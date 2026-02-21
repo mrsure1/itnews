@@ -7,7 +7,7 @@ import random
 import re
 import sys
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 from urllib.parse import quote_plus, urljoin
 
@@ -2507,22 +2507,98 @@ def collect_news() -> list[dict]:
 
 
 def main():
-    items = collect_news()
-
     json_name = "news_data.json"
+    existing_items = []
+    if Path(json_name).exists():
+        try:
+            with open(json_name, "r", encoding="utf-8") as f:
+                existing_items = json.load(f)
+        except Exception as e:
+            print(f"[WARN] Failed to load existing {json_name}: {e}")
+
+    # Retain items collected within the last 7 days
+    now = datetime.now()
+    seven_days_ago = now - timedelta(days=7)
+    
+    retained_items = []
+    for item in existing_items:
+        collected_at_str = item.get("collected_at") or item.get("수집일시")
+        if collected_at_str:
+            try:
+                # Format is usually "%Y-%m-%d %H:%M"
+                item_date = datetime.strptime(collected_at_str, "%Y-%m-%d %H:%M")
+                if item_date >= seven_days_ago:
+                    retained_items.append(item)
+            except ValueError:
+                # If date format is weird, just keep it for now
+                retained_items.append(item)
+
+    print(f"[INFO] Retained {len(retained_items)} items from the last 7 days.")
+
+    new_items = collect_news()
+    
+    # Combine and Deduplicate by link or title
+    seen_links = set()
+    combined_items = []
+    
+    # Add new items first to ensure they take precedence
+    for item in new_items:
+        link = item.get("link") or item.get("링크")
+        title = item.get("title") or item.get("제목")
+        dedup_key = link if link else title
+        if dedup_key not in seen_links:
+            seen_links.add(dedup_key)
+            combined_items.append(item)
+
+    # Add retained older items second
+    for item in retained_items:
+        link = item.get("link") or item.get("링크")
+        title = item.get("title") or item.get("제목")
+        dedup_key = link if link else title
+        if dedup_key not in seen_links:
+            seen_links.add(dedup_key)
+            combined_items.append(item)
+
+    # Sort combined items (OpenAI priorities, then latest first)
+    def sort_key(item):
+        title_lower = (item.get("title") or item.get("제목") or "").lower()
+        media_lower = (item.get("media") or item.get("매체") or "").lower()
+        collected_at = item.get("collected_at") or item.get("수집일시") or ""
+        
+        is_prioritized = 0 if ('openai' in title_lower or 'openai' in media_lower) else 1
+        # Secondary sort by date descending
+        return (is_prioritized, collected_at)
+
+    combined_items.sort(key=sort_key, reverse=True) # Sort reverse=True so newest is first in each priority group
+    # However we need priority 0 (is_prioritized=0) to be at the top. Since reverse=True, 0 will go to the bottom if we aren't careful.
+    # So let's invert the boolean or priority number.
+    
+    def final_sort_key(item):
+        title_lower = (item.get("title") or item.get("제목") or "").lower()
+        media_lower = (item.get("media") or item.get("매체") or "").lower()
+        collected_at = item.get("collected_at") or item.get("수집일시") or ""
+        
+        # Lower number is better priority.
+        priority = 0 if ('openai' in title_lower or 'openai' in media_lower) else 1
+        return (priority, collected_at)
+
+    # To sort by priority ASC, date DESC:
+    combined_items.sort(key=lambda x: x.get("collected_at") or x.get("수집일시") or "", reverse=True)
+    combined_items.sort(key=lambda x: 0 if 'openai' in (x.get("title") or x.get("제목") or "").lower() or 'openai' in (x.get("media") or x.get("매체") or "").lower() else 1)
+
     with open(json_name, "w", encoding="utf-8") as f:
-        json.dump(items, f, ensure_ascii=False, indent=2)
+        json.dump(combined_items, f, ensure_ascii=False, indent=2)
 
-    domestic_count = sum(1 for item in items if item.get(KEY_COUNTRY) == VAL_DOMESTIC)
-    us_count = sum(1 for item in items if item.get(KEY_COUNTRY) == VAL_US)
+    domestic_count = sum(1 for item in combined_items if (item.get("국가") == "국내" or item.get("country") == "domestic"))
+    us_count = sum(1 for item in combined_items if (item.get("국가") == "미국" or item.get("country") == "global"))
 
-    print(f"[OK] Wrote {len(items)} items to {json_name}")
-    print(f"- Domestic({VAL_DOMESTIC}): {domestic_count}")
-    print(f"- US({VAL_US}): {us_count}")
+    print(f"[OK] Wrote {len(combined_items)} items to {json_name}")
+    print(f"- Domestic: {domestic_count}")
+    print(f"- US/Global: {us_count}")
 
     # Also save as .js for local file access (CORS bypass)
     js_name = "news_data.js"
-    js_content = f"window.NEWS_DATA = {json.dumps(items, ensure_ascii=False, indent=2)};"
+    js_content = f"window.NEWS_DATA = {json.dumps(combined_items, ensure_ascii=False, indent=2)};"
     with open(js_name, "w", encoding="utf-8") as f:
         f.write(js_content)
     print(f"[OK] Wrote to {js_name} (for local browser access)")
