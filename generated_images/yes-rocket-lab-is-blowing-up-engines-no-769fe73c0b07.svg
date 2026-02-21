@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1f2937" />
+      <stop offset="60%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#4f46e5" />
+    </linearGradient>
+    <radialGradient id="glow" cx="0.8" cy="0.2" r="0.7">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.25)" />
+      <stop offset="100%" stop-color="rgba(255,255,255,0)" />
+    </radialGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#bg)" />
+  <rect width="1024" height="1024" fill="url(#glow)" />
+  <g opacity="0.17" stroke="white" stroke-width="2" fill="none">
+    <circle cx="210" cy="180" r="120" />
+    <circle cx="860" cy="760" r="180" />
+    <path d="M120 800 C360 640, 620 900, 910 700" />
+  </g>
+  <rect x="72" y="92" width="260" height="44" rx="22" fill="rgba(255,255,255,0.18)" />
+  <text x="95" y="121" fill="white" font-size="24" font-family="Arial, sans-serif" font-weight="700">Ars Technica</text>
+  <text x="80" y="860" fill="white" font-size="52" font-family="Arial, sans-serif" font-weight="700">AI GENERATED COVER</text>
+  <foreignObject x="80" y="900" width="864" height="96">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="font-family:Arial,sans-serif;font-size:30px;color:#e2e8f0;line-height:1.35;">
+      Yes, Rocket Lab is blowing up engines. No, it&#x27;s not a bi...
+    </div>
+  </foreignObject>
+</svg>

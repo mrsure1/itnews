@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="cbg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="60%" stop-color="#1d4ed8" />
+      <stop offset="100%" stop-color="#38bdf8" />
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#cbg)" />
+  <circle cx="860" cy="170" r="140" fill="rgba(255,255,255,0.14)" />
+  <rect x="76" y="74" width="320" height="54" rx="27" fill="rgba(255,255,255,0.2)" />
+  <text x="102" y="110" fill="white" font-size="30" font-family="Arial, sans-serif" font-weight="700">KAKAO</text>
+  <text x="80" y="920" fill="#e2e8f0" font-size="34" font-family="Arial, sans-serif">Kakao</text>
+  <rect x="288" y="216" width="448" height="448" rx="34" fill="rgba(255,255,255,0.16)" />
+  <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAaVBMVEX/3AAeHh7XugWlkAz21QEjIh2gjA0hIB4xLhzmxwOplAvvzwI7NxpeVBVjWBXz0gJGQBmIdxDOsgduYhM/OhqTgQ7BqAhMRRjLsAd4ahJ9bhEmJR1XThaOfQ+2ngotKxw3MxvfwQRpXRQ3W59WAAAA4ElEQVRYhe2UzQ6CMBCEW6H8I1IQVESU939Id1OCGE+7a4yHzoEdDvOlyWyrlJeX11/LRk27kwA0yAM84NuAKJQBjrq1EkAXa20yPiBN4CdJ2YCwB29OtPwWcEYfEPMbQIb2Qs2/ALsB3JXc4grICzBFTs6vgBLmwFnJBTDivDHyCwA3SI+cvAOkE3xbVn45wR5HJABUBxhxxwe4azAJWlDWgLkL9sBtcs/fRKVqtLMA4KqoBYAQq9DEB+nzRTLEMt/eRItXenrwAa6KUgDAKuaKBAhA2/VpeDfCy8vrh3oCvnoGJ6xjEQ0AAAAASUVORK5CYII=" x="312" y="240" width="400" height="400" preserveAspectRatio="xMidYMid meet" />
+</svg>

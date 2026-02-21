@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="kwbg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="60%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#22d3ee" />
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#kwbg)" />
+  <g opacity="0.16" fill="none" stroke="white" stroke-width="3">
+    <circle cx="860" cy="200" r="140" />
+    <circle cx="180" cy="860" r="180" />
+    <path d="M140 700 C360 520, 640 860, 900 650" />
+  </g>
+  <rect x="72" y="72" width="250" height="46" rx="23" fill="rgba(255,255,255,0.18)" />
+  <text x="94" y="103" fill="white" font-size="24" font-family="Arial, sans-serif" font-weight="700">TechCrunch</text>
+  <rect x="76" y="136" width="220" height="38" rx="19" fill="rgba(255,255,255,0.12)" />
+  <text x="94" y="162" fill="#e2e8f0" font-size="20" font-family="Arial, sans-serif">ai</text>
+  <text x="80" y="560" fill="white" font-size="112" font-family="Arial, sans-serif" font-weight="800">AI</text>
+  <text x="82" y="610" fill="#dbeafe" font-size="32" font-family="Arial, sans-serif">Artificial Intelligence</text>
+  <text x="80" y="892" fill="#f8fafc" font-size="34" font-family="Arial, sans-serif">OpenAI disbands mission alignment team</text>
+</svg>

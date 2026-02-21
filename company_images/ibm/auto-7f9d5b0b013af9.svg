@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   id="svg1654"
+   version="1.1"
+   height="400"
+   width="1000">
+  <metadata
+     id="metadata1660">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs1658">
+    <clipPath
+       id="clipPath1749"
+       clipPathUnits="userSpaceOnUse">
+      <path
+         id="path1751"
+         d="M 0,-1 V 82 H 55.900391 V 318 H 1.5 v 82 h 195 V 318 H 140.59961 V 82 H 195 V -1 Z M 433.13086,-0.09960937 222,0 v 82 h 55.90039 v 106 24 106 H 222 v 82 l 211.13086,0.0996 c 37.6,0 65.89844,-27.40039 65.89844,-27.40039 l 22.30078,-25.89844 c 6.3,-6.2 9.91992,-27.30078 9.91992,-27.30078 l 2.30078,-25.90039 c 0,-12.9 -5.35156,-27.40039 -5.35156,-27.40039 l -11.5,-25.89844 c -5.8,-13.4 -23.79883,-27.40039 -23.79883,-27.40039 V 212 188 187.09961 c 0,0 17.99883,-14.00039 23.79883,-27.40039 l 11.5,-25.89844 c 0,0 5.35156,-14.50039 5.35156,-27.40039 L 531.25,80.5 c 0,0 -3.61992,-21.100781 -9.91992,-27.300781 L 499.0293,27.300781 c 0,0 -28.29844,-27.40039037 -65.89844,-27.40039037 z M 554,0 v 82 h 55.90039 V 318 H 555.5 v 82 h 139 V 172 l 82.69922,228 1.68164,0.0391 81.19922,-228 v 228 h 140.00002 v -82 H 944.17969 V 82.039062 h 54.40039 V 0.0390625 h -156 L 777.88086,183.03906 712.38086,0.0390625 Z M 362,82 h 82 v 76 h -82 z m 0,160 h 82 v 76 h -82 z" />
+    </clipPath>
+  </defs>
+  <clipPath
+     id="A">
+    <path
+       id="path1646"
+       d="M0-1v83h55.9v236H1.5v82h195v-82h-55.9V82H195V-1zm554 1v82h55.9v236h-54.4v82h139V172l82.7 228 1.68.04 81.2-228v228h140v-82h-55.9v-236h54.4v-82h-156l-64.7 183-65.5-183z" />
+    <path
+       d="M222 0v82h55.9v130h215v-24.9s18-14 23.8-27.4l11.5-25.9s5.35-14.5 5.35-27.4l-2.3-25.9s-3.62-21.1-9.92-27.3l-22.3-25.9S470.73-.1 433.13-.1zm140 82h82v76h-82z"
+       id="B" />
+    <use
+       id="use1649"
+       xlink:href="#B"
+       transform="matrix(1 0 0 -1 0 400)" />
+  </clipPath>
+  <path
+     clip-path="url(#clipPath1749)"
+     d="M -41.624115,9.5123198 H 1091.8107 V 36.774431 H -41.624115 m 0,27.262108 H 1091.8107 v 27.26211 H -41.624115 V 118.56074 H 1091.8107 v 27.26213 H -41.624115 m 0,27.2621 H 1091.8107 v 27.2621 H -41.624115 m 1133.434815,0 v 27.26211 H -41.62416 m 0,27.26212 H 1091.8107 v 27.26211 H -41.62416 v 27.26213 H 1091.8107 v 27.2621 H -41.62416 m 0,27.26209 H 1091.8107 v 27.2621 H -41.62416"
+     style="fill:none;stroke:#1f70c1;stroke-width:16.06299213;stroke-miterlimit:4;stroke-dasharray:none"
+     id="path1652-4-6" />
+</svg>

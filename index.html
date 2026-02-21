@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="ko" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MrSure IT News</title>
+
+  <!-- Tailwind CSS (via CDN for standalone usage) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ["Space Grotesk", "ui-sans-serif", "system-ui"],
+            body: ["IBM Plex Sans KR", "ui-sans-serif", "system-ui"],
+          },
+          colors: {
+            // Professional Slate palette (Neutral)
+            slate: {
+              50: '#f8fafc',
+              100: '#f1f5f9',
+              200: '#e2e8f0',
+              300: '#cbd5e1',
+              400: '#94a3b8',
+              500: '#64748b',
+              600: '#475569',
+              700: '#334155',
+              800: '#1e293b',
+              900: '#0f172a',
+              950: '#020617',
+            },
+            // Accent Colors
+            primary: {
+              DEFAULT: '#3b82f6', // blue-500
+              foreground: '#ffffff',
+            },
+            secondary: {
+              DEFAULT: '#8b5cf6', // violet-500
+              foreground: '#ffffff',
+            }
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.5s ease-out forwards',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0', transform: 'translateY(10px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            }
+          }
+        },
+      },
+    };
+  </script>
+
+  <!-- Fonts: Space Grotesk (Headers) & IBM Plex Sans KR (Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      /* Subtle, modern mesh gradient background */
+      background-image:
+        radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.08) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.08) 0px, transparent 50%);
+      color: #0f172a;
+      /* Slate 900 */
+      font-family: 'IBM Plex Sans KR', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    header h1 {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .news-card {
+      transition-property: transform, box-shadow, border-color, background-color;
+      transition-duration: 200ms;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .news-card:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Custom Scrollbar for Webkit */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen selection:bg-blue-100 selection:text-blue-900">
+  <main class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+    <!-- Banner Header Section -->
+    <header class="mb-16 animate-fade-in">
+      <!-- Daily Update Badge (outside banner, left aligned) -->
+      <div class="mb-3">
+        <div
+          class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold border border-blue-100">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+          </span>
+          Daily Tech Update
+        </div>
+      </div>
+
+      <!-- Banner -->
+      <div class="rounded-xl overflow-hidden shadow-lg border border-slate-200/60 relative" style="min-height: 180px;">
+        <!-- Gradient Background -->
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-500 via-violet-500 to-purple-600"></div>
+
+        <!-- Pattern Overlay -->
+        <div class="absolute inset-0 opacity-30"
+          style="background-image: 
+          repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.1) 35px, rgba(255,255,255,.1) 70px),
+          repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(255,255,255,.1) 35px, rgba(255,255,255,.1) 70px);"></div>
+
+        <!-- Content -->
+        <div class="relative h-full flex flex-col items-center justify-center text-white px-6 py-8">
+
+          <!-- Main Title -->
+          <div class="flex items-center justify-center gap-3 mb-3">
+            <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z">
+              </path>
+            </svg>
+            <h1 class="text-4xl md:text-5xl font-bold tracking-tight">
+              IT News <span class="font-light opacity-90">Hub</span>
+            </h1>
+          </div>
+
+          <!-- Subtitle -->
+          <p class="text-blue-50 text-sm md:text-base max-w-2xl mx-auto text-center mb-4">
+            국내외 핵심 기술 트렌드를 한눈에 파악하세요.
+            <span class="hidden sm:inline">AI가 엄선한 테크 뉴스를 실시간으로 제공합니다.</span>
+          </p>
+
+          <!-- Update Time -->
+          <div class="flex flex-col sm:flex-row items-center gap-2 text-xs">
+            <div id="lastUpdated"
+              class="font-mono bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-md border border-white/30">
+              Updating...
+            </div>
+            <p class="text-blue-100 text-[11px]">
+              Auto-translated summaries included
+            </p>
+          </div>
+        </div>
+
+        <!-- Animated dots -->
+        <div class="absolute top-4 left-4 w-2 h-2 bg-white rounded-full animate-ping"></div>
+        <div class="absolute bottom-4 right-4 w-2 h-2 bg-white rounded-full animate-ping"
+          style="animation-delay: 0.5s;"></div>
+      </div>
+    </header>
+
+    <!-- Content Stack: Domestic -> Global -->
+    <div class="space-y-0">
+
+      <!-- Domestic News Section -->
+      <section class="animate-fade-in pb-16" style="animation-delay: 100ms;">
+        <div class="flex items-center gap-4 mb-8 border-l-4 border-blue-500 pl-4">
+          <div>
+            <h2 class="font-display text-2xl font-bold text-slate-800">Korea Tech</h2>
+            <p class="text-sm text-slate-500 font-medium">국내 최신 기술 동향</p>
+          </div>
+        </div>
+
+        <div id="koreaList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
+          <!-- Skeleton Loader -->
+          <div class="animate-pulse space-y-4 col-span-full">
+            <div class="h-64 bg-slate-100 rounded-xl border border-slate-200"></div>
+            <div class="h-64 bg-slate-100 rounded-xl border border-slate-200"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Global News Section with Background -->
+      <section id="globalSection"
+        class="-mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-16 bg-gradient-to-br from-slate-200 via-gray-200 to-slate-250 border-y border-slate-300 opacity-0 translate-y-8 transition-all duration-1000 ease-out">
+        <div class="flex items-center gap-4 mb-8 border-l-4 border-violet-500 pl-4">
+          <div>
+            <h2 class="font-display text-2xl font-bold text-slate-800">Global Tech</h2>
+            <p class="text-sm text-slate-500 font-medium">해외 주요 이슈 (AI 요약 번역)</p>
+          </div>
+        </div>
+
+        <div id="globalList"
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
+          <!-- Skeleton Loader -->
+          <div class="animate-pulse space-y-4 col-span-full">
+            <div class="h-64 bg-slate-100 rounded-xl border border-slate-200"></div>
+            <div class="h-64 bg-slate-100 rounded-xl border border-slate-200"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-24 pt-10 border-t border-slate-200">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
+        <p class="font-medium">Powered by MrSure Agent with Professional Web Dev Skill</p>
+        <div class="flex gap-4">
+          <span>Google News</span>
+          <span>TechCrunch</span>
+          <span>The Verge</span>
+          <span>Wired</span>
+        </div>
+      </div>
+      <p id="fetchHint" class="hidden mt-4 text-xs font-mono text-red-500 bg-red-50 p-2 rounded text-center">
+        ⚠️ Fetch Error: 로컬 파일 직접 열기 제한. <code>python -m http.server</code> 실행 후 localhost 접속 권장.
+      </p>
+    </footer>
+  </main>
+
+  <!-- Load data as JS variable to bypass CORS when opening local file -->
+  <script>
+    (function () {
+      // Cache busting for news_data.js
+      const script = document.createElement('script');
+      script.src = "news_data.js?t=" + new Date().getTime();
+      script.onload = function () {
+        console.log("news_data.js loaded dynamically");
+        // Trigger loadNews after script is loaded
+        if (typeof loadNews === 'function') loadNews();
+      };
+      script.onerror = function () {
+        console.warn("Failed to load news_data.js dynamically. Falling back to fetch.");
+        if (typeof loadNews === 'function') loadNews();
+      };
+      document.body.appendChild(script);
+    })();
+  </script>
+  <script>
+    const $ = (id) => document.getElementById(id);
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function getFallbackImage(title) {
+      const gradients = [
+        "from-blue-400 to-indigo-500",
+        "from-violet-400 to-purple-500",
+        "from-cyan-400 to-blue-500",
+        "from-emerald-400 to-teal-500",
+        "from-rose-400 to-pink-500"
+      ];
+      const index = title.length % gradients.length;
+      return gradients[index];
+    }
+
+    function makeNewsItem(item, type) {
+      const media = item["매체"] ?? item.media ?? item.source ?? "Unknown Source";
+      const title = item["제목"] ?? item.title ?? "Untitled";
+      const collectedAt = item["수집일시"] ?? item.collected_at ?? "";
+      // 시간 포맷 정리 (YYYY-MM-DD HH:MM -> YYYY.MM.DD)
+      const dateStr = collectedAt.split(' ')[0].replace(/-/g, '.');
+
+      const link = item["링크"] ?? item.link ?? item.url ?? "#";
+      const summary = item["요약"] ?? item.summary ?? item.description ?? "";
+      const imageUrl = item["이미지"] ?? item.image ?? "";
+
+      const isKorea = type === 'korea';
+
+      // 테마별 색상 및 스타일 정의
+      const theme = isKorea ? {
+        badge: "bg-blue-50 text-blue-700 border-blue-100",
+        hoverText: "group-hover:text-blue-600",
+        borderHover: "hover:border-blue-200 hover:shadow-blue-500/5",
+        accent: "bg-blue-500"
+      } : {
+        badge: "bg-violet-50 text-violet-700 border-violet-100",
+        hoverText: "group-hover:text-violet-600",
+        borderHover: "hover:border-violet-200 hover:shadow-violet-500/5",
+        accent: "bg-violet-500"
+      };
+
+
+      // 제목 처리 (해외 뉴스는 번역 ID 부여)
+      const titleHtml = isKorea
+        ? escapeHtml(title)
+        : `<span class="js-ko-title">${escapeHtml(title)}</span>`;
+
+      // 요약 처리 (해외 뉴스는 번역 ID 부여)
+      let summaryHtml = '';
+      const summaryContent = isKorea
+        ? escapeHtml(summary)
+        : (summary ? `<span class="js-ko-summary">${escapeHtml(summary)}</span>` : '');
+
+      if (summaryContent) {
+        summaryHtml = `
+                    <p class="text-sm text-slate-600 leading-relaxed line-clamp-3">
+                        ${summaryContent}
+                    </p>
+            `;
+      }
+
+      // 이미지 처리
+      let imageHtml = '';
+      if (imageUrl) {
+        // onerror 핸들러: 이미지 로드 실패 시 폴백 그라디언트로 교체
+        imageHtml = `
+                <div class="w-full h-48 relative overflow-hidden bg-slate-100 border-b border-slate-200">
+                    <img src="${imageUrl}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" 
+                        onerror="this.parentNode.innerHTML=\`<div class='w-full h-full bg-gradient-to-br ${getFallbackImage(title)} flex items-center justify-center'><svg class='w-10 h-10 text-white/50' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'></path></svg></div>\`">
+                </div>
+             `;
+      } else {
+        // 이미지가 없는 경우 폴백 그라디언트
+        imageHtml = `
+                <div class="w-full h-48 bg-gradient-to-br ${getFallbackImage(title)} flex items-center justify-center border-b border-slate-200">
+                     <svg class="w-10 h-10 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                </div>
+             `;
+      }
+
+      return `
+          <a href="${link}" target="_blank" rel="noopener noreferrer" 
+             class="news-card group flex flex-col bg-white rounded-xl border border-slate-200 shadow-[0_2px_8px_rgba(0,0,0,0.02)] ${theme.borderHover} overflow-hidden h-full transition-all duration-300 hover:shadow-lg">
+             
+            ${imageHtml}
+
+            <div class="flex-1 p-4 flex flex-col">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-[10px] uppercase tracking-wider font-bold px-2 py-1 rounded-md border ${theme.badge}">
+                        ${escapeHtml(media)}
+                    </span>
+                    <span class="text-[10px] font-mono text-slate-400">${dateStr}</span>
+                </div>
+                
+                <h3 class="text-base font-bold text-slate-800 leading-snug mb-2 ${theme.hoverText} transition-colors line-clamp-2">
+                    ${titleHtml}
+                </h3>
+                
+                ${summaryHtml}
+                
+                <div class="mt-auto pt-3 flex items-center gap-2 text-slate-400 group-hover:text-blue-600 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    <span class="text-xs font-medium">자세히 보기</span>
+                </div>
+            </div>
+          </a>
+        `;
+    }
+
+    // --- 번역 로직 (제목 + 요약) ---
+    // "Professional Web Dev Skill"에 따라 번역 로직을 더 견고하게 개선 (캐싱, 큐잉)
+    const _trCache = new Map();
+    let _trQueue = [];
+    let _trInFlight = 0;
+    const _trMaxInFlight = 4; // 병렬 처리 수 약간 증가
+
+    function hasHangul(text) { return /[가-힣]/.test(text); }
+
+    function enqueueTranslation(text, el) {
+      if (!text) return;
+      // 이미 한글이 포함되어 있고 길이가 짧으면 번역 불필요 간주
+      if (hasHangul(text) && text.length < 50) {
+        el.textContent = text;
+        return;
+      }
+
+      const cached = _trCache.get(text) || localStorage.getItem(`tr:en2ko:${text}`);
+      if (cached) {
+        el.textContent = cached;
+        return;
+      }
+      _trQueue.push({ text, el });
+      drainTranslationQueue();
+    }
+
+    async function drainTranslationQueue() {
+      if (_trInFlight >= _trMaxInFlight || _trQueue.length === 0) return;
+
+      const job = _trQueue.shift();
+      _trInFlight++;
+
+      try {
+        const ko = await translateEnToKo(job.text);
+        if (ko) {
+          // 부드러운 텍스트 교체를 위한 페이드 효과
+          job.el.style.opacity = '0';
+          setTimeout(() => {
+            job.el.textContent = ko;
+            job.el.style.transition = 'opacity 0.3s ease';
+            job.el.style.opacity = '1';
+          }, 100);
+        }
+      } catch (e) {
+        console.warn("Translation failed for:", job.text);
+      } finally {
+        _trInFlight--;
+        drainTranslationQueue();
+      }
+    }
+
+    async function translateEnToKo(text) {
+      const cached = _trCache.get(text) || localStorage.getItem(`tr:en2ko:${text}`);
+      if (cached) return cached;
+
+      const url = new URL("https://translate.googleapis.com/translate_a/single");
+      url.search = new URLSearchParams({ client: "gtx", sl: "auto", tl: "ko", dt: "t", q: text });
+
+      const res = await fetch(url.toString(), { method: "GET", mode: "cors" });
+      if (!res.ok) throw new Error("Translation API Error");
+      const data = await res.json();
+
+      // 여러 문장 합치기
+      const out = Array.isArray(data?.[0]) ? data[0].map((x) => x?.[0]).join("") : "";
+      const translated = out || text;
+
+      _trCache.set(text, translated);
+      try { localStorage.setItem(`tr:en2ko:${text}`, translated); } catch { }
+      return translated;
+    }
+    // ----------------------------------
+
+    async function loadNews() {
+      try {
+        let data = [];
+
+        // 1. Try loading from global variable (local file friendly)
+        if (window.NEWS_DATA && Array.isArray(window.NEWS_DATA)) {
+          data = window.NEWS_DATA;
+          console.log("Loaded news from window.NEWS_DATA");
+        } else {
+          // 2. Fallback to fetch (web server mode)
+          console.log("window.NEWS_DATA not found, trying fetch...");
+          const res = await fetch("news_data.json", { cache: "no-store" });
+          if (!res.ok) throw new Error("Failed to load news data");
+          data = await res.json();
+        }
+
+        const normalizeCountry = (x) => String(x["국가"] ?? x.country ?? "").trim().toLowerCase();
+        const korea = data.filter((x) => ["국내", "domestic", "korea", "kr"].includes(normalizeCountry(x)));
+        const global = data.filter((x) => ["미국", "global", "us", "usa"].includes(normalizeCountry(x)));
+
+        // Update Last Updated
+        const times = data.map(x => x["수집일시"] ?? x.collected_at).filter(Boolean).sort();
+        if (times.length) $("lastUpdated").textContent = `Last update: ${times[times.length - 1]}`;
+
+        // 공통 렌더링 함수
+        const renderList = (items, type) => {
+          if (!items.length) {
+            return `<div class="p-8 text-center text-slate-400 bg-slate-50 rounded-xl border border-dashed border-slate-200">
+                            뉴스가 없습니다.
+                        </div>`;
+          }
+          return items.map(item => makeNewsItem(item, type)).join('');
+        };
+
+        document.getElementById('koreaList').innerHTML = renderList(korea, 'korea');
+        document.getElementById('globalList').innerHTML = renderList(global, 'global');
+
+        // 번역 큐에 등록 (제목 + 요약)
+        document.querySelectorAll('.js-ko-title').forEach(el => enqueueTranslation(el.textContent, el));
+        document.querySelectorAll('.js-ko-summary').forEach(el => enqueueTranslation(el.textContent, el));
+
+      } catch (err) {
+        console.error(err);
+        $("fetchHint").classList.remove("hidden");
+        $("koreaList").innerHTML = `<div class="p-4 bg-red-50 text-red-500 rounded-lg text-sm">데이터를 불러오지 못했습니다. (JSON Fetch Err)</div>`;
+        $("globalList").innerHTML = `<div class="p-4 bg-red-50 text-red-500 rounded-lg text-sm">데이터를 불러오지 못했습니다. (JSON Fetch Err)</div>`;
+      }
+    }
+
+    // 초기 로딩 애니메이션을 위해 약간의 지연 후 실행 (Moved to script.onload)
+    // setTimeout(loadNews, 100);
+
+    // Global Section 스크롤 애니메이션
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+
+    const observerCallback = (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    const globalSection = document.getElementById('globalSection');
+    if (globalSection) {
+      observer.observe(globalSection);
+    }
+  </script>
+</body>
+
+</html>
