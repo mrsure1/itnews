@@ -2,7 +2,7 @@ name: Update IT News Daily
 
 on:
   schedule:
-    - cron: '0 23 * * *' # 매일 한국 시간 오전 8시 (UTC 23:00)에 실행
+    - cron: '0 4,23 * * *' # 매일 한국 시간 오전 8시, 오후 1시 (UTC 23:00, 04:00)에 실행
   workflow_dispatch: # 수동 실행 
 
 jobs:
