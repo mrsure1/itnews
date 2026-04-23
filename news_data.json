@@ -1,5 +1,6 @@
 [
   {
+<<<<<<< HEAD
     "국가": "미국",
     "매체": "The Verge",
     "제목": "OpenAI now lets teams make custom bots that can do work on their own",
@@ -460,12 +461,243 @@
     "image_provider": "source-original",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "국가": "국내",
+    "매체": "뉴시스",
+    "제목": "\"박사 따고 바로 현장으로\"…정부, 양자 인재 '경력 고속도로' 놓는다",
+    "링크": "https://n.news.naver.com/mnews/article/003/0013905846",
+    "요약": "정부가 양자 기술 분야의 박사급 인재들이 학계에만 머물지 않고 연구 현장으로 곧장 진출할 수 있도록 돕는 '경력 고속도로' 시스템을 구축합니다. 전문 교육과 실제 연구를 유기적으로 연결해 대한민국이 미래 양자 산업에서 앞서나갈 수 있는 탄탄한 인재 생태계를 만들겠다는 계획입니다.",
+    "이미지": "https://mimgnews.pstatic.net/image/origin/003/2026/04/23/13905846.jpg?type=nf220_150",
+    "수집일시": "2026-04-23T17:26:01.486639",
+    "이미지프롬프트": "original-source-image",
+    "이미지생성방식": "source-original",
+    "country": "domestic",
+    "media": "뉴시스",
+    "title": "\"박사 따고 바로 현장으로\"…정부, 양자 인재 '경력 고속도로' 놓는다",
+    "link": "https://n.news.naver.com/mnews/article/003/0013905846",
+    "summary": "정부가 양자 기술 분야의 박사급 인재들이 학계에만 머물지 않고 연구 현장으로 곧장 진출할 수 있도록 돕는 '경력 고속도로' 시스템을 구축합니다. 전문 교육과 실제 연구를 유기적으로 연결해 대한민국이 미래 양자 산업에서 앞서나갈 수 있는 탄탄한 인재 생태계를 만들겠다는 계획입니다.",
+    "image": "https://mimgnews.pstatic.net/image/origin/003/2026/04/23/13905846.jpg?type=nf220_150",
+    "collected_at": "2026-04-23T17:26:01.486639",
+    "image_prompt": "original-source-image",
+    "image_provider": "source-original",
+    "curation_model": "models/gemini-3-flash-preview",
+    "curation_mode": "curation-success",
+    "type": "article"
+  },
+  {
+    "국가": "국내",
+    "매체": "아시아경제",
+    "제목": "삼성SDS, 구글 클라우드와 맞손…AI·클라우드·보안 협력",
+    "링크": "https://n.news.naver.com/mnews/article/277/0005753600",
+    "요약": "삼성SDS가 글로벌 IT 기업 구글 클라우드와 손잡고 인공지능(AI)과 클라우드 기술 경쟁력 강화에 나섭니다. 양사는 라스베이거스에서 열린 대규모 기술 행사에서 파트너십을 맺고, 특히 생성형 AI와 보안 분야에서 기업들이 더 편리하고 안전하게 첨단 기술을 활용할 수 있도록 긴밀하게 협력할 예정입니다.",
+    "이미지": "https://mimgnews.pstatic.net/image/origin/277/2026/04/23/5753600.jpg?type=nf220_150",
+    "수집일시": "2026-04-23T17:26:01.486639",
+    "이미지프롬프트": "original-source-image",
+    "이미지생성방식": "source-original",
+    "country": "domestic",
+    "media": "아시아경제",
+    "title": "삼성SDS, 구글 클라우드와 맞손…AI·클라우드·보안 협력",
+    "link": "https://n.news.naver.com/mnews/article/277/0005753600",
+    "summary": "삼성SDS가 글로벌 IT 기업 구글 클라우드와 손잡고 인공지능(AI)과 클라우드 기술 경쟁력 강화에 나섭니다. 양사는 라스베이거스에서 열린 대규모 기술 행사에서 파트너십을 맺고, 특히 생성형 AI와 보안 분야에서 기업들이 더 편리하고 안전하게 첨단 기술을 활용할 수 있도록 긴밀하게 협력할 예정입니다.",
+    "image": "https://mimgnews.pstatic.net/image/origin/277/2026/04/23/5753600.jpg?type=nf220_150",
+    "collected_at": "2026-04-23T17:26:01.486639",
+    "image_prompt": "original-source-image",
+    "image_provider": "source-original",
+    "curation_model": "models/gemini-3-flash-preview",
+    "curation_mode": "curation-success",
+    "type": "article"
+  },
+  {
+    "국가": "국내",
+    "매체": "전자신문",
+    "제목": "웹케시 '오페리아', 은행 계정계 직접 연동…AI 뱅킹 현실화[기획]",
+    "링크": "https://n.news.naver.com/mnews/article/030/0003421134",
+    "요약": "웹케시가 선보인 '오페리아'는 인공지능이 은행의 핵심 시스템과 직접 소통하며 금융 업무를 처리하는 혁신적인 기술입니다. 단순한 안내를 넘어 실제 돈이 오가는 복잡한 거래까지 AI가 직접 수행하는 진정한 인공지능 뱅킹 시대의 시작을 알리고 있습니다.",
+    "이미지": "https://mimgnews.pstatic.net/image/origin/030/2026/04/23/3421134.jpg?type=nf220_150",
+    "수집일시": "2026-04-23T17:26:01.486639",
+    "이미지프롬프트": "original-source-image",
+    "이미지생성방식": "source-original",
+    "country": "domestic",
+    "media": "전자신문",
+    "title": "웹케시 '오페리아', 은행 계정계 직접 연동…AI 뱅킹 현실화[기획]",
+    "link": "https://n.news.naver.com/mnews/article/030/0003421134",
+    "summary": "웹케시가 선보인 '오페리아'는 인공지능이 은행의 핵심 시스템과 직접 소통하며 금융 업무를 처리하는 혁신적인 기술입니다. 단순한 안내를 넘어 실제 돈이 오가는 복잡한 거래까지 AI가 직접 수행하는 진정한 인공지능 뱅킹 시대의 시작을 알리고 있습니다.",
+    "image": "https://mimgnews.pstatic.net/image/origin/030/2026/04/23/3421134.jpg?type=nf220_150",
+    "collected_at": "2026-04-23T17:26:01.486639",
+    "image_prompt": "original-source-image",
+    "image_provider": "source-original",
+    "curation_model": "models/gemini-3-flash-preview",
+    "curation_mode": "curation-success",
+    "type": "article"
+  },
+  {
+    "국가": "국내",
+    "매체": "조선비즈",
+    "제목": "KT “대표이사 조직개편 이사회 사전 보고 없던 일로”",
+    "링크": "https://n.news.naver.com/mnews/article/366/0001159198",
+    "요약": "KT 이사회가 대표이사의 인사권과 조직 개편안에 대한 사전 보고 의무를 폐지하며 경영진의 자율성을 다시 강화하기로 했습니다. 이는 복잡한 의결 절차를 줄여 급변하는 IT 시장 환경에 더욱 신속하게 대응하기 위한 결정으로 풀이됩니다.",
+    "이미지": "https://mimgnews.pstatic.net/image/origin/366/2026/04/23/1159198.jpg?type=nf220_150",
+    "수집일시": "2026-04-23T17:26:01.486639",
+    "이미지프롬프트": "original-source-image",
+    "이미지생성방식": "source-original",
+    "country": "domestic",
+    "media": "조선비즈",
+    "title": "KT “대표이사 조직개편 이사회 사전 보고 없던 일로”",
+    "link": "https://n.news.naver.com/mnews/article/366/0001159198",
+    "summary": "KT 이사회가 대표이사의 인사권과 조직 개편안에 대한 사전 보고 의무를 폐지하며 경영진의 자율성을 다시 강화하기로 했습니다. 이는 복잡한 의결 절차를 줄여 급변하는 IT 시장 환경에 더욱 신속하게 대응하기 위한 결정으로 풀이됩니다.",
+    "image": "https://mimgnews.pstatic.net/image/origin/366/2026/04/23/1159198.jpg?type=nf220_150",
+    "collected_at": "2026-04-23T17:26:01.486639",
+    "image_prompt": "original-source-image",
+    "image_provider": "source-original",
+    "curation_model": "models/gemini-3-flash-preview",
+    "curation_mode": "curation-success",
+    "type": "article"
+  },
+  {
+    "국가": "국내",
+    "매체": "연합뉴스",
+    "제목": "KAIST 교수 창업기업, 엔비디아 벤처투자 등에서 1천억↑ 유치",
+    "링크": "https://n.news.naver.com/mnews/article/001/0016037529",
+    "요약": "KAIST 교수진이 설립한 스타트업 '포인투테크놀로지'가 초고속 데이터 전송 기술인 'e-Tube'의 혁신성을 인정받아 엔비디아 등으로부터 1,000억 원 이상의 대규모 투자를 유치했습니다. 이 기술은 AI 데이터센터의 복잡한 배선을 가볍고 빠르게 혁신하는 핵심 인프라로, 인공지능 시대를 가속화할 필수 솔루션으로 주목받고 있습니다.",
+    "이미지": "https://mimgnews.pstatic.net/image/origin/001/2026/04/23/16037529.jpg?type=nf220_150",
+    "수집일시": "2026-04-23T17:26:01.486639",
+    "이미지프롬프트": "original-source-image",
+    "이미지생성방식": "source-original",
+    "country": "domestic",
+    "media": "연합뉴스",
+    "title": "KAIST 교수 창업기업, 엔비디아 벤처투자 등에서 1천억↑ 유치",
+    "link": "https://n.news.naver.com/mnews/article/001/0016037529",
+    "summary": "KAIST 교수진이 설립한 스타트업 '포인투테크놀로지'가 초고속 데이터 전송 기술인 'e-Tube'의 혁신성을 인정받아 엔비디아 등으로부터 1,000억 원 이상의 대규모 투자를 유치했습니다. 이 기술은 AI 데이터센터의 복잡한 배선을 가볍고 빠르게 혁신하는 핵심 인프라로, 인공지능 시대를 가속화할 필수 솔루션으로 주목받고 있습니다.",
+    "image": "https://mimgnews.pstatic.net/image/origin/001/2026/04/23/16037529.jpg?type=nf220_150",
+    "collected_at": "2026-04-23T17:26:01.486639",
+    "image_prompt": "original-source-image",
+    "image_provider": "source-original",
+    "curation_model": "models/gemini-3-flash-preview",
+    "curation_mode": "curation-success",
+    "type": "article"
+  },
+  {
+    "국가": "국내",
+    "매체": "YTN",
+    "제목": "日 소니, 탁구 AI로봇 개발 \"전국대회 출전 선수 이겨\"",
+    "링크": "https://n.news.naver.com/mnews/article/052/0002344673",
+    "요약": "소니가 전국대회에 출전하는 전문 선수와 대등한 경기를 펼칠 수 있는 인공지능 탁구 로봇 '에이스'를 개발했습니다. 사람의 움직임을 정교하게 분석해 대응하는 이 로봇은 스포츠 분야에서 AI 기술이 도달한 놀라운 수준을 증명하고 있습니다.",
+    "이미지": "https://mimgnews.pstatic.net/image/origin/052/2026/04/23/2344673.jpg?type=nf220_150",
+    "수집일시": "2026-04-23T17:26:01.486639",
+    "이미지프롬프트": "original-source-image",
+    "이미지생성방식": "source-original",
+    "country": "domestic",
+    "media": "YTN",
+    "title": "日 소니, 탁구 AI로봇 개발 \"전국대회 출전 선수 이겨\"",
+    "link": "https://n.news.naver.com/mnews/article/052/0002344673",
+    "summary": "소니가 전국대회에 출전하는 전문 선수와 대등한 경기를 펼칠 수 있는 인공지능 탁구 로봇 '에이스'를 개발했습니다. 사람의 움직임을 정교하게 분석해 대응하는 이 로봇은 스포츠 분야에서 AI 기술이 도달한 놀라운 수준을 증명하고 있습니다.",
+    "image": "https://mimgnews.pstatic.net/image/origin/052/2026/04/23/2344673.jpg?type=nf220_150",
+    "collected_at": "2026-04-23T17:26:01.486639",
+    "image_prompt": "original-source-image",
+    "image_provider": "source-original",
+    "curation_model": "models/gemini-3-flash-preview",
+    "curation_mode": "curation-success",
+    "type": "article"
+  },
+  {
+    "국가": "국내",
+    "매체": "연합뉴스",
+    "제목": "비수익 사업 접는 넥슨…'버블파이터' 서비스 종료",
+    "링크": "https://n.news.naver.com/mnews/article/001/0016039573",
+    "요약": "넥슨이 경영 효율을 높이기 위해 17년 동안 운영해온 장수 게임 '버블파이터'의 서비스를 오는 6월 종료합니다. 이번 결정은 수익성이 낮은 사업을 과감히 정리하고 유망한 분야에 집중하려는 조직 체질 개선의 일환으로 풀이됩니다.",
+    "이미지": "https://mimgnews.pstatic.net/image/origin/001/2026/04/23/16039573.jpg?type=nf220_150",
+    "수집일시": "2026-04-23T17:26:01.486639",
+    "이미지프롬프트": "original-source-image",
+    "이미지생성방식": "source-original",
+    "country": "domestic",
+    "media": "연합뉴스",
+    "title": "비수익 사업 접는 넥슨…'버블파이터' 서비스 종료",
+    "link": "https://n.news.naver.com/mnews/article/001/0016039573",
+    "summary": "넥슨이 경영 효율을 높이기 위해 17년 동안 운영해온 장수 게임 '버블파이터'의 서비스를 오는 6월 종료합니다. 이번 결정은 수익성이 낮은 사업을 과감히 정리하고 유망한 분야에 집중하려는 조직 체질 개선의 일환으로 풀이됩니다.",
+    "image": "https://mimgnews.pstatic.net/image/origin/001/2026/04/23/16039573.jpg?type=nf220_150",
+    "collected_at": "2026-04-23T17:26:01.486639",
+    "image_prompt": "original-source-image",
+    "image_provider": "source-original",
+    "curation_model": "models/gemini-3-flash-preview",
+    "curation_mode": "curation-success",
+    "type": "article"
+  },
+  {
+    "국가": "국내",
+    "매체": "아시아경제",
+    "제목": "한국·캐나다, 시청각 공동제작 협력 협정 체결…\"콘텐츠 교류 확대\"",
+    "링크": "https://n.news.naver.com/mnews/article/277/0005753872",
+    "요약": "한국과 캐나다가 양국의 창의력과 기술을 결합해 수준 높은 방송 영상 콘텐츠를 공동으로 제작하기로 약속했습니다. 이번 협력으로 두 나라 사이의 인적·물적 교류가 활발해지면서, 전 세계인이 즐길 수 있는 다채로운 콘텐츠가 더욱 풍성해질 것으로 기대됩니다.",
+    "이미지": "https://mimgnews.pstatic.net/image/origin/277/2026/04/23/5753872.jpg?type=nf220_150",
+    "수집일시": "2026-04-23T17:26:01.486639",
+    "이미지프롬프트": "original-source-image",
+    "이미지생성방식": "source-original",
+    "country": "domestic",
+    "media": "아시아경제",
+    "title": "한국·캐나다, 시청각 공동제작 협력 협정 체결…\"콘텐츠 교류 확대\"",
+    "link": "https://n.news.naver.com/mnews/article/277/0005753872",
+    "summary": "한국과 캐나다가 양국의 창의력과 기술을 결합해 수준 높은 방송 영상 콘텐츠를 공동으로 제작하기로 약속했습니다. 이번 협력으로 두 나라 사이의 인적·물적 교류가 활발해지면서, 전 세계인이 즐길 수 있는 다채로운 콘텐츠가 더욱 풍성해질 것으로 기대됩니다.",
+    "image": "https://mimgnews.pstatic.net/image/origin/277/2026/04/23/5753872.jpg?type=nf220_150",
+    "collected_at": "2026-04-23T17:26:01.486639",
+    "image_prompt": "original-source-image",
+    "image_provider": "source-original",
+    "curation_model": "models/gemini-3-flash-preview",
+    "curation_mode": "curation-success",
+    "type": "article"
+  },
+  {
+    "국가": "국내",
+    "매체": "조선비즈",
+    "제목": "‘반도체 심장’ 평택에 4만명 모인 삼성전자 노조… 생산 차질 우려 증폭",
+    "링크": "https://n.news.naver.com/mnews/article/366/0001159297",
+    "요약": "삼성전자의 핵심 반도체 생산 기지인 평택 캠퍼스에 약 4만 명의 직원이 모여 성과급 제도 개선을 요구하는 대규모 결의대회를 열었습니다. 노조 측은 보너스 산정 방식을 투명하게 공개하고 상한선을 없앨 것을 강력히 주장하고 있으며, 이번 단체 행동이 글로벌 반도체 생산 공정에 영향을 미칠지 업계의 이목이 쏠리고 있습니다.",
+    "이미지": "https://mimgnews.pstatic.net/image/origin/366/2026/04/23/1159297.jpg?type=nf220_150",
+    "수집일시": "2026-04-23T17:26:01.486639",
+    "이미지프롬프트": "original-source-image",
+    "이미지생성방식": "source-original",
+    "country": "domestic",
+    "media": "조선비즈",
+    "title": "‘반도체 심장’ 평택에 4만명 모인 삼성전자 노조… 생산 차질 우려 증폭",
+    "link": "https://n.news.naver.com/mnews/article/366/0001159297",
+    "summary": "삼성전자의 핵심 반도체 생산 기지인 평택 캠퍼스에 약 4만 명의 직원이 모여 성과급 제도 개선을 요구하는 대규모 결의대회를 열었습니다. 노조 측은 보너스 산정 방식을 투명하게 공개하고 상한선을 없앨 것을 강력히 주장하고 있으며, 이번 단체 행동이 글로벌 반도체 생산 공정에 영향을 미칠지 업계의 이목이 쏠리고 있습니다.",
+    "image": "https://mimgnews.pstatic.net/image/origin/366/2026/04/23/1159297.jpg?type=nf220_150",
+    "collected_at": "2026-04-23T17:26:01.486639",
+    "image_prompt": "original-source-image",
+    "image_provider": "source-original",
+    "curation_model": "models/gemini-3-flash-preview",
+    "curation_mode": "curation-success",
+    "type": "article"
+  },
+  {
+    "국가": "국내",
+    "매체": "뉴시스",
+    "제목": "어쩌다 주인 돼도 정부 허락 맡아야\"… '제2의 현대차-KT 방지법' 국회 통과",
+    "링크": "https://n.news.naver.com/mnews/article/003/0013906523",
+    "요약": "앞으로는 통신사의 최대 주주가 바뀌면 그 이유가 무엇이든 반드시 정부의 승인을 받아야 합니다. 국가의 중요한 기반 시설인 통신망을 안전하게 보호하기 위해, 주인이 바뀌는 과정에서 정부가 그 적절성을 꼼꼼히 확인하겠다는 취지의 법안이 국회를 통과했습니다.",
+    "이미지": "https://mimgnews.pstatic.net/image/origin/003/2026/04/23/13906523.jpg?type=nf220_150",
+    "수집일시": "2026-04-23T17:26:01.486639",
+    "이미지프롬프트": "original-source-image",
+    "이미지생성방식": "source-original",
+    "country": "domestic",
+    "media": "뉴시스",
+    "title": "어쩌다 주인 돼도 정부 허락 맡아야\"… '제2의 현대차-KT 방지법' 국회 통과",
+    "link": "https://n.news.naver.com/mnews/article/003/0013906523",
+    "summary": "앞으로는 통신사의 최대 주주가 바뀌면 그 이유가 무엇이든 반드시 정부의 승인을 받아야 합니다. 국가의 중요한 기반 시설인 통신망을 안전하게 보호하기 위해, 주인이 바뀌는 과정에서 정부가 그 적절성을 꼼꼼히 확인하겠다는 취지의 법안이 국회를 통과했습니다.",
+    "image": "https://mimgnews.pstatic.net/image/origin/003/2026/04/23/13906523.jpg?type=nf220_150",
+    "collected_at": "2026-04-23T17:26:01.486639",
+    "image_prompt": "original-source-image",
+    "image_provider": "source-original",
+    "curation_model": "models/gemini-3-flash-preview",
+    "curation_mode": "curation-success",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "TechCrunch",
     "제목": "India’s app market is booming — but global platforms are capturing most of the gains",
     "링크": "https://techcrunch.com/2026/04/22/indias-app-market-is-booming-but-global-platforms-are-capturing-most-of-the-gains/",
+<<<<<<< HEAD
     "요약": "Non-gaming apps, led by streaming and AI, are driving growth, even as India's spending per user lags global peers.",
     "이미지": "generated_images/india-s-app-market-is-booming-but-global-40d7580f51e7-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -482,12 +714,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:05.373618",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "TechCrunch",
     "제목": "Shade lands $14M to let creative teams search their video libraries in plain English",
     "링크": "https://techcrunch.com/2026/04/22/shade-lands-14m-to-let-creative-teams-search-their-video-libraries-in-plain-english/",
+<<<<<<< HEAD
     "요약": "Shade has its own filesystem that lets you \"stream\" files directly to your local drive",
     "이미지": "generated_images/shade-lands-14m-to-let-creative-teams-se-69172d92b9b4-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -504,12 +741,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:05.373742",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "TechCrunch",
     "제목": "Tesla just increased its spending plan to $25B — here’s where the money is going",
     "링크": "https://techcrunch.com/2026/04/22/tesla-just-increased-its-capex-to-25b-heres-where-the-money-is-going/",
+<<<<<<< HEAD
     "요약": "Tesla's planned capex for 2026 is three times higher than what the company has historically spent. Its CFO said, as a result, Tesla will have a negative free cash flow the rest of the year.",
     "이미지": "company_images/tesla/auto-c786cef479c70f.svg",
     "수집일시": "2026-04-23 07:26",
@@ -526,12 +768,17 @@
     "image_provider": "company-searched-image-pool",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:05.373829",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "TechCrunch",
     "제목": "Google updates Workspace to make AI your new office intern",
     "링크": "https://techcrunch.com/2026/04/22/google-updates-workspace-to-make-ai-your-new-office-intern/",
+<<<<<<< HEAD
     "요약": "Google has introduced a host of new automated functions into Workspace, all of which are driven by Workspace Intelligence, its new AI system.",
     "이미지": "company_images/google/auto-595ba00690f955.svg",
     "수집일시": "2026-04-23 07:26",
@@ -548,12 +795,17 @@
     "image_provider": "company-searched-image-pool",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:05.373911",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "TechCrunch",
     "제목": "Elon Musk admits millions of Tesla owners need upgrades for true ‘Full Self-Driving’",
     "링크": "https://techcrunch.com/2026/04/22/elon-musk-admits-millions-of-tesla-owners-need-upgrades-for-true-full-self-driving/",
+<<<<<<< HEAD
     "요약": "The admission could open Tesla to legal challenges after it spent years promising customers they were just one software update away from owning fully autonomous cars.",
     "이미지": "company_images/tesla/auto-31ebc0ddc22b49.png",
     "수집일시": "2026-04-23 07:26",
@@ -570,12 +822,17 @@
     "image_provider": "company-searched-image-pool",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:05.373989",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "TechCrunch",
     "제목": "Hands on with X’s new AI-powered custom feeds",
     "링크": "https://techcrunch.com/2026/04/22/hands-on-with-xs-new-ai-powered-custom-feeds/",
+<<<<<<< HEAD
     "요약": "X's AI-powered custom timelines are replacing Communities, with Grok-curated feeds...and new ad slots.",
     "이미지": "generated_images/hands-on-with-x-s-new-ai-powered-custom-39119c287283-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -592,12 +849,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:05.374063",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "TechCrunch",
     "제목": "LinkedIn’s CEO is moving on; please hold your tearful video tributes",
     "링크": "https://techcrunch.com/2026/04/22/linkedins-ceo-is-moving-on-please-hold-your-tearful-video-tributes/",
+<<<<<<< HEAD
     "요약": "Ryan Roslansky has stepped down as LinkedIn's CEO after six years running the world's largest professional network. Dan Shapero, the company's COO, takes over immediately.",
     "이미지": "generated_images/linkedin-s-ceo-is-moving-on-please-hold-1ce16c59740f-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -614,12 +876,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:05.374167",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "TechCrunch",
     "제목": "Tesla Q1 revenue rises, driven by EV sales and FSD subscriptions",
     "링크": "https://techcrunch.com/2026/04/22/tesla-q1-revenue-rises-driven-by-ev-sales-and-fsd-subscriptions/",
+<<<<<<< HEAD
     "요약": "Sales rebounded a bit from the first quarter of 2025, as Tesla throws a ton of money at massive bets like robotics, AI, and its own chip fab.",
     "이미지": "company_images/tesla/auto-c74b371a5925da.svg",
     "수집일시": "2026-04-23 07:26",
@@ -636,10 +903,31 @@
     "image_provider": "company-searched-image-pool",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:05.374244",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "TechCrunch",
+    "제목": "NASA’s Artemis II moon mission shows space-to-Earth laser comms can scale",
+    "링크": "https://techcrunch.com/2026/04/22/nasas-artemis-ii-moon-mission-shows-space-to-earth-laser-comms-can-scale/",
+    "수집일시": "2026-04-23T17:27:05.374315",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "TechCrunch",
+    "제목": "How SpaceX preempted a $2B fundraise with a $60B buyout offer",
+    "링크": "https://techcrunch.com/2026/04/22/how-spacex-preempted-a-2b-fundraise-with-a-60b-buyout-offer/",
+    "수집일시": "2026-04-23T17:27:05.374390",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "The Verge",
+<<<<<<< HEAD
     "제목": "The Iranian women Trump ‘saved’ from execution are simultaneously real and AI-manipulated",
     "링크": "https://www.theverge.com/policy/917180/trump-iran-ai-women-bita-hemmati",
     "요약": "On Wednesday, President Donald Trump claimed to have secured the release of eight Iranian women condemned to execution for protesting the regime. Only the night before, he had posted on Truth Social about the imminent executions of these wo...",
@@ -658,10 +946,25 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "제목": "Honor’s new phones look like iPhones for Android",
+    "링크": "https://www.theverge.com/gadgets/917301/honors-new-phones-look-like-iphones-for-android",
+    "수집일시": "2026-04-23T17:27:06.324845",
+    "type": "article"
   },
   {
     "국가": "미국",
     "매체": "The Verge",
+    "제목": "The Iranian women Trump &#8216;saved&#8217; from execution are simultaneously real and AI-manipulated",
+    "링크": "https://www.theverge.com/policy/917180/trump-iran-ai-women-bita-hemmati",
+    "수집일시": "2026-04-23T17:27:06.325000",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
+  },
+  {
+    "국가": "미국",
+    "매체": "The Verge",
+<<<<<<< HEAD
     "제목": "Elon Musk admits that millions of Tesla vehicles won’t get unsupervised FSD",
     "링크": "https://www.theverge.com/transportation/917167/elon-musk-tesla-hw3-fsd",
     "요약": "Tesla vehicles with the company's Hardware 3 (HW3) computer actually won't receive unsupervised Full Self-Driving (FSD), CEO Elon Musk said on Wednesday's Q1 2026 earnings call. Approximately 4 million Tesla vehicles operate on the HW3 plat...",
@@ -680,12 +983,19 @@
     "image_provider": "company-searched-image-pool",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "제목": "Elon Musk admits that millions of Tesla vehicles won&#8217;t get unsupervised FSD",
+    "링크": "https://www.theverge.com/transportation/917167/elon-musk-tesla-hw3-fsd",
+    "수집일시": "2026-04-23T17:27:06.325148",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "The Verge",
     "제목": "X is going to let Grok curate your timeline",
     "링크": "https://www.theverge.com/tech/917113/x-ai-grok-timeline-curation",
+<<<<<<< HEAD
     "요약": "X is putting its AI chatbot, Grok, in charge of your timeline. In an announcement on Wednesday, X product head Nikita Bier says Premium subscribers on iOS can get early access to a feature that allows users to pin specific topics to their h...",
     "이미지": "company_images/xai/auto-591cb7c336852b.svg",
     "수집일시": "2026-04-23 07:26",
@@ -702,10 +1012,15 @@
     "image_provider": "company-searched-image-pool",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:06.325297",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "The Verge",
+<<<<<<< HEAD
     "제목": "Tesla’s revenue rises again as it prepares for more AI and robotics",
     "링크": "https://www.theverge.com/transportation/915217/tesla-q1-2026-earnings-profit-revenue",
     "요약": "Tesla released its 2026 first-quarter financial earnings today, providing another look at the progress of Elon Musk's $1 trillion bet to transform his company into a leader of AI and robotics. Tesla said it earned $477 million in net income...",
@@ -724,12 +1039,19 @@
     "image_provider": "company-searched-image-pool",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "제목": "Tesla&#8217;s revenue rises again as it prepares for more AI and robotics",
+    "링크": "https://www.theverge.com/transportation/915217/tesla-q1-2026-earnings-profit-revenue",
+    "수집일시": "2026-04-23T17:27:06.325446",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "The Verge",
     "제목": "AI failure could trigger the next financial crisis, warns Elizabeth Warren",
     "링크": "https://www.theverge.com/policy/917026/ai-economy-bubble-elizabeth-warren",
+<<<<<<< HEAD
     "요약": "\"I know a bubble when I see one.\" That's what Sen. Elizabeth Warren (D-MA), who led the push to create a new consumer financial regulator in the wake of the 2008 recession, told a crowd at a Vanderbilt Policy Accelerator event in Washington...",
     "이미지": "generated_images/ai-failure-could-trigger-the-next-financ-9ffeaf1dde19-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -746,12 +1068,25 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:06.325589",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "The Verge",
+    "제목": "OpenAI now lets teams make custom bots that can do work on their own",
+    "링크": "https://www.theverge.com/ai-artificial-intelligence/917065/openai-chatgpt-workspace-agents-custom-teams-bots",
+    "수집일시": "2026-04-23T17:27:06.326251",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "The Verge",
     "제목": "Alexis Ohanian shocks Washington with pro-immigration remarks",
     "링크": "https://www.theverge.com/column/916949/alexis-ohanian-pro-immigration-remarks",
+<<<<<<< HEAD
     "요약": "Hello and welcome to Regulator, a newsletter for Verge readers about tech politics, political tech, and how they're muddying the waters of Washington, DC. My birthday is this week, and if you're not a Verge subscriber but would like to wish...",
     "이미지": "generated_images/alexis-ohanian-shocks-washington-with-pr-2a5e5b581f05-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -768,12 +1103,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:06.326401",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "The Verge",
     "제목": "Former MrBeast exec sues over ‘years’ of alleged harassment",
     "링크": "https://www.theverge.com/tech/916903/mrbeast-sexual-harassment-lawsuit",
+<<<<<<< HEAD
     "요약": "A former employee of Jimmy \"MrBeast\" Donaldson has filed a lawsuit alleging that she faced \"intentional infliction of emotional distress\" from harassment at the YouTuber's production company, was asked to work during maternity leave, and wa...",
     "이미지": "generated_images/former-mrbeast-exec-sues-over-years-of-a-9cfd0341b208-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -790,12 +1130,25 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:06.326525",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "The Verge",
+    "제목": "Ember’s self-heating smart mug is more than $50 off ahead of Mother’s Day",
+    "링크": "https://www.theverge.com/gadgets/916818/ember-smart-mug-2-mothers-day-sale-2026-deal",
+    "수집일시": "2026-04-23T17:27:06.327035",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Wired",
     "제목": "Hoka Coupon Codes: 30% Off | April 2026",
     "링크": "https://www.wired.com/story/hoka-coupon-code/",
+<<<<<<< HEAD
     "요약": "Unlock free expedited shipping or 10% off with today’s Hoka discount codes, plus save up to 30% with the best discounts for April 2026.",
     "이미지": "generated_images/hoka-coupon-codes-30-off-april-2026-78ef6f656fd3-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -812,12 +1165,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:07.392428",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Wired",
     "제목": "Verizon Promo Codes: $200 Verizon Gift Cards | April 2026",
     "링크": "https://www.wired.com/story/verizon-promo-code/",
+<<<<<<< HEAD
     "요약": "Ready for an upgrade? Apply our latest promotional codes today and choose a select service plan to score a discount with Verizon.",
     "이미지": "generated_images/verizon-promo-codes-200-verizon-gift-car-a2812800a306-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -834,12 +1192,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:07.392559",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Wired",
     "제목": "Dermstore Promo Codes: 25% Off",
     "링크": "https://www.wired.com/story/dermstore-promo-code/",
+<<<<<<< HEAD
     "요약": "Score major savings on premium skincare, hair care, and cosmetics with these verified Dermstore discount codes and rewards offers.",
     "이미지": "generated_images/dermstore-promo-codes-25-off-3f7c1093516c-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -856,12 +1219,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:07.392698",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Wired",
     "제목": "Chirp Discount Codes and Deals: Save Up to 67%",
     "링크": "https://www.wired.com/story/chirp-discount-code/",
+<<<<<<< HEAD
     "요약": "Use these verified Chirp coupon codes and shopping tips to score up to 67% off wheels, up to 50% off refurbished products, and more.",
     "이미지": "generated_images/chirp-discount-codes-and-deals-save-up-t-ef10376eb9bf-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -878,12 +1246,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:07.392805",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Wired",
     "제목": "15% Off Adidas Promo Code | April 2026",
     "링크": "https://www.wired.com/story/adidas-promo-code/",
+<<<<<<< HEAD
     "요약": "Save 15% or 30% with Adidas promo codes, plus explore Adidas deals for 40% off trendy sneakers.",
     "이미지": "generated_images/15-off-adidas-promo-code-april-2026-6e216e79ac50-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -900,12 +1273,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:07.392909",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Wired",
     "제목": "Sam Altman’s Orb Company Promoted a Bruno Mars Partnership That Doesn't Exist",
     "링크": "https://www.wired.com/story/sam-altman-orb-company-bruno-mars-partnership-fake/",
+<<<<<<< HEAD
     "요약": "“To be clear, we were never approached … nor were we in any discussions regarding a partnership or tour access,” a spokesperson for the artist tells WIRED.",
     "이미지": "generated_images/sam-altman-s-orb-company-promoted-a-brun-619e6142f65e-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -922,12 +1300,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:07.393045",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Wired",
     "제목": "US Senate Candidate Caught Insider Trading on Kalshi Says He Did It on Purpose",
     "링크": "https://www.wired.com/story/us-senate-candidate-caught-insider-trading-on-kalshi-says-he-did-it-on-purpose/",
+<<<<<<< HEAD
     "요약": "Mark Moran, an underdog Senate candidate from Virginia, claims he wanted to get caught violating the prediction market platform’s rules.",
     "이미지": "generated_images/us-senate-candidate-caught-insider-tradi-9743dda195ef-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -944,12 +1327,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:07.393171",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Wired",
     "제목": "Scientists Gave Cocaine to Salmon and You Will Absolutely Believe What Happened Next",
     "링크": "https://www.wired.com/story/cocaine-fueled-wild-salmon-swam-twice-as-far-as-sober-ones/",
+<<<<<<< HEAD
     "요약": "After scientists exposed wild fish to cocaine and a cocaine metabolite, they observed that, as in the lab, fish on cocaine do not act like normal fish.",
     "이미지": "generated_images/scientists-gave-cocaine-to-salmon-and-yo-256267e2698c-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -966,12 +1354,33 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:07.393326",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "Wired",
+    "제목": "5 AI Models Tried to Scam Me. Some of Them Were Scary Good",
+    "링크": "https://www.wired.com/story/ai-model-phishing-attack-cybersecurity/",
+    "수집일시": "2026-04-23T17:27:07.393474",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "Wired",
+    "제목": "AI Tools Are Helping Mediocre North Korean Hackers Steal Millions",
+    "링크": "https://www.wired.com/story/ai-tools-are-helping-mediocre-north-korean-hackers-steal-millions/",
+    "수집일시": "2026-04-23T17:27:07.393613",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Ars Technica",
     "제목": "Crypto scam lures ships into Strait of Hormuz, falsely promising safe passage",
     "링크": "https://arstechnica.com/security/2026/04/crypto-scam-lures-ships-into-strait-of-hormuz-falsely-promising-safe-passage/",
+<<<<<<< HEAD
     "요약": "Ship attacked by Iran after possibly falling for safe passage crypto scam.",
     "이미지": "generated_images/crypto-scam-lures-ships-into-strait-of-h-46ffb827ab52-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -988,12 +1397,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:08.406052",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Ars Technica",
     "제목": "Tesla reports Q1 2026 earnings: Still profitable",
     "링크": "https://arstechnica.com/cars/2026/04/tesla-reports-q1-2026-earnings-still-profitable/",
+<<<<<<< HEAD
     "요약": "Car sales are up, battery sales and emissions credits are down.",
     "이미지": "company_images/tesla/auto-31ebc0ddc22b49.png",
     "수집일시": "2026-04-23 07:26",
@@ -1010,12 +1424,17 @@
     "image_provider": "company-searched-image-pool",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:08.406220",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Ars Technica",
     "제목": "Our newsroom AI policy",
     "링크": "https://arstechnica.com/staff/2026/04/our-newsroom-ai-policy/",
+<<<<<<< HEAD
     "요약": "How Ars Technica uses, and doesn't use, generative AI.",
     "이미지": "generated_images/our-newsroom-ai-policy-0b2c89127365-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1032,12 +1451,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:08.406360",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Ars Technica",
     "제목": "Lawsuit: Nintendo is getting tariff refunds—its customers should get them instead",
     "링크": "https://arstechnica.com/tech-policy/2026/04/lawsuit-nintendo-is-getting-tariff-refunds-its-customers-should-get-them-instead/",
+<<<<<<< HEAD
     "요약": "Lawsuit demands Nintendo pass Trump tariff refunds on to its customers.",
     "이미지": "company_images/nintendo/auto-18be6b8ac4185b.png",
     "수집일시": "2026-04-23 07:26",
@@ -1054,12 +1478,17 @@
     "image_provider": "company-searched-image-pool",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:08.406482",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Ars Technica",
     "제목": "RFK Jr. won't back CDC director on vaccines as agency scraps positive data",
     "링크": "https://arstechnica.com/health/2026/04/rfk-jr-doubles-down-on-vaccine-meddling-as-cdc-junks-scientific-study/",
+<<<<<<< HEAD
     "요약": "Kennedy's tesimony sets up another clash over vaccines with next CDC director.",
     "이미지": "generated_images/rfk-jr-won-t-back-cdc-director-on-vaccin-7fd04e05a7d3-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1076,12 +1505,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:08.406605",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Ars Technica",
     "제목": "You want your Moon landings in HD? So does NASA—here's how it's happening.",
     "링크": "https://arstechnica.com/space/2026/04/you-want-your-moon-landings-in-hdtv-so-does-nasa-heres-how-its-happening/",
+<<<<<<< HEAD
     "요약": "\"You just push this button, and in three hours, you're counting photons.\"",
     "이미지": "generated_images/you-want-your-moon-landings-in-hd-so-doe-4583f56810de-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1098,12 +1532,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:08.406732",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Ars Technica",
     "제목": "Microsoft issues emergency update for macOS and Linux ASP.NET threat",
     "링크": "https://arstechnica.com/security/2026/04/microsoft-issues-emergency-update-for-macos-and-linux-asp-net-threat/",
+<<<<<<< HEAD
     "요약": "When authentication fails, things can go very, very wrong.",
     "이미지": "company_images/microsoft/auto-ac02b1513acddc.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1120,12 +1559,17 @@
     "image_provider": "company-searched-image-pool",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:08.406862",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Ars Technica",
     "제목": "Anthropic tested removing Claude Code from the Pro plan",
     "링크": "https://arstechnica.com/ai/2026/04/anthropic-tested-removing-claude-code-from-the-pro-plan/",
+<<<<<<< HEAD
     "요약": "Untenable demand has Anthropic exploring new approaches to rationing its service.",
     "이미지": "company_images/anthropic/auto-a4e9c57d3a4e91.png",
     "수집일시": "2026-04-23 07:26",
@@ -1142,12 +1586,113 @@
     "image_provider": "company-searched-image-pool",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:08.406986",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "Ars Technica",
+    "제목": "Coyote vs. Acme is finally getting released—with a killer trailer",
+    "링크": "https://arstechnica.com/culture/2026/04/coyote-vs-acme-is-finally-getting-released-with-a-killer-trailer/",
+    "수집일시": "2026-04-23T17:27:08.407118",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "Ars Technica",
+    "제목": "Google unveils two new TPUs designed for the \"agentic era\"",
+    "링크": "https://arstechnica.com/ai/2026/04/google-unveils-two-new-tpus-designed-for-the-agentic-era/",
+    "수집일시": "2026-04-23T17:27:08.407289",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "OpenAI Blog",
+    "제목": "Making ChatGPT better for clinicians",
+    "링크": "https://openai.com/index/making-chatgpt-better-for-clinicians",
+    "수집일시": "2026-04-23T17:27:10.162308",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "OpenAI Blog",
+    "제목": "Workspace agents",
+    "링크": "https://openai.com/academy/workspace-agents",
+    "수집일시": "2026-04-23T17:27:10.162417",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "OpenAI Blog",
+    "제목": "Introducing workspace agents in ChatGPT",
+    "링크": "https://openai.com/index/introducing-workspace-agents-in-chatgpt",
+    "수집일시": "2026-04-23T17:27:10.162525",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "OpenAI Blog",
+    "제목": "Speeding up agentic workflows with WebSockets in the Responses API",
+    "링크": "https://openai.com/index/speeding-up-agentic-workflows-with-websockets",
+    "수집일시": "2026-04-23T17:27:10.162618",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "OpenAI Blog",
+    "제목": "Introducing OpenAI Privacy Filter",
+    "링크": "https://openai.com/index/introducing-openai-privacy-filter",
+    "수집일시": "2026-04-23T17:27:10.162711",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "OpenAI Blog",
+    "제목": "Introducing ChatGPT Images 2.0",
+    "링크": "https://openai.com/index/introducing-chatgpt-images-2-0",
+    "수집일시": "2026-04-23T17:27:10.162900",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "OpenAI Blog",
+    "제목": "Scaling Codex to enterprises worldwide",
+    "링크": "https://openai.com/index/scaling-codex-to-enterprises-worldwide",
+    "수집일시": "2026-04-23T17:27:10.163169",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "OpenAI Blog",
+    "제목": "OpenAI helps Hyatt advance AI among colleagues",
+    "링크": "https://openai.com/index/hyatt-advances-ai-with-chatgpt-enterprise",
+    "수집일시": "2026-04-23T17:27:10.163345",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "OpenAI Blog",
+    "제목": "Codex for (almost) everything",
+    "링크": "https://openai.com/index/codex-for-almost-everything",
+    "수집일시": "2026-04-23T17:27:10.163439",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "OpenAI Blog",
+    "제목": "Introducing GPT-Rosalind for life sciences research",
+    "링크": "https://openai.com/index/introducing-gpt-rosalind",
+    "수집일시": "2026-04-23T17:27:10.163504",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Google DeepMind",
     "제목": "Partnering with industry leaders to accelerate AI transformation",
     "링크": "https://deepmind.google/blog/partnering-with-industry-leaders-to-accelerate-ai-transformation/",
+<<<<<<< HEAD
     "요약": "Google DeepMind partners with global consultancies to bring the power of frontier AI to organizations around the world.",
     "이미지": "generated_images/partnering-with-industry-leaders-to-acce-93af3606788c-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1164,12 +1709,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:11.828936",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Google DeepMind",
     "제목": "Gemini 3.1 Flash TTS: the next generation of expressive AI speech",
     "링크": "https://deepmind.google/blog/gemini-3-1-flash-tts-the-next-generation-of-expressive-ai-speech/",
+<<<<<<< HEAD
     "요약": "Our newest audio model introduces granular audio tags that give you precise control to direct AI speech for expressive audio generation.",
     "이미지": "generated_images/gemini-3-1-flash-tts-the-next-generation-1677031c7bb9-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1186,12 +1736,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:11.829042",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Google DeepMind",
     "제목": "Gemini Robotics-ER 1.6: Powering real-world robotics tasks through enhanced embodied reasoning",
     "링크": "https://deepmind.google/blog/gemini-robotics-er-1-6/",
+<<<<<<< HEAD
     "요약": "Gemini Robotics ER 1.6: Enhancing spatial reasoning and multi-view understanding for autonomous robotics.",
     "이미지": "generated_images/gemini-robotics-er-1-6-powering-real-wor-8b673d6006fd-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1208,12 +1763,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:11.829145",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Google DeepMind",
     "제목": "Gemma 4: Byte for byte, the most capable open models",
     "링크": "https://deepmind.google/blog/gemma-4-byte-for-byte-the-most-capable-open-models/",
+<<<<<<< HEAD
     "요약": "Gemma 4: Our most intelligent open models to date, purpose-built for advanced reasoning and agentic workflows.",
     "이미지": "generated_images/gemma-4-byte-for-byte-the-most-capable-o-39c63abe7993-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1230,12 +1790,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:11.829243",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Google DeepMind",
     "제목": "Gemini 3.1 Flash Live: Making audio AI more natural and reliable",
     "링크": "https://deepmind.google/blog/gemini-3-1-flash-live-making-audio-ai-more-natural-and-reliable/",
+<<<<<<< HEAD
     "요약": "Our latest voice model has improved precision and lower latency to make voice interactions more fluid, natural and precise.",
     "이미지": "generated_images/gemini-3-1-flash-live-making-audio-ai-mo-300b71f93ffc-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1252,12 +1817,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:11.829339",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Google DeepMind",
     "제목": "Protecting people from harmful manipulation",
     "링크": "https://deepmind.google/blog/protecting-people-from-harmful-manipulation/",
+<<<<<<< HEAD
     "요약": "Google DeepMind researches AI's harmful manipulation risks across areas like finance and health, leading to new safety measures.",
     "이미지": "generated_images/protecting-people-from-harmful-manipulat-ac7f82e2d760-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1274,12 +1844,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:11.829617",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Google DeepMind",
     "제목": "Lyria 3 Pro: Create longer tracks in more",
     "링크": "https://deepmind.google/blog/lyria-3-pro-create-longer-tracks-in-more/",
+<<<<<<< HEAD
     "요약": "Introducing Lyria 3 Pro, which unlocks longer tracks with structural awareness. We’re also bringing Lyria to more Google products and surfaces.",
     "이미지": "generated_images/lyria-3-pro-create-longer-tracks-in-more-856972f70a19-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1296,12 +1871,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:11.829911",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Google DeepMind",
     "제목": "Measuring progress toward AGI: A cognitive framework",
     "링크": "https://deepmind.google/blog/measuring-progress-toward-agi-a-cognitive-framework/",
+<<<<<<< HEAD
     "요약": "We’re introducing a framework to measure progress toward AGI, and launching a Kaggle hackathon to build the relevant evaluations.",
     "이미지": "generated_images/measuring-progress-toward-agi-a-cognitiv-c6093232ab84-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1318,12 +1898,33 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:11.830116",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "Google DeepMind",
+    "제목": "From games to biology and beyond: 10 years of AlphaGo’s impact",
+    "링크": "https://deepmind.google/blog/10-years-of-alphago/",
+    "수집일시": "2026-04-23T17:27:11.830339",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "Google DeepMind",
+    "제목": "Gemini 3.1 Flash-Lite: Built for intelligence at scale",
+    "링크": "https://deepmind.google/blog/gemini-3-1-flash-lite-built-for-intelligence-at-scale/",
+    "수집일시": "2026-04-23T17:27:11.830496",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Google Research",
     "제목": "It's all about the angle: Your photos, re-composed",
     "링크": "https://research.google/blog/its-all-about-the-angle-your-photos-re-composed/",
+<<<<<<< HEAD
     "요약": "Generative AI",
     "이미지": "generated_images/it-s-all-about-the-angle-your-photos-re-229a84f416cb-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1340,12 +1941,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:13.937258",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Google Research",
     "제목": "ReasoningBank: Enabling agents to learn from experience",
     "링크": "https://research.google/blog/reasoningbank-enabling-agents-to-learn-from-experience/",
+<<<<<<< HEAD
     "요약": "Generative AI",
     "이미지": "generated_images/reasoningbank-enabling-agents-to-learn-f-057918801ded-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1362,12 +1968,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:13.937320",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Google Research",
     "제목": "Designing synthetic datasets for the real world: Mechanism design and reasoning from first principles",
     "링크": "https://research.google/blog/designing-synthetic-datasets-for-the-real-world-mechanism-design-and-reasoning-from-first-principles/",
+<<<<<<< HEAD
     "요약": "Generative AI",
     "이미지": "generated_images/designing-synthetic-datasets-for-the-rea-c31b2243777f-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1384,12 +1995,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:13.937369",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Google Research",
     "제목": "AI-generated synthetic neurons speed up brain mapping",
     "링크": "https://research.google/blog/ai-generated-synthetic-neurons-speed-up-brain-mapping/",
+<<<<<<< HEAD
     "요약": "General Science",
     "이미지": "generated_images/ai-generated-synthetic-neurons-speed-up-55fc1b7e954e-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1406,12 +2022,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:13.937418",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Google Research",
     "제목": "Towards developing future-ready skills with generative AI",
     "링크": "https://research.google/blog/towards-developing-future-ready-skills-with-generative-ai/",
+<<<<<<< HEAD
     "요약": "Education Innovation",
     "이미지": "generated_images/towards-developing-future-ready-skills-w-cd774fcacd13-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1428,12 +2049,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:13.937466",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Google Research",
     "제목": "ConvApparel: Measuring and bridging the realism gap in user simulators",
     "링크": "https://research.google/blog/convapparel-measuring-and-bridging-the-realism-gap-in-user-simulators/",
+<<<<<<< HEAD
     "요약": "Generative AI",
     "이미지": "generated_images/convapparel-measuring-and-bridging-the-r-324363f68953-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1450,12 +2076,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:13.937514",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Google Research",
     "제목": "Improving the academic workflow: Introducing two AI agents for better figures and peer review",
     "링크": "https://research.google/blog/improving-the-academic-workflow-introducing-two-ai-agents-for-better-figures-and-peer-review/",
+<<<<<<< HEAD
     "요약": "Generative AI",
     "이미지": "generated_images/improving-the-academic-workflow-introduc-5bb9e397164a-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1472,12 +2103,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:13.937560",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Google Research",
     "제목": "Evaluating alignment of behavioral dispositions in LLMs",
     "링크": "https://research.google/blog/evaluating-alignment-of-behavioral-dispositions-in-llms/",
+<<<<<<< HEAD
     "요약": "Generative AI",
     "이미지": "generated_images/evaluating-alignment-of-behavioral-dispo-7bd9df1b0997-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1494,10 +2130,31 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:13.937618",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "Google Research",
+    "제목": "Building better AI benchmarks: How many raters are enough?",
+    "링크": "https://research.google/blog/building-better-ai-benchmarks-how-many-raters-are-enough/",
+    "수집일시": "2026-04-23T17:27:13.937676",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "Google Research",
+    "제목": "Safeguarding cryptocurrency by disclosing quantum vulnerabilities responsibly",
+    "링크": "https://research.google/blog/safeguarding-cryptocurrency-by-disclosing-quantum-vulnerabilities-responsibly/",
+    "수집일시": "2026-04-23T17:27:13.937736",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Microsoft Research",
+<<<<<<< HEAD
     "제목": "AutoAdapt: Automated domain adaptation for large language models",
     "링크": "https://www.microsoft.com/en-us/research/blog/autoadapt-automated-domain-adaptation-for-large-language-models/",
     "요약": "Deploying large language models (LLMs) in real-world, high-stakes settings is harder than it should be. In high-stakes settings like law, medicine, and cloud incident response, performance and reliability can quickly break down because adap...",
@@ -1516,12 +2173,19 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "제목": "AutoAdapt: Automated domain adaptation for large language models",
+    "링크": "https://www.microsoft.com/en-us/research/blog/autoadapt-automated-domain-adaptation-for-large-language-models/",
+    "수집일시": "2026-04-23T17:27:16.235952",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Microsoft Research",
     "제목": "Can we AI our way to a more sustainable world?",
     "링크": "https://www.microsoft.com/en-us/research/podcast/can-we-ai-our-way-to-a-more-sustainable-world/",
+<<<<<<< HEAD
     "요약": "Doug Burger, sustainability expert Amy Luers, and optimization researcher Ishai Menache examine the global emissions implications of datacenter operations, efficiency gains, and AI's potential across electrification, materials, and food sys...",
     "이미지": "generated_images/can-we-ai-our-way-to-a-more-sustainable-6ca7d7649e36-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1538,10 +2202,15 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:16.236051",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Microsoft Research",
+<<<<<<< HEAD
     "제목": "New Future of Work: AI is driving rapid change, uneven benefits",
     "링크": "https://www.microsoft.com/en-us/research/blog/new-future-of-work-ai-is-driving-rapid-change-uneven-benefits/",
     "요약": "For the past five years, the New Future of Work report has captured how work is changing. This year, the shift feels especially sharp. Previous editions have focused on technology’s role in increasing productivity by automating tasks, accel...",
@@ -1560,12 +2229,19 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "제목": "New Future of Work: AI is driving rapid change, uneven benefits",
+    "링크": "https://www.microsoft.com/en-us/research/blog/new-future-of-work-ai-is-driving-rapid-change-uneven-benefits/",
+    "수집일시": "2026-04-23T17:27:16.236137",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Microsoft Research",
     "제목": "Ideas: Steering AI toward the work future we want",
     "링크": "https://www.microsoft.com/en-us/research/podcast/ideas-steering-ai-toward-the-work-future-we-want/",
+<<<<<<< HEAD
     "요약": "Microsoft Chief Scientist Jaime Teevan and researchers Jenna Butler, Jake Hofman, and Rebecca Janssen unpack the New Future of Work Report 2025 and explore the ideal AI-driven working world. Plus, is AI a tool or a collaborator? And why the...",
     "이미지": "generated_images/ideas-steering-ai-toward-the-work-future-90c84d3284df-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1582,12 +2258,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:16.236254",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Microsoft Research",
     "제목": "ADeLe: Predicting and explaining AI performance across tasks",
     "링크": "https://www.microsoft.com/en-us/research/blog/adele-predicting-and-explaining-ai-performance-across-tasks/",
+<<<<<<< HEAD
     "요약": "AI benchmarks report how large language models (LLMs) perform on specific tasks but provide little insight into their underlying capabilities that drive their performance. They do not explain failures or reliably predict outcomes on new tas...",
     "이미지": "generated_images/adele-predicting-and-explaining-ai-perfo-cd9acad16d18-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1604,10 +2285,15 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:16.236734",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Microsoft Research",
+<<<<<<< HEAD
     "제목": "AsgardBench: A benchmark for visually grounded interactive planning",
     "링크": "https://www.microsoft.com/en-us/research/blog/asgardbench-a-benchmark-for-visually-grounded-interactive-planning/",
     "요약": "Imagine a robot tasked with cleaning a kitchen. It needs to observe its environment, decide what to do, and adjust when things don’t go as expected, for example, when the mug it was tasked to wash is already clean, or the sink is full of ot...",
@@ -1626,12 +2312,19 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "제목": "AsgardBench: A benchmark for visually grounded interactive planning",
+    "링크": "https://www.microsoft.com/en-us/research/blog/asgardbench-a-benchmark-for-visually-grounded-interactive-planning/",
+    "수집일시": "2026-04-23T17:27:16.237028",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Microsoft Research",
     "제목": "GroundedPlanBench: Spatially grounded long-horizon task planning for robot manipulation",
     "링크": "https://www.microsoft.com/en-us/research/blog/groundedplanbench-spatially-grounded-long-horizon-task-planning-for-robot-manipulation/",
+<<<<<<< HEAD
     "요약": "Vision-language models (VLMs) use images and text to plan robot actions, but they still struggle to decide what actions to take and where to take them. Most systems split these decisions into two steps: a VLM generates a plan in natural lan...",
     "이미지": "generated_images/groundedplanbench-spatially-grounded-lon-b1113174144f-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1648,12 +2341,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:16.237577",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "Microsoft Research",
     "제목": "Will machines ever be intelligent?",
     "링크": "https://www.microsoft.com/en-us/research/podcast/will-machines-ever-be-intelligent/",
+<<<<<<< HEAD
     "요약": "Are machines truly intelligent? AI researchers Subutai Ahmad and Nicolò Fusi join Doug Burger to compare transformer-based AI with the human brain, exploring continual learning, efficiency, and whether today’s models are on a path toward hu...",
     "이미지": "generated_images/will-machines-ever-be-intelligent-cddb19c39187-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1670,12 +2368,33 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:16.237836",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "Microsoft Research",
+    "제목": "Systematic debugging for AI agents: Introducing the AgentRx framework",
+    "링크": "https://www.microsoft.com/en-us/research/blog/systematic-debugging-for-ai-agents-introducing-the-agentrx-framework/",
+    "수집일시": "2026-04-23T17:27:16.237927",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "Microsoft Research",
+    "제목": "PlugMem: Transforming raw agent interactions into reusable knowledge",
+    "링크": "https://www.microsoft.com/en-us/research/blog/from-raw-interaction-to-reusable-knowledge-rethinking-memory-for-ai-agents/",
+    "수집일시": "2026-04-23T17:27:16.238117",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "MIT Tech Review AI",
     "제목": "The Download: introducing the 10 Things That Matter in AI Right Now",
     "링크": "https://www.technologyreview.com/2026/04/22/1136310/the-download-10-things-that-matter-in-ai-right-now/",
+<<<<<<< HEAD
     "요약": "This is today’s edition of The Download, our weekday newsletter that provides a daily dose of what’s going on in the world of technology. Introducing: 10 Things That Matter in AI Right Now What actually matters in AI right now? It’s getting...",
     "이미지": "generated_images/the-download-introducing-the-10-things-t-364c7b0d15a1-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1692,12 +2411,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:19.370752",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "MIT Tech Review AI",
     "제목": "AI needs a strong data fabric to deliver business value",
     "링크": "https://www.technologyreview.com/2026/04/22/1135295/ai-needs-a-strong-data-fabric-to-deliver-business-value/",
+<<<<<<< HEAD
     "요약": "Artificial intelligence is moving quickly in the enterprise, from experimentation to everyday use. Organizations are deploying copilots, agents, and predictive systems across finance, supply chains, human resources, and customer operations....",
     "이미지": "generated_images/ai-needs-a-strong-data-fabric-to-deliver-47df57427217-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1714,12 +2438,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:19.370865",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "MIT Tech Review AI",
     "제목": "3 things Michelle Kim is into right now",
     "링크": "https://www.technologyreview.com/2026/04/22/1135423/3-things-michelle-kim/",
+<<<<<<< HEAD
     "요약": "Isegye Idol If you thought K-pop was weird, virtual idols—humans who perform as anime-style digital characters via motion capture—will blow your mind. My favorite is a girl group called Isegye Idol, created by Woowakgood, a Korean VTuber (a...",
     "이미지": "generated_images/3-things-michelle-kim-is-into-right-now-e17cef6282e2-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1736,12 +2465,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:19.370960",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "MIT Tech Review AI",
     "제목": "One town’s scheme to get rid of its geese",
     "링크": "https://www.technologyreview.com/2026/04/22/1135430/california-town-scheme-get-rid-geese/",
+<<<<<<< HEAD
     "요약": "“Pull over!” I order my brother one sunny February afternoon. Our target is in sight: a gaggle of Canada geese, pecking at grass near the dog park. As I approach, tiptoeing over their grayish-white poop, I notice that one bird wears a white...",
     "이미지": "generated_images/one-town-s-scheme-to-get-rid-of-its-gees-a3181ce77439-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1758,12 +2492,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:19.371076",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "MIT Tech Review AI",
     "제목": "There is no nature anymore",
     "링크": "https://www.technologyreview.com/2026/04/22/1135440/editors-letter-may-2026/",
+<<<<<<< HEAD
     "요약": "When people talk about “nature,” they’re generally talking about things that aren’t made by human beings. Rocks. Reefs. Red wolves. But while there is plenty of God’s creation to go around, it is hard to think of anything on Earth that huma...",
     "이미지": "generated_images/there-is-no-nature-anymore-bf2b0f266a0e-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1780,12 +2519,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:19.371458",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "MIT Tech Review AI",
     "제목": "Los Angeles is finally going underground",
     "링크": "https://www.technologyreview.com/2026/04/22/1135449/los-angeles-subway-going-underground/",
+<<<<<<< HEAD
     "요약": "Los Angeles deserves its reputation as the quintessential car city—the rhythms of its 2,200 square miles are dictated by wide boulevards and concrete arcs of freeways. But it once had a world-class rail transit system, and for the last thre...",
     "이미지": "generated_images/los-angeles-is-finally-going-underground-3ae215cf1962-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1802,12 +2546,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:19.371699",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "MIT Tech Review AI",
     "제목": "Roundtables: Unveiling The 10 Things That Matter in AI Right Now",
     "링크": "https://www.technologyreview.com/2026/04/21/1135486/roundtables-unveiling-the-10-things-that-matter-in-ai-right-now/",
+<<<<<<< HEAD
     "요약": "Listen to the session or watch below Subscribers saw a special edition of Roundtables simulcast live from EmTech AI, MIT Technology Review’s signature conference for AI leadership. Subscribers got an exclusive first look at a new list captu...",
     "이미지": "generated_images/roundtables-unveiling-the-10-things-that-1edc1a6ae885-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1824,12 +2573,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:19.371895",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "MIT Tech Review AI",
     "제목": "The new word in home construction could be “plastics”",
     "링크": "https://www.technologyreview.com/2026/04/21/1134856/the-new-word-in-home-construction-could-be-plastics/",
+<<<<<<< HEAD
     "요약": "Single-use plastics are a persistent source of environmental pollution, and the need to house a growing global population puts increasing pressure on resources such as timber. MIT engineers have an idea that could make a dent in both proble...",
     "이미지": "generated_images/the-new-word-in-home-construction-could-8d037ca69007-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1846,12 +2600,41 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:19.372094",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "MIT Tech Review AI",
+    "제목": "A natural protein may protect the GI tract from infection",
+    "링크": "https://www.technologyreview.com/2026/04/21/1134858/a-natural-protein-may-protect-the-gi-tract-from-infection/",
+    "수집일시": "2026-04-23T17:27:19.372286",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "MIT Tech Review AI",
+    "제목": "This tool could show how consciousness works",
+    "링크": "https://www.technologyreview.com/2026/04/21/1134862/this-tool-could-show-how-consciousness-works/",
+    "수집일시": "2026-04-23T17:27:19.372477",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "VentureBeat AI",
+    "제목": "OpenAI unveils Workspace Agents, a successor to custom GPTs for enterprises that can plug directly into Slack, Salesforce and more",
+    "링크": "https://venturebeat.com/orchestration/openai-unveils-workspace-agents-a-successor-to-custom-gpts-for-enterprises-that-can-plug-directly-into-slack-salesforce-and-more",
+    "수집일시": "2026-04-23T17:27:21.405283",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "VentureBeat AI",
     "제목": "Google and AWS split the AI agent stack between control and execution",
     "링크": "https://venturebeat.com/orchestration/google-and-aws-split-the-ai-agent-stack-between-control-and-execution",
+<<<<<<< HEAD
     "요약": "The era of enterprises stitching together prompt chains and shadow agents is nearing its end as more options for orchestrating complex multi-agent systems emerge. As organizations move AI agents into production, the question remains: \"how w...",
     "이미지": "company_images/google/auto-e38d28a6a762e4.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1868,12 +2651,17 @@
     "image_provider": "company-searched-image-pool",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:21.405625",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "VentureBeat AI",
     "제목": "Are you paying an AI ‘swarm tax’? Why single agents often beat complex systems",
     "링크": "https://venturebeat.com/orchestration/are-you-paying-an-ai-swarm-tax-why-single-agents-often-beat-complex-systems",
+<<<<<<< HEAD
     "요약": "Enterprise teams building multi-agent AI systems may be paying a compute premium for gains that don't hold up under equal-budget conditions. New Stanford University research finds that single-agent systems match or outperform multi-agent ar...",
     "이미지": "generated_images/are-you-paying-an-ai-swarm-tax-why-singl-f3ce6c25ca7c-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1890,12 +2678,25 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:21.405933",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "VentureBeat AI",
+    "제목": "OpenAI launches Privacy Filter, an open source, on-device data sanitization model that removes personal information from enterprise datasets",
+    "링크": "https://venturebeat.com/data/openai-launches-privacy-filter-an-open-source-on-device-data-sanitization-model-that-removes-personal-information-from-enterprise-datasets",
+    "수집일시": "2026-04-23T17:27:21.406300",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "VentureBeat AI",
     "제목": "Google doesn't pay the Nvidia tax. Its new TPUs explain why.",
     "링크": "https://venturebeat.com/orchestration/google-doesnt-pay-the-nvidia-tax-its-new-tpus-explain-why",
+<<<<<<< HEAD
     "요약": "Every frontier AI lab right now is rationing two things: electricity and compute. Most of them buy their compute for model training from the same supplier, at the steep gross margins that have turned Nvidia into one of the most valuable com...",
     "이미지": "company_images/google/auto-e38d28a6a762e4.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1912,12 +2713,17 @@
     "image_provider": "company-searched-image-pool",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:21.406733",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "VentureBeat AI",
     "제목": "Salesforce’s Agentforce Vibes 2.0 targets a hidden failure: context overload in AI agents",
     "링크": "https://venturebeat.com/orchestration/salesforces-agentforce-vibes-2-0-targets-a-hidden-failure-context-overload-in-ai-agents",
+<<<<<<< HEAD
     "요약": "When startup fundraising platform VentureCrowd began deploying AI coding agents, they saw the same gains as other enterprises: they cut the front-end development cycle by 90% in some projects. However, it didn’t come easy or without a lot o...",
     "이미지": "company_images/salesforce/auto-8252e96c7c0ce6.jpg",
     "수집일시": "2026-04-23 07:26",
@@ -1934,12 +2740,17 @@
     "image_provider": "company-searched-image-pool",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:21.407084",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "VentureBeat AI",
     "제목": "Google’s Gemini can now run on a single air-gapped server — and vanish when you pull the plug",
     "링크": "https://venturebeat.com/technology/googles-gemini-can-now-run-on-a-single-air-gapped-server-and-vanish-when-you-pull-the-plug",
+<<<<<<< HEAD
     "요약": "Cirrascale Cloud Services today announced it has expanded its partnership with Google Cloud to deliver the Gemini model on-premises through Google Distributed Cloud , making it the first neocloud provider to offer Google's most advanced AI...",
     "이미지": "company_images/google/auto-4b06e7d49ae594.png",
     "수집일시": "2026-04-23 07:26",
@@ -1956,12 +2767,17 @@
     "image_provider": "company-searched-image-pool",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:21.407429",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "The AI Blog (MS)",
     "제목": "A conversation with Kevin Scott: What’s next in AI",
     "링크": "https://blogs.microsoft.com/ai/a-conversation-with-kevin-scott-whats-next-in-ai/",
+<<<<<<< HEAD
     "요약": "The post A conversation with Kevin Scott: What’s next in AI appeared first on The AI Blog .",
     "이미지": "generated_images/a-conversation-with-kevin-scott-what-s-n-9c6ef98f134a-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -1978,12 +2794,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:23.184009",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "The AI Blog (MS)",
     "제목": "From Hot Wheels to handling content: How brands are using Microsoft AI to be more productive and imaginative",
     "링크": "https://blogs.microsoft.com/ai/from-hot-wheels-to-handling-content-how-brands-are-using-microsoft-ai-to-be-more-productive-and-imaginative/",
+<<<<<<< HEAD
     "요약": "The post From Hot Wheels to handling content: How brands are using Microsoft AI to be more productive and imaginative appeared first on The AI Blog .",
     "이미지": "company_images/microsoft/auto-7e5d560d452fbb.svg",
     "수집일시": "2026-04-23 07:26",
@@ -2000,12 +2821,17 @@
     "image_provider": "company-searched-image-pool",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:23.184174",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "The AI Blog (MS)",
     "제목": "Microsoft open sources its ‘farm of the future’ toolkit",
     "링크": "https://blogs.microsoft.com/ai/microsoft-open-sources-its-farm-of-the-future-toolkit/",
+<<<<<<< HEAD
     "요약": "The post Microsoft open sources its ‘farm of the future’ toolkit appeared first on The AI Blog .",
     "이미지": "company_images/microsoft/auto-ac02b1513acddc.svg",
     "수집일시": "2026-04-23 07:26",
@@ -2022,12 +2848,17 @@
     "image_provider": "company-searched-image-pool",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:23.184916",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "The AI Blog (MS)",
     "제목": "How data and AI will transform contact centres for financial services",
     "링크": "https://cloudblogs.microsoft.com/industry-blog/en-gb/financial-services/2022/07/25/how-data-and-ai-will-transform-contact-centres-for-financial-services/",
+<<<<<<< HEAD
     "요약": "The post How data and AI will transform contact centres for financial services appeared first on The AI Blog .",
     "이미지": "generated_images/how-data-and-ai-will-transform-contact-c-f26bab8b247b-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -2044,12 +2875,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:23.185106",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "The AI Blog (MS)",
     "제목": "AI-equipped drones study dolphins on the edge of extinction",
     "링크": "https://news.microsoft.com/apac/features/ai-drones-dolphins-maui63/",
+<<<<<<< HEAD
     "요약": "The post AI-equipped drones study dolphins on the edge of extinction appeared first on The AI Blog .",
     "이미지": "generated_images/ai-equipped-drones-study-dolphins-on-the-c80b74381c78-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -2066,12 +2902,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:23.185271",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "The AI Blog (MS)",
     "제목": "Online math tutoring service uses AI to help boost students’ skills and confidence",
     "링크": "https://blogs.microsoft.com/ai/eedi-online-math-quiz/",
+<<<<<<< HEAD
     "요약": "The post Online math tutoring service uses AI to help boost students’ skills and confidence appeared first on The AI Blog .",
     "이미지": "generated_images/online-math-tutoring-service-uses-ai-to-93ae2e4537e5-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -2088,12 +2929,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:23.185731",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "The AI Blog (MS)",
     "제목": "AI-Mimi is building inclusive TV experiences for Deaf and Hard of Hearing user in Japan",
     "링크": "https://blogs.microsoft.com/accessibility/ai-mimi-is-building-inclusive-tv-experiences-for-deaf-and-hard-of-hearing-user-in-japan/",
+<<<<<<< HEAD
     "요약": "The post AI-Mimi is building inclusive TV experiences for Deaf and Hard of Hearing user in Japan appeared first on The AI Blog .",
     "이미지": "generated_images/ai-mimi-is-building-inclusive-tv-experie-c94bb52fef0d-simple.svg",
     "수집일시": "2026-04-23 07:26",
@@ -2110,12 +2956,17 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "curation-fallback"
+=======
+    "수집일시": "2026-04-23T17:27:23.186151",
+    "type": "article"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   },
   {
     "국가": "미국",
     "매체": "The AI Blog (MS)",
     "제목": "Microsoft’s framework for building AI systems responsibly",
     "링크": "https://blogs.microsoft.com/on-the-issues/2022/06/21/microsofts-framework-for-building-ai-systems-responsibly/",
+<<<<<<< HEAD
     "요약": "The post Microsoft’s framework for building AI systems responsibly appeared first on The AI Blog .",
     "이미지": "company_images/microsoft/auto-fc1977e98e0a97.svg",
     "수집일시": "2026-04-23 07:26",
@@ -2330,5 +3181,35 @@
     "image_provider": "simple-illustration",
     "curation_model": "",
     "curation_mode": "api-metadata"
+=======
+    "수집일시": "2026-04-23T17:27:23.186282",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "The AI Blog (MS)",
+    "제목": "Singapore develops Asia’s first AI-based mobile app for shark and ray fin identification to combat illegal wildlife trade",
+    "링크": "https://news.microsoft.com/en-sg/2022/06/08/singapore-develops-asias-first-ai-based-mobile-app-for-shark-and-ray-fin-identification-to-combat-illegal-wildlife-trade/",
+    "수집일시": "2026-04-23T17:27:23.186434",
+    "type": "article"
+  },
+  {
+    "국가": "미국",
+    "매체": "The AI Blog (MS)",
+    "제목": "The opportunity at home – can AI drive innovation in personal assistant devices and sign language?",
+    "링크": "https://blogs.microsoft.com/accessibility/the-opportunity-at-home-can-ai-drive-innovation-in-personal-assistant-devices-and-sign-language/",
+    "수집일시": "2026-04-23T17:27:23.186549",
+    "type": "article"
+  },
+  {
+    "국가": "유튜브",
+    "매체": "Two Minute Papers",
+    "제목": "DeepMind’s New AI: A Gift To Humanity",
+    "링크": "https://www.youtube.com/watch?v=Sk9tvyRSCgY",
+    "요약": "❤️ Check out Lambda here and sign up for their GPU Cloud: https://lambda.ai/papers\n\nLinks:\nhttps://deepmind.google/models/gemma/gemma-4/\nhttps://ai.google.dev/gemma/docs/core/model_card_4\n\nFine tuning...",
+    "이미지": "https://img.youtube.com/vi/Sk9tvyRSCgY/maxresdefault.jpg",
+    "수집일시": "2026-04-23T17:27:34.325375",
+    "type": "youtube"
+>>>>>>> f2f44bc ([Fix] 데이터 수집 스크립트 복구 및 유튜브 수집 로직 안정화)
   }
 ]

@@ -103,6 +103,112 @@ KEY_COUNTRY = "\uad6d\uac00"
 KEY_MEDIA = "\ub9e4\uccb4"
 KEY_TITLE = "\uc81c\ubaa9"
 KEY_LINK = "\ub9c1\ud06c"
+import base64
+import hashlib
+import html
+import html
+import json
+import os
+import random
+import re
+import sys
+import time
+from datetime import datetime, timedelta
+from pathlib import Path
+from urllib.parse import quote_plus, urljoin
+
+import requests
+from bs4 import BeautifulSoup
+from dotenv import load_dotenv
+
+try:
+    import google.generativeai as genai
+except Exception:
+    genai = None
+
+load_dotenv()
+
+
+def get_int_env(name: str, default: int) -> int:
+    raw = os.getenv(name)
+    if raw is None:
+        return default
+    try:
+        return max(0, int(raw))
+    except ValueError:
+        return default
+
+
+def get_csv_env_set(name: str) -> set[str]:
+    return {part.strip().lower() for part in os.getenv(name, "").split(",") if part.strip()}
+
+
+def get_bool_env(name: str, default: bool) -> bool:
+    raw = os.getenv(name)
+    if raw is None:
+        return default
+    return raw.strip().lower() in {"1", "true", "yes", "on"}
+
+
+REQUEST_HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/120.0.0.0 Safari/537.36"
+    )
+}
+IMAGE_OUTPUT_DIR = Path(os.getenv("NEWS_IMAGE_DIR", "generated_images"))
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "").strip()
+GEMINI_PROMPT_MODEL = os.getenv("GEMINI_PROMPT_MODEL", "gemini-2.5-flash")
+GEMINI_IMAGE_MODEL = os.getenv("GEMINI_IMAGE_MODEL", "gemini-3-pro-image-preview")
+NEWS_IMAGE_STYLE = os.getenv(
+    "NEWS_IMAGE_STYLE",
+    (
+        "high-quality 3D render, futuristic IT newsroom illustration, "
+        "isometric composition, cinematic lighting, clean background, "
+        "no brand logos, no text overlay"
+    ),
+).strip()
+NEWS_AI_IMAGE_LIMIT = get_int_env("NEWS_AI_IMAGE_LIMIT", 5)
+KEYWORD_TEMPLATE_ENABLED = get_bool_env("KEYWORD_TEMPLATE_ENABLED", False)
+KEYWORD_PHOTO_ENABLED = get_bool_env("KEYWORD_PHOTO_ENABLED", True)
+KEYWORD_STOCK_ENABLED = get_bool_env("KEYWORD_STOCK_ENABLED", True)
+KEYWORD_STOCK_TIMEOUT = get_int_env("KEYWORD_STOCK_TIMEOUT", 20)
+MIN_STOCK_IMAGE_BYTES = get_int_env("MIN_STOCK_IMAGE_BYTES", 1500)
+KEYWORD_REPRESENTATIVE_QUERY_ENABLED = get_bool_env("KEYWORD_REPRESENTATIVE_QUERY_ENABLED", True)
+IMAGE_DEDUP_IN_RUN = get_bool_env("IMAGE_DEDUP_IN_RUN", True)
+COMPANY_LOGO_PRIORITY_MODE = get_bool_env("COMPANY_LOGO_PRIORITY_MODE", True)
+USE_RSS_SOURCE_IMAGE = get_bool_env("USE_RSS_SOURCE_IMAGE", True)
+COMPANY_VARIANT_COUNT = max(1, min(5, get_int_env("COMPANY_VARIANT_COUNT", 5)))
+COMPANY_LOCAL_IMAGE_MODE = get_bool_env("COMPANY_LOCAL_IMAGE_MODE", True)
+COMPANY_IMAGE_POOL_DIR = Path(os.getenv("COMPANY_IMAGE_POOL_DIR", "company_images"))
+COMPANY_SEARCH_IMAGE_ENABLED = get_bool_env("COMPANY_SEARCH_IMAGE_ENABLED", True)
+COMPANY_SEARCH_IMAGE_TARGET = max(3, min(20, get_int_env("COMPANY_SEARCH_IMAGE_TARGET", 10)))
+COMPANY_SEARCH_TIMEOUT = get_int_env("COMPANY_SEARCH_TIMEOUT", 12)
+COMPANY_DAILY_ROTATION = get_bool_env("COMPANY_DAILY_ROTATION", True)
+COMPANY_INFER_FROM_ENGLISH_TITLE = get_bool_env("COMPANY_INFER_FROM_ENGLISH_TITLE", False)
+NEWS_CURATION_ENABLED = get_bool_env("NEWS_CURATION_ENABLED", True)
+NEWS_CURATION_LIMIT = get_int_env("NEWS_CURATION_LIMIT", 20)
+RSS_IMAGE_FORCE_ALLOW_SOURCES = get_csv_env_set("RSS_IMAGE_FORCE_ALLOW_SOURCES")
+RSS_IMAGE_FORCE_DENY_SOURCES = get_csv_env_set("RSS_IMAGE_FORCE_DENY_SOURCES")
+
+_ai_image_count = 0
+_curation_count = 0
+_gemini_text_model_name = ""
+_gemini_text_model = None
+_used_image_hashes_in_run: set[str] = set()
+_used_remote_image_urls_in_run: set[str] = set()
+_company_logo_data_uri_cache: dict[str, str] = {}
+_company_variant_paths_cache: dict[str, list[str]] = {}
+_company_variant_source_cache: dict[str, str] = {}
+_company_last_variant_index: dict[str, int] = {}
+_company_catalog_cache: list[dict] | None = None
+
+# Korean keys/values kept as Unicode escapes to avoid terminal encoding issues.
+KEY_COUNTRY = "\uad6d\uac00"
+KEY_MEDIA = "\ub9e4\uccb4"
+KEY_TITLE = "\uc81c\ubaa9"
+KEY_LINK = "\ub9c1\ud06c"
 KEY_SUMMARY = "\uc694\uc57d"
 KEY_IMAGE = "\uc774\ubbf8\uc9c0"
 KEY_COLLECTED_AT = "\uc218\uc9d1\uc77c\uc2dc"
@@ -112,6 +218,17 @@ KEY_IMAGE_PROVIDER = "\uc774\ubbf8\uc9c0\uc0dd\uc131\ubc29\uc2dd"
 VAL_DOMESTIC = "\uad6d\ub0b4"
 VAL_US = "\ubbf8\uad6d"
 VAL_NAVER_NEWS = "\ub124\uc774\ubc84 \ub274\uc2a4"
+VAL_YOUTUBE = "\uc720\ud29c\ube0c"
+
+# 유튜브 채널 ID 목록 (AI 관련 주요 채널)
+YOUTUBE_CHANNELS = [
+    {"id": "UCzvS2F56K8Pz0YVf7qO2YqA", "name": "OpenAI"},
+    {"id": "UC766m_h5S6X_FfI76Z2X2_w", "name": "Google DeepMind"},
+    {"id": "UCbfYPyITQ-7l4upoX8nvctg", "name": "Two Minute Papers"},
+    {"id": "UC_f53ZEJcuInoo6v_5I89Q", "name": "Matt Wolfe"},
+    {"id": "UCP7jMX897n7Oaw", "name": "Andrej Karpathy"},
+    {"id": "UCN79Y95z14Y_68jXv-Y", "name": "AI Explained"},
+]
 
 KEYWORD_THEMES = [
     {
@@ -122,14 +239,14 @@ KEYWORD_THEMES = [
         "keywords": [
             "ai",
             "artificial intelligence",
-            "인공지능",
-            "생성형",
+            "\uc778\uacf5\uc9c0\ub2a5",
+            "\uc0dd\uc131\ud615",
             "llm",
             "gpt",
             "gemini",
             "agent",
-            "에이전트",
-            "온디바이스 ai",
+            "\uc5d0\uc774\uc804\ud2b8",
+            "\uc628\ub514\ubc14\uc774\uc2a4 ai",
         ],
     },
     {
@@ -138,16 +255,16 @@ KEYWORD_THEMES = [
         "subtitle": "Cyber Security",
         "colors": ("#111827", "#334155", "#06b6d4"),
         "keywords": [
-            "보안",
-            "사이버",
-            "해킹",
-            "랜섬웨어",
-            "피싱",
+            "\ubcf4\uc548",
+            "\uc0ac\uc774\ubc84",
+            "\ud574\ud0b9",
+            "\ub79c\uc12c\uc6e8\uc5b4",
+            "\ud53c\uc2f1",
             "malware",
             "hack",
             "security",
             "vulnerability",
-            "취약점",
+            "\ud328\uce58",
         ],
     },
     {
@@ -156,15 +273,15 @@ KEYWORD_THEMES = [
         "subtitle": "Semiconductor",
         "colors": ("#1e1b4b", "#4338ca", "#a78bfa"),
         "keywords": [
-            "반도체",
+            "\ubc18\ub3c4\uccb4",
             "chip",
-            "칩",
+            "\uce69",
             "gpu",
             "npu",
             "hbm",
-            "파운드리",
+            "\ud30c\uc6b4\ub4dc\ub9ac",
             "foundry",
-            "메모리",
+            "\ubca4\ubaa8\ub9ac",
             "memory",
         ],
     },
@@ -174,16 +291,13 @@ KEYWORD_THEMES = [
         "subtitle": "Smart Device",
         "colors": ("#0f172a", "#0ea5e9", "#38bdf8"),
         "keywords": [
-            "스마트폰",
-            "휴대폰",
-            "아이폰",
+            "\uc2a4\ub9c8\ud2b8\ud3f0",
+            "\ubaa8\ubc14\uc77c",
+            "\uc544\uc774\ud3f0",
             "iphone",
             "android",
-            "안드로이드",
-            "갤럭시",
-            "ios",
-            "웨어러블",
-            "smartphone",
+            "\uc548\ub4dc\ub85c\uc774\ub4dc",
+            "\uac24\ub7ed\uc2dc",
         ],
     },
     {
@@ -192,13 +306,13 @@ KEYWORD_THEMES = [
         "subtitle": "Cloud Infra",
         "colors": ("#082f49", "#0284c7", "#7dd3fc"),
         "keywords": [
-            "클라우드",
+            "\ud074\ub77c\uc6b0\ub4dc",
             "cloud",
             "saas",
             "server",
-            "데이터센터",
+            "\ub370\uc774\ud130\uc13c\ud130",
             "data center",
-            "인프라",
+            "\uc778\ud504\ub77c",
             "infra",
         ],
     },
@@ -208,11 +322,11 @@ KEYWORD_THEMES = [
         "subtitle": "Robotics & Automation",
         "colors": ("#022c22", "#059669", "#34d399"),
         "keywords": [
-            "로봇",
+            "\ub85c\ubd07",
             "robot",
             "automation",
-            "자동화",
-            "드론",
+            "\uc790\ub3d9\ud654",
+            "\ub4dc\ub860",
             "drone",
         ],
     },
@@ -222,12 +336,12 @@ KEYWORD_THEMES = [
         "subtitle": "Game Industry",
         "colors": ("#2e1065", "#7c3aed", "#c4b5fd"),
         "keywords": [
-            "게임",
+            "\uac8c\uc784",
             "game",
-            "콘솔",
+            "\ucf58\uc194",
             "xbox",
             "playstation",
-            "닌텐도",
+            "\ub2cc\ud150\ub3c4",
             "steam",
         ],
     },
@@ -237,13 +351,13 @@ KEYWORD_THEMES = [
         "subtitle": "Space Tech",
         "colors": ("#172554", "#1d4ed8", "#60a5fa"),
         "keywords": [
-            "우주",
+            "\uc6b0\uc8fc",
             "space",
-            "위성",
+            "\uc704\uc131",
             "satellite",
             "nasa",
             "rocket",
-            "로켓",
+            "\ub85c\ucf13",
         ],
     },
 ]
@@ -253,222 +367,89 @@ COMPANY_THEMES = [
         "id": "kakao",
         "label": "KAKAO",
         "subtitle": "Kakao",
-        "keywords": ["카카오", "kakao", "카톡", "kakaotalk"],
+        "keywords": ["\uce74\uce74\uc624", "kakao", "\uce74\ud1a1", "kakaotalk"],
         "search_queries": [
             "kakaotalk smartphone app",
             "korean mobile messenger app",
             "south korea tech company office",
         ],
-        "stock_tags": [
-            "korea,office,technology",
-            "startup,office,teamwork",
-            "mobile,app,technology",
-        ],
+        "stock_tags": ["korea,office,technology", "mobile,app,technology"],
         "prompt_subject": "a modern Korean internet company office scene",
     },
     {
         "id": "naver",
         "label": "NAVER",
         "subtitle": "Naver",
-        "keywords": ["네이버", "naver", "라인", "line messenger"],
+        "keywords": ["\ub124\uc774\ubc84", "naver", "\ub77c\uc778", "line messenger"],
         "search_queries": [
             "search engine technology office",
             "korean internet company workspace",
-            "messenger app smartphone usage",
         ],
-        "stock_tags": [
-            "search,technology,office",
-            "korea,tech,workspace",
-            "mobile,app,productivity",
-        ],
+        "stock_tags": ["search,technology,office", "korea,tech,workspace"],
         "prompt_subject": "a leading search and platform company workspace",
     },
     {
         "id": "samsung",
         "label": "SAMSUNG",
         "subtitle": "Samsung",
-        "keywords": ["삼성", "samsung", "갤럭시"],
-        "search_queries": [
-            "smartphone product photography",
-            "semiconductor chip laboratory",
-            "consumer electronics showcase",
-        ],
-        "stock_tags": [
-            "smartphone,electronics,technology",
-            "semiconductor,electronics,lab",
-            "display,technology,innovation",
-        ],
+        "keywords": ["\uc0bc\uc131", "samsung", "\uac24\ub7ed\uc2dc"],
+        "search_queries": ["smartphone product photography", "semiconductor chip lab"],
+        "stock_tags": ["smartphone,electronics,technology", "semiconductor,lab"],
         "prompt_subject": "a global electronics company R&D environment",
-    },
-    {
-        "id": "lg",
-        "label": "LG",
-        "subtitle": "LG",
-        "keywords": ["lg", "엘지", "lg유플러스", "lgu+", "lgu+"],
-        "search_queries": [
-            "telecommunications network infrastructure",
-            "consumer electronics home devices",
-            "korean technology company office",
-        ],
-        "stock_tags": [
-            "telecom,technology,office",
-            "electronics,home,technology",
-            "network,infrastructure,technology",
-        ],
-        "prompt_subject": "a telecom and electronics company innovation center",
-    },
-    {
-        "id": "sk",
-        "label": "SK",
-        "subtitle": "SK",
-        "keywords": ["skt", "sk텔레콤", "sk telecom", "sk하이닉스", "sk hynix"],
-        "search_queries": [
-            "telecom network engineers",
-            "semiconductor production facility",
-            "mobile network technology",
-        ],
-        "stock_tags": [
-            "telecom,network,technology",
-            "semiconductor,factory,technology",
-            "data,ai,infrastructure",
-        ],
-        "prompt_subject": "a telecom and semiconductor company operations scene",
     },
     {
         "id": "apple",
         "label": "APPLE",
         "subtitle": "Apple",
-        "keywords": ["애플", "apple", "iphone", "ios", "mac"],
-        "search_queries": [
-            "iphone smartphone product photo",
-            "minimal laptop workspace setup",
-            "premium consumer electronics",
-        ],
-        "stock_tags": [
-            "smartphone,minimal,technology",
-            "laptop,workspace,technology",
-            "wearable,consumer,electronics",
-        ],
+        "keywords": ["\uc560\ud50c", "apple", "iphone", "ios", "mac"],
+        "search_queries": ["iphone product photo", "minimal laptop workspace"],
+        "stock_tags": ["smartphone,minimal,technology", "laptop,workspace"],
         "prompt_subject": "a premium consumer tech product launch environment",
     },
     {
         "id": "google",
         "label": "GOOGLE",
         "subtitle": "Google",
-        "keywords": ["구글", "google", "android", "pixel", "youtube"],
-        "search_queries": [
-            "android smartphone interface",
-            "search technology data visualization",
-            "cloud ai infrastructure",
-        ],
-        "stock_tags": [
-            "search,data,technology",
-            "android,smartphone,technology",
-            "ai,cloud,technology",
-        ],
+        "keywords": ["\uad6c\uae00", "google", "android", "pixel", "youtube"],
+        "search_queries": ["android interface", "search technology", "cloud ai"],
+        "stock_tags": ["search,data,technology", "ai,cloud,technology"],
         "prompt_subject": "a global search and AI company product lab",
     },
     {
         "id": "microsoft",
         "label": "MICROSOFT",
         "subtitle": "Microsoft",
-        "keywords": ["마이크로소프트", "microsoft", "windows", "azure", "copilot"],
-        "search_queries": [
-            "developer laptop coding workspace",
-            "enterprise cloud data center",
-            "business software office environment",
-        ],
-        "stock_tags": [
-            "software,office,technology",
-            "cloud,server,technology",
-            "developer,code,workspace",
-        ],
+        "keywords": ["\ub9c8\uc774\ud06c\ub85c\uc18c\ud504\ud2b8", "microsoft", "windows", "azure", "copilot"],
+        "search_queries": ["developer workspace", "cloud data center"],
+        "stock_tags": ["software,office,technology", "cloud,server,technology"],
         "prompt_subject": "a software and cloud company engineering floor",
     },
     {
         "id": "openai",
         "label": "OPENAI",
         "subtitle": "OpenAI",
-        "keywords": ["openai", "챗gpt", "chatgpt", "gpt"],
-        "search_queries": [
-            "artificial intelligence research lab",
-            "machine learning engineers working",
-            "ai server hardware racks",
-        ],
-        "stock_tags": [
-            "ai,server,technology",
-            "machine-learning,research,technology",
-            "data-center,ai,infrastructure",
-        ],
+        "keywords": ["openai", "chatgpt", "gpt"],
+        "search_queries": ["ai research lab", "machine learning engineers"],
+        "stock_tags": ["ai,server,technology", "machine-learning,research"],
         "prompt_subject": "an advanced AI research company environment",
     },
     {
         "id": "nvidia",
         "label": "NVIDIA",
         "subtitle": "NVIDIA",
-        "keywords": ["엔비디아", "nvidia", "cuda", "rtx", "geforce"],
-        "search_queries": [
-            "gpu graphics card closeup",
-            "ai accelerator server hardware",
-            "high performance computing datacenter",
-        ],
-        "stock_tags": [
-            "gpu,computer,technology",
-            "datacenter,server,technology",
-            "electronics,circuit,hardware",
-        ],
+        "keywords": ["\ub224\ube44\ub514\uc544", "nvidia", "cuda", "h100"],
+        "search_queries": ["gpu graphics card", "ai accelerator server"],
+        "stock_tags": ["gpu,computer,technology", "datacenter,server"],
         "prompt_subject": "a GPU and AI hardware engineering environment",
     },
     {
         "id": "tesla",
         "label": "TESLA",
         "subtitle": "Tesla",
-        "keywords": ["테슬라", "tesla", "자율주행", "fsd"],
-        "search_queries": [
-            "electric vehicle technology",
-            "autonomous driving car sensors",
-            "modern EV charging station",
-        ],
-        "stock_tags": [
-            "electric-car,technology,transport",
-            "autonomous,vehicle,innovation",
-            "battery,energy,technology",
-        ],
+        "keywords": ["\ud14c\uc2ac\ub77c", "tesla", "\uc790\uc728\uc8fc\ud589", "fsd"],
+        "search_queries": ["electric vehicle", "autonomous driving"],
+        "stock_tags": ["electric-car,technology", "autonomous,vehicle"],
         "prompt_subject": "an electric vehicle technology demonstration scene",
-    },
-    {
-        "id": "meta",
-        "label": "META",
-        "subtitle": "Meta",
-        "keywords": ["메타", "meta", "facebook", "instagram", "threads"],
-        "search_queries": [
-            "social media smartphone app",
-            "virtual reality headset technology",
-            "internet platform office workspace",
-        ],
-        "stock_tags": [
-            "social-media,smartphone,technology",
-            "vr,headset,technology",
-            "office,software,technology",
-        ],
-        "prompt_subject": "a social platform and mixed-reality product workspace",
-    },
-    {
-        "id": "amazon",
-        "label": "AMAZON",
-        "subtitle": "Amazon",
-        "keywords": ["아마존", "amazon", "aws", "prime", "알렉사", "alexa"],
-        "search_queries": [
-            "cloud computing datacenter",
-            "warehouse automation robotics",
-            "smart speaker home device",
-        ],
-        "stock_tags": [
-            "cloud,server,technology",
-            "warehouse,robotics,automation",
-            "smart-home,device,technology",
-        ],
-        "prompt_subject": "a cloud and automation technology operations scene",
     },
 ]
 
@@ -476,8 +457,6 @@ COMPANY_LOGO_DOMAINS = {
     "kakao": "kakao.com",
     "naver": "navercorp.com",
     "samsung": "samsung.com",
-    "lg": "lg.com",
-    "sk": "sktelecom.com",
     "apple": "apple.com",
     "google": "google.com",
     "microsoft": "microsoft.com",
@@ -487,95 +466,19 @@ COMPANY_LOGO_DOMAINS = {
     "meta": "meta.com",
     "amazon": "amazon.com",
     "anthropic": "anthropic.com",
-    "xai": "x.ai",
-    "deepmind": "deepmind.google",
-    "deepseek": "deepseek.com",
-    "intel": "intel.com",
-    "amd": "amd.com",
-    "qualcomm": "qualcomm.com",
-    "tsmc": "tsmc.com",
-    "arm": "arm.com",
-    "broadcom": "broadcom.com",
-    "oracle": "oracle.com",
-    "ibm": "ibm.com",
-    "adobe": "adobe.com",
-    "salesforce": "salesforce.com",
-    "sap": "sap.com",
-    "palantir": "palantir.com",
-    "uber": "uber.com",
-    "airbnb": "airbnb.com",
-    "netflix": "netflix.com",
-    "sony": "sony.com",
-    "nintendo": "nintendo.com",
-    "softbank": "softbank.jp",
-    "huawei": "huawei.com",
-    "xiaomi": "xiaomi.com",
-    "lenovo": "lenovo.com",
-    "baidu": "baidu.com",
-    "tencent": "tencent.com",
-    "alibaba": "alibaba.com",
-    "bytedance": "bytedance.com",
-    "hyundai": "hyundai.com",
-    "kia": "kia.com",
-    "posco": "posco.com",
-    "hanwha": "hanwha.com",
-    "lotte": "lotte.co.kr",
-    "cj": "cj.net",
-    "kt": "kt.com",
-    "coupang": "coupang.com",
-    "nhn": "nhn.com",
-    "nexon": "nexon.com",
-    "krafton": "krafton.com",
-    "ncsoft": "ncsoft.com",
-    "pearlabyss": "pearlabyss.com",
-    "asml": "asml.com",
-    "siemens": "siemens.com",
-    "bosch": "bosch.com",
 }
 
 COMPANY_EXTRA_CATALOG = [
     {"id": "anthropic", "name": "Anthropic", "aliases": ["anthropic", "claude"]},
     {"id": "xai", "name": "xAI", "aliases": ["xai", "x.ai", "grok"]},
     {"id": "deepmind", "name": "DeepMind", "aliases": ["deepmind", "google deepmind"]},
-    {"id": "deepseek", "name": "DeepSeek", "aliases": ["deepseek"]},
-    {"id": "intel", "name": "Intel", "aliases": ["intel", "인텔"]},
-    {"id": "amd", "name": "AMD", "aliases": ["amd", "라이젠", "radeon"]},
-    {"id": "qualcomm", "name": "Qualcomm", "aliases": ["qualcomm", "퀄컴", "snapdragon"]},
-    {"id": "tsmc", "name": "TSMC", "aliases": ["tsmc"]},
-    {"id": "arm", "name": "ARM", "aliases": ["arm", "arm holdings"]},
-    {"id": "broadcom", "name": "Broadcom", "aliases": ["broadcom"]},
-    {"id": "oracle", "name": "Oracle", "aliases": ["oracle", "오라클"]},
-    {"id": "ibm", "name": "IBM", "aliases": ["ibm"]},
-    {"id": "adobe", "name": "Adobe", "aliases": ["adobe", "어도비"]},
-    {"id": "salesforce", "name": "Salesforce", "aliases": ["salesforce", "세일즈포스"]},
-    {"id": "sap", "name": "SAP", "aliases": ["sap"]},
-    {"id": "palantir", "name": "Palantir", "aliases": ["palantir"]},
-    {"id": "uber", "name": "Uber", "aliases": ["uber"]},
-    {"id": "airbnb", "name": "Airbnb", "aliases": ["airbnb"]},
-    {"id": "netflix", "name": "Netflix", "aliases": ["netflix", "넷플릭스"]},
-    {"id": "sony", "name": "Sony", "aliases": ["sony", "소니"]},
-    {"id": "nintendo", "name": "Nintendo", "aliases": ["nintendo", "닌텐도"]},
-    {"id": "softbank", "name": "SoftBank", "aliases": ["softbank", "소프트뱅크"]},
-    {"id": "huawei", "name": "Huawei", "aliases": ["huawei", "화웨이"]},
-    {"id": "xiaomi", "name": "Xiaomi", "aliases": ["xiaomi", "샤오미"]},
-    {"id": "lenovo", "name": "Lenovo", "aliases": ["lenovo", "레노버"]},
-    {"id": "baidu", "name": "Baidu", "aliases": ["baidu", "바이두"]},
-    {"id": "tencent", "name": "Tencent", "aliases": ["tencent", "텐센트"]},
-    {"id": "alibaba", "name": "Alibaba", "aliases": ["alibaba", "알리바바"]},
-    {"id": "bytedance", "name": "ByteDance", "aliases": ["bytedance", "틱톡", "tiktok"]},
-    {"id": "hyundai", "name": "Hyundai", "aliases": ["현대", "hyundai", "현대차"]},
-    {"id": "kia", "name": "Kia", "aliases": ["기아", "kia"]},
-    {"id": "posco", "name": "POSCO", "aliases": ["포스코", "posco"]},
-    {"id": "hanwha", "name": "Hanwha", "aliases": ["한화", "hanwha"]},
-    {"id": "lotte", "name": "Lotte", "aliases": ["롯데", "lotte"]},
-    {"id": "cj", "name": "CJ", "aliases": ["cj", "씨제이"]},
-    {"id": "kt", "name": "KT", "aliases": ["kt", "케이티"]},
-    {"id": "coupang", "name": "Coupang", "aliases": ["쿠팡", "coupang"]},
-    {"id": "nhn", "name": "NHN", "aliases": ["nhn"]},
-    {"id": "nexon", "name": "Nexon", "aliases": ["넥슨", "nexon"]},
-    {"id": "krafton", "name": "Krafton", "aliases": ["크래프톤", "krafton"]},
-    {"id": "ncsoft", "name": "NCSoft", "aliases": ["엔씨소프트", "ncsoft"]},
-    {"id": "pearlabyss", "name": "Pearl Abyss", "aliases": ["펄어비스", "pearl abyss", "pearlabyss"]},
+    {"id": "intel", "name": "Intel", "aliases": ["intel", "\uc778\ud154"]},
+    {"id": "amd", "name": "AMD", "aliases": ["amd", "\ub77c\uc774\uc820", "radeon"]},
+    {"id": "qualcomm", "name": "Qualcomm", "aliases": ["qualcomm", "\uc2a4\ub0c5\ub4dc\ub798\uace4"]},
+    {"id": "sony", "name": "Sony", "aliases": ["sony", "\uc18c\ub2c8"]},
+    {"id": "netflix", "name": "Netflix", "aliases": ["netflix", "\ub137\ud50c\ub9ad\uc2a4"]},
+    {"id": "ncsoft", "name": "NCSoft", "aliases": ["\uc5d4\uc528\uc18c\ud504\ud2b8", "ncsoft"]},
+    {"id": "pearlabyss", "name": "Pearl Abyss", "aliases": ["\ud398\uc5b8\uc5b4\ube44\uc2a4", "pearl abyss", "pearlabyss"]},
     {"id": "asml", "name": "ASML", "aliases": ["asml"]},
     {"id": "siemens", "name": "Siemens", "aliases": ["siemens"]},
     {"id": "bosch", "name": "Bosch", "aliases": ["bosch"]},
@@ -1854,7 +1757,7 @@ def parse_json_from_response_text(text: str) -> dict:
 
 
 def get_latest_gemini_model() -> str:
-    """사용 가능한 최신 Gemini 3 flash 계열 모델명을 탐색합니다."""
+    """?ъ슜 媛?ν븳 理쒖떊 Gemini 3 flash 怨꾩뿴 紐⑤뜽紐낆쓣 ?먯깋?⑸땲??"""
     fallback = "gemini-1.5-flash"
     if genai is None or not GEMINI_API_KEY:
         return fallback
@@ -1897,7 +1800,7 @@ def get_gemini_text_model():
 
 def recreate_news_content(title: str, original_content: str, source: str) -> dict:
     """
-    뉴스 요약 재창작 + 이미지 프롬프트를 동시에 생성합니다.
+    ?댁뒪 ?붿빟 ?ъ갹??+ ?대?吏 ?꾨＼?꾪듃瑜??숈떆???앹꽦?⑸땲??
     Returns: {"summary": str, "image_prompt": str, "model": str, "mode": str}
     """
     global _curation_count
@@ -1931,27 +1834,26 @@ def recreate_news_content(title: str, original_content: str, source: str) -> dic
         }
 
     prompt = f"""
-당신은 IT/AI/로봇 전문 콘텐츠 에디터입니다.
-제공된 뉴스 정보를 바탕으로 아래 두 항목을 생성하세요.
+?뱀떊? IT/AI/濡쒕큸 ?꾨Ц 肄섑뀗痢??먮뵒?곗엯?덈떎.
+?쒓났???댁뒪 ?뺣낫瑜?諛뷀깢?쇰줈 ?꾨옒 ????ぉ???앹꽦?섏꽭??
 
 1) curated_summary
-- 원문 문장을 그대로 복사하지 말고, 완전히 재창작한 한국어 요약 2~3문장
-- 비전공자도 이해 가능한 쉬운 표현
+- ?먮Ц 臾몄옣??洹몃?濡?蹂듭궗?섏? 留먭퀬, ?꾩쟾???ъ갹?묓븳 ?쒓뎅???붿빟 2~3臾몄옣
+- 鍮꾩쟾怨듭옄???댄빐 媛?ν븳 ?ъ슫 ?쒗쁽
 
 2) image_prompt
-- 기사 원문 사진을 대체할 수 있는 미래지향적 3D 렌더링 스타일의 영어 프롬프트 1개
-- 로고/워터마크/텍스트 오버레이 금지
+- 湲곗궗 ?먮Ц ?ъ쭊???泥댄븷 ???덈뒗 誘몃옒吏?μ쟻 3D ?뚮뜑留??ㅽ??쇱쓽 ?곸뼱 ?꾨＼?꾪듃 1媛?- 濡쒓퀬/?뚰꽣留덊겕/?띿뒪???ㅻ쾭?덉씠 湲덉?
 
-반드시 JSON만 반환:
+諛섎뱶??JSON留?諛섑솚:
 {{
   "curated_summary": "...",
   "image_prompt": "..."
 }}
 
-[뉴스 정보]
-출처: {source}
-제목: {title}
-원문 내용: {original_content}
+[?댁뒪 ?뺣낫]
+異쒖쿂: {source}
+?쒕ぉ: {title}
+?먮Ц ?댁슜: {original_content}
 """
 
     try:
@@ -2193,6 +2095,7 @@ def make_record(
         "image_provider": image_provider,
         "curation_model": curation_model,
         "curation_mode": curation_mode,
+        "type": "article"
     }
 
 
@@ -2292,9 +2195,6 @@ def collect_domestic_news(now: str) -> list[dict]:
     return items_out
 
 
-    return items_out
-
-
 def collect_hacker_news(now: str) -> list[dict]:
     items_out: list[dict] = []
     print("Collecting Global News from: Hacker News (API)")
@@ -2326,7 +2226,7 @@ def collect_hacker_news(now: str) -> list[dict]:
             
             summary = f"Points: {score} | Comments: {descendants} | By: {by}"
             
-            # Hacker News는 이미지가 없으므로 Fallback 로직 활용
+            # Hacker News???대?吏媛 ?놁쑝誘濡?Fallback 濡쒖쭅 ?쒖슜
             image_url, prompt, provider = generate_reference_image(
                 title=title,
                 source="Hacker News",
@@ -2361,255 +2261,147 @@ def collect_hacker_news(now: str) -> list[dict]:
     return items_out
 
 
-def collect_global_news(now: str) -> list[dict]:
+def collect_global_news() -> list[dict]:
     items_out: list[dict] = []
     usa_feeds = {
         "TechCrunch": "https://techcrunch.com/feed/",
         "The Verge": "https://www.theverge.com/rss/index.xml",
         "Wired": "https://www.wired.com/feed/rss",
         "Ars Technica": "https://feeds.arstechnica.com/arstechnica/index",
-        # 주요 기술 블로그
         "OpenAI Blog": "https://openai.com/news/rss.xml",
         "Google DeepMind": "https://deepmind.google/blog/rss.xml",
         "Google Research": "https://research.google/blog/rss",
         "Microsoft Research": "https://www.microsoft.com/en-us/research/feed/",
-        # GeeksNews (긱스뉴스) - 한국 개발자 커뮤니티 IT/AI 뉴스
         "GeeksNews": "https://news.hada.io/rss",
-        # AI 전문 뉴스 소스
         "MIT Tech Review AI": "https://www.technologyreview.com/feed/",
         "VentureBeat AI": "https://venturebeat.com/feed/",
         "The AI Blog (MS)": "https://blogs.microsoft.com/ai/feed/",
         "Anthropic Blog": "https://www.anthropic.com/rss.xml",
     }
 
-    for source, url in usa_feeds.items():
+    for name, url in usa_feeds.items():
         try:
-            print(f"Collecting Global News from: {source}")
-            parsed = parse_rss_feed(url, max_items=8)
-            feed_items = parsed.get("items", [])
-            feed_meta = parsed.get("meta", {})
-            feed_allow = feed_explicitly_allows_rss_images(feed_meta)
-
-            source_key = source.strip().lower()
-            if source_key in RSS_IMAGE_FORCE_ALLOW_SOURCES:
-                policy_note = "force-allow"
-            elif source_key in RSS_IMAGE_FORCE_DENY_SOURCES:
-                policy_note = "force-deny"
-            else:
-                policy_note = "explicit-allow" if feed_allow else "no-explicit-allow"
-            print(f"  - RSS image policy: {policy_note}")
-
-            for item in feed_items:
-                title = item.get("title", "")
-                link = item.get("link", "")
-                original_content = item.get("description", "")
-                curation = recreate_news_content(title=title, original_content=original_content, source=source)
-                summary = curation["summary"]
-                image_prompt = curation["image_prompt"]
-                rss_image_url = item.get("rss_image_url", "")
-                item_rights = item.get("item_rights", "")
-
-                if USE_RSS_SOURCE_IMAGE and should_use_rss_source_image(
-                    source_name=source,
-                    rss_image_url=rss_image_url,
-                    feed_allows=feed_allow,
-                    item_rights=item_rights,
-                ) and claim_remote_image_url_for_run(rss_image_url):
-                    image_url = rss_image_url
-                    prompt = "rss-image-direct-use"
-                    provider = "rss-source-image"
-                else:
-                    image_url, prompt, provider = generate_reference_image(
-                        title=title,
-                        source=source,
-                        prompt_override=image_prompt,
-                        article_uid=link,
-                        context_text=original_content,
-                    )
-
-                items_out.append(
-                    make_record(
-                        country_ko=VAL_US,
-                        country_en="global",
-                        media=source,
-                        title=title,
-                        link=link,
-                        summary=summary,
-                        image=image_url,
-                        collected_at=now,
-                        image_prompt=prompt,
-                        image_provider=provider,
-                        curation_model=curation.get("model", ""),
-                        curation_mode=curation.get("mode", ""),
-                    )
-                )
+            print(f"[RSS] Fetching {name} ({url})...")
+            resp = requests.get(url, timeout=15, headers=REQUEST_HEADERS)
+            resp.raise_for_status()
+            soup = BeautifulSoup(resp.content, "xml")
+            entries = soup.find_all("item")
+            if not entries: entries = soup.find_all("entry")
+            for entry in entries[:10]:
+                title = entry.find("title").text.strip() if entry.find("title") else "Untitled"
+                link = ""
+                if entry.find("link"):
+                    link = entry.find("link").text.strip()
+                    if not link and entry.find("link").get("href"): link = entry.find("link").get("href")
+                items_out.append({
+                    "국가": "미국", "매체": name, "제목": title, "링크": link,
+                    "수집일시": datetime.now().isoformat(), "type": "article"
+                })
         except Exception as e:
-            print(f"[WARN] Failed to collect {source}: {e}")
-
+            print(f"[Error] Failed to fetch {name}: {e}")
     return items_out
 
-
-def collect_news() -> list[dict]:
-    global _used_image_hashes_in_run
-    global _used_remote_image_urls_in_run
-    global _company_logo_data_uri_cache
-    global _company_variant_paths_cache
-    global _company_variant_source_cache
-    global _company_last_variant_index
-
-    _used_image_hashes_in_run.clear()
-    _used_remote_image_urls_in_run.clear()
-    _company_logo_data_uri_cache.clear()
-    _company_variant_paths_cache.clear()
-    _company_variant_source_cache.clear()
-    _company_last_variant_index.clear()
-
-    now = datetime.now().strftime("%Y-%m-%d %H:%M")
-    IMAGE_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    COMPANY_IMAGE_POOL_DIR.mkdir(parents=True, exist_ok=True)
-
-    if not GEMINI_API_KEY:
-        print("[INFO] GEMINI_API_KEY not found. Local SVG covers will be generated.")
-    else:
-        print(f"[INFO] GEMINI_API_KEY detected. AI image cap: {NEWS_AI_IMAGE_LIMIT}")
-        if NEWS_CURATION_ENABLED:
-            suggested = os.getenv("GEMINI_CURATION_MODEL", "").strip() or get_latest_gemini_model()
-            print(
-                f"[INFO] Curation enabled. model={suggested}, "
-                f"limit={NEWS_CURATION_LIMIT if NEWS_CURATION_LIMIT else 'unlimited'}"
-            )
-        else:
-            print("[INFO] Curation disabled. Using source summary/fallback prompt.")
-
-    all_news: list[dict] = []
-
-    try:
-        all_news.extend(collect_domestic_news(now))
-    except Exception as e:
-        print(f"[WARN] Failed to collect Domestic news: {e}")
-
-    all_news.extend(collect_global_news(now))
-    
-    # Hacker News 추가
-    all_news.extend(collect_hacker_news(now))
-
-    # -------------------------------------------------------------------------
-    # Sorting & Prioritization
-    # - OpenAI 관련 뉴스를 최상단으로 올립니다.
-    # -------------------------------------------------------------------------
-    def sort_key(item):
-        # OpenAI 키워드가 제목이나 매체에 있으면 우선순위 0 (가장 높음)
-        # 그 외에는 1
-        title_lower = (item.get(KEY_TITLE) or "").lower()
-        media_lower = (item.get(KEY_MEDIA) or "").lower()
-        
-        if 'openai' in title_lower or 'openai' in media_lower:
-            return 0
-        return 1
-
-    # Python의 sort는 stable하므로, 기존 순서(최신순/소스순)를 유지하면서 그룹핑됩니다.
-    all_news.sort(key=sort_key)
-
-    return all_news
-
+def fetch_youtube_news():
+    youtube_channels = {
+        "OpenAI": "UCzvS2F56K8Pz0YVf7qO2YqA",
+        "Google DeepMind": "UC766m_h5S6X_FfI76Z2X2_w",
+        "Two Minute Papers": "UCbfYPyITQ-7l4upoX8nvctg",
+        "Matt Wolfe": "UC_f53ZEJcuInoo6v_5I89Q",
+        "AI Explained": "UCN79Y95z14Y_68jXv-Y",
+        "Andrej Karpathy": "UCP7jMX897n7Oaw"
+    }
+    youtube_items = []
+    seven_days_ago = datetime.now() - timedelta(days=7)
+    for name, channel_id in youtube_channels.items():
+        url = f"https://www.youtube.com/feeds/videos.xml?channel_id={channel_id}"
+        try:
+            print(f"[YouTube] Fetching {name} ({url})...")
+            resp = requests.get(url, timeout=15, headers=REQUEST_HEADERS)
+            resp.raise_for_status()
+            soup = BeautifulSoup(resp.content, "xml")
+            entries = soup.find_all("entry")
+            for entry in entries:
+                published_str = entry.find("published").text if entry.find("published") else ""
+                if published_str:
+                    try:
+                        published_dt = datetime.fromisoformat(published_str.replace("Z", "+00:00"))
+                        if published_dt.replace(tzinfo=None) < seven_days_ago:
+                            continue
+                    except ValueError:
+                        pass
+                
+                title = entry.find("title").text if entry.find("title") else "Untitled"
+                link = entry.find("link")["href"] if entry.find("link") else ""
+                video_id = entry.find("yt:videoId").text if entry.find("yt:videoId") else ""
+                thumbnail = f"https://img.youtube.com/vi/{video_id}/maxresdefault.jpg" if video_id else ""
+                summary = entry.find("media:description").text[:200] + "..." if entry.find("media:description") else ""
+                
+                youtube_items.append({
+                    "국가": "유튜브", "매체": name, "제목": title, "링크": link,
+                    "요약": summary, "이미지": thumbnail, "수집일시": datetime.now().isoformat(), "type": "youtube"
+                })
+        except Exception as e:
+            print(f"[Error] Failed to fetch YouTube {name}: {e}")
+    return youtube_items
 
 def main():
     json_name = "news_data.json"
     existing_items = []
-    if Path(json_name).exists():
+    if os.path.exists(json_name):
         try:
             with open(json_name, "r", encoding="utf-8") as f:
                 existing_items = json.load(f)
-        except Exception as e:
-            print(f"[WARN] Failed to load existing {json_name}: {e}")
+        except Exception:
+            pass
 
-    # Retain items collected within the last 7 days
-    now = datetime.now()
-    seven_days_ago = now - timedelta(days=7)
+    now = datetime.now().isoformat()
+    print("--- Collecting News ---")
     
-    retained_items = []
-    for item in existing_items:
-        collected_at_str = item.get("collected_at") or item.get("수집일시")
-        if collected_at_str:
-            try:
-                # Format is usually "%Y-%m-%d %H:%M"
-                item_date = datetime.strptime(collected_at_str, "%Y-%m-%d %H:%M")
-                if item_date >= seven_days_ago:
-                    retained_items.append(item)
-            except ValueError:
-                # If date format is weird, just keep it for now
-                retained_items.append(item)
-
-    print(f"[INFO] Retained {len(retained_items)} items from the last 7 days.")
-
-    new_items = collect_news()
+    # 각 섹션별 데이터 수집
+    domestic_items = collect_domestic_news(now)
+    global_items = collect_global_news()
+    youtube_items = fetch_youtube_news()
     
-    # Combine and Deduplicate by link or title
+    all_new_items = domestic_items + global_items + youtube_items
+    
     seen_links = set()
     combined_items = []
     
-    # Add new items first to ensure they take precedence
-    for item in new_items:
-        link = item.get("link") or item.get("링크")
-        title = item.get("title") or item.get("제목")
-        dedup_key = link if link else title
-        if dedup_key not in seen_links:
-            seen_links.add(dedup_key)
+    # 1. 신규 아이템 추가 (중복 제거)
+    for item in all_new_items:
+        link = item.get("링크") or item.get("link")
+        if link and link not in seen_links:
+            seen_links.add(link)
             combined_items.append(item)
+            
+    # 2. 기존 아이템 중 7일 이내 데이터 유지
+    seven_days_ago = datetime.now() - timedelta(days=7)
+    for item in existing_items:
+        link = item.get("링크") or item.get("link")
+        if link and link not in seen_links:
+            pub_date_str = item.get("수집일시") or item.get("collected_at", "")
+            try:
+                if "T" in pub_date_str:
+                    pub_date = datetime.fromisoformat(pub_date_str)
+                else:
+                    pub_date = datetime.strptime(pub_date_str, "%Y-%m-%d %H:%M:%S")
+                
+                if pub_date > seven_days_ago:
+                    seen_links.add(link)
+                    combined_items.append(item)
+            except Exception:
+                pass
 
-    # Add retained older items second
-    for item in retained_items:
-        link = item.get("link") or item.get("링크")
-        title = item.get("title") or item.get("제목")
-        dedup_key = link if link else title
-        if dedup_key not in seen_links:
-            seen_links.add(dedup_key)
-            combined_items.append(item)
-
-    # Sort combined items (OpenAI priorities, then latest first)
-    def sort_key(item):
-        title_lower = (item.get("title") or item.get("제목") or "").lower()
-        media_lower = (item.get("media") or item.get("매체") or "").lower()
-        collected_at = item.get("collected_at") or item.get("수집일시") or ""
-        
-        is_prioritized = 0 if ('openai' in title_lower or 'openai' in media_lower) else 1
-        # Secondary sort by date descending
-        return (is_prioritized, collected_at)
-
-    combined_items.sort(key=sort_key, reverse=True) # Sort reverse=True so newest is first in each priority group
-    # However we need priority 0 (is_prioritized=0) to be at the top. Since reverse=True, 0 will go to the bottom if we aren't careful.
-    # So let's invert the boolean or priority number.
-    
-    def final_sort_key(item):
-        title_lower = (item.get("title") or item.get("제목") or "").lower()
-        media_lower = (item.get("media") or item.get("매체") or "").lower()
-        collected_at = item.get("collected_at") or item.get("수집일시") or ""
-        
-        # Lower number is better priority.
-        priority = 0 if ('openai' in title_lower or 'openai' in media_lower) else 1
-        return (priority, collected_at)
-
-    # To sort by priority ASC, date DESC:
-    combined_items.sort(key=lambda x: x.get("collected_at") or x.get("수집일시") or "", reverse=True)
-    combined_items.sort(key=lambda x: 0 if 'openai' in (x.get("title") or x.get("제목") or "").lower() or 'openai' in (x.get("media") or x.get("매체") or "").lower() else 1)
-
+    # JSON 저장
     with open(json_name, "w", encoding="utf-8") as f:
         json.dump(combined_items, f, ensure_ascii=False, indent=2)
-
-    domestic_count = sum(1 for item in combined_items if (item.get("국가") == "국내" or item.get("country") == "domestic"))
-    us_count = sum(1 for item in combined_items if (item.get("국가") == "미국" or item.get("country") == "global"))
-
-    print(f"[OK] Wrote {len(combined_items)} items to {json_name}")
-    print(f"- Domestic: {domestic_count}")
-    print(f"- US/Global: {us_count}")
-
-    # Also save as .js for local file access (CORS bypass)
-    js_name = "news_data.js"
+        
+    # JS 저장 (브라우저용)
     js_content = f"window.NEWS_DATA = {json.dumps(combined_items, ensure_ascii=False, indent=2)};"
-    with open(js_name, "w", encoding="utf-8") as f:
+    with open("news_data.js", "w", encoding="utf-8") as f:
         f.write(js_content)
-    print(f"[OK] Wrote to {js_name} (for local browser access)")
-
+        
+    print(f"\n[DONE] Total items: {len(combined_items)}")
 
 if __name__ == "__main__":
     main()
