@@ -82,7 +82,7 @@ COMPANY_SEARCH_TIMEOUT = get_int_env("COMPANY_SEARCH_TIMEOUT", 12)
 COMPANY_DAILY_ROTATION = get_bool_env("COMPANY_DAILY_ROTATION", True)
 COMPANY_INFER_FROM_ENGLISH_TITLE = get_bool_env("COMPANY_INFER_FROM_ENGLISH_TITLE", False)
 NEWS_CURATION_ENABLED = get_bool_env("NEWS_CURATION_ENABLED", True)
-NEWS_CURATION_LIMIT = get_int_env("NEWS_CURATION_LIMIT", 20)
+NEWS_CURATION_LIMIT = get_int_env("NEWS_CURATION_LIMIT", 100)
 RSS_IMAGE_FORCE_ALLOW_SOURCES = get_csv_env_set("RSS_IMAGE_FORCE_ALLOW_SOURCES")
 RSS_IMAGE_FORCE_DENY_SOURCES = get_csv_env_set("RSS_IMAGE_FORCE_DENY_SOURCES")
 
@@ -103,31 +103,6 @@ KEY_COUNTRY = "\uad6d\uac00"
 KEY_MEDIA = "\ub9e4\uccb4"
 KEY_TITLE = "\uc81c\ubaa9"
 KEY_LINK = "\ub9c1\ud06c"
-import base64
-import hashlib
-import html
-import html
-import json
-import os
-import random
-import re
-import sys
-import time
-from datetime import datetime, timedelta
-from pathlib import Path
-from urllib.parse import quote_plus, urljoin
-
-import requests
-from bs4 import BeautifulSoup
-from dotenv import load_dotenv
-
-try:
-    import google.generativeai as genai
-except Exception:
-    genai = None
-
-load_dotenv()
-
 
 def extract_og_image(url: str) -> str:
     """기사 URL에서 og:image 메타 태그를 추출합니다."""
@@ -1891,6 +1866,7 @@ def recreate_news_content(title: str, original_content: str, source: str) -> dic
             image_prompt = fallback_prompt
 
         _curation_count += 1
+        print(f"  [Gemini] Curated: {title[:30]}... ({_curation_count}/{NEWS_CURATION_LIMIT})")
         return {
             "summary": curated_summary,
             "image_prompt": image_prompt,
@@ -1898,6 +1874,7 @@ def recreate_news_content(title: str, original_content: str, source: str) -> dic
             "mode": "curation-success",
         }
     except Exception as e:
+        print(f"  [Gemini Error] {title[:30]}...: {e}")
         print(f"[WARN] recreate_news_content failed: {e}")
         return {
             "summary": fallback_summary,
@@ -2316,7 +2293,7 @@ def collect_global_news() -> list[dict]:
             soup = BeautifulSoup(resp.content, "xml")
             entries = soup.find_all("item")
             if not entries: entries = soup.find_all("entry")
-            for entry in entries[:10]:
+            for entry in entries[:5]:
                 title = entry.find("title").text.strip() if entry.find("title") else "Untitled"
                 link = ""
                 if entry.find("link"):
@@ -2348,16 +2325,24 @@ def collect_global_news() -> list[dict]:
                         if img_match:
                             image_url = img_match.group(1)
                 # 4순위: og:image 태그 (description 안에 있는 경우)
-                if not image_url:
-                    desc = entry.find("description")
-                    if desc:
-                        img_match = re.search(r'<img[^>]+src=["\']([^"\'>]+)["\']', desc.text or "")
-                        if img_match:
-                            image_url = img_match.group(1)
-
+                desc_tag = entry.find("description")
+                description_text = desc_tag.text.strip() if desc_tag else ""
+                if not image_url and desc_tag:
+                    img_match = re.search(r'<img[^>]+src=["\']([^"\'>]+)["\']', desc_tag.text or "")
+                    if img_match:
+                        image_url = img_match.group(1)
+                
+                # HTML 태그 제거 및 텍스트 정리 (요약용)
+                clean_desc = BeautifulSoup(description_text, "html.parser").get_text().strip()
+                
+                # 한국어 요약 생성 (Gemini 사용, 영문 기사 대응)
+                # recreate_news_content는 내부적으로 NEWS_CURATION_LIMIT를 체크함
+                curation_data = recreate_news_content(title, clean_desc, name)
+                
                 items_out.append({
                     "국가": "미국", "매체": name, "제목": title, "링크": link,
                     "이미지": image_url,
+                    "요약": curation_data["summary"],
                     "수집일시": datetime.now().isoformat(), "type": "article"
                 })
         except Exception as e:
@@ -2373,13 +2358,13 @@ def fetch_youtube_news():
     # 채널 홈 URL: youtube.com/@채널명 → 소스코드에서 "externalId" 검색으로 확인
     youtube_channels = {
         "조코딩 JoCoding": "UCQNE2JmbasNYbjGAcuBiRRg",
-        "데이터팝콘 data.popcorn": "UCGU_CgteEqNSjiXcF0QfaKg",
         "빵형의 개발도상국": "UC9PB9nKYqKEx_N3KM-JVTpg",
         "테크몽": "UCFX6adXoyQKxft933NB3rmA",
-        "세바시 강연 Sebasi Talk": "UCgheNMc3gGHLsT-RISdCzDQ",
         "노정석": "UCz-BiVywYdO6iXhjXkw_Kgw",
         "원투코딩 OneTwoCoding": "UCPaKutl_0Ip43VSXAq_d7GA",
-        "Two Minute Papers": "UCbfYPyITQ-7l4upoX8nvctg",  # 유효한 채널 유지
+        "코딩알려주는누나": "UCfBvs0ZJdTA43NQrnI9imGA",     # 검증 완료
+        "Nomad Coders": "UCUpJs89fSBXNolQGOYKn0YQ",        # 검증 완료
+        "Google for Developers": "UC_x5XG1OV2P6uZZ5FSM9Ttw",  # 검증 완료
     }
 
     youtube_items = []
@@ -2407,32 +2392,45 @@ def fetch_youtube_news():
                 if published_str:
                     try:
                         published_dt = datetime.fromisoformat(published_str.replace("Z", "+00:00")).replace(tzinfo=None)
-                        if published_dt < thirty_days_ago:
-                            continue
-                    except ValueError:
-                        pass
+                        if published_dt < thirty_days_ago: continue
+                    except ValueError: pass
 
                 title = entry.find("title").text if entry.find("title") else "Untitled"
-                summary_full = entry.find("media:description").text if entry.find("media:description") else ""
 
-                # 키워드 매칭
-                text_to_check = (title + " " + summary_full).lower()
-                matched = any(k.lower() in text_to_check for k in priority_keywords)
-                if not matched:
+                video_url = entry.find("link")["href"] if entry.find("link") else ""
+                video_id = entry.find("yt:videoId").text if entry.find("yt:videoId") else ""
+                thumb_url = f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg" if video_id else ""
+
+                # 영상 설명 추출
+                yt_summary = ""
+                media_group = entry.find("media:group")
+                if media_group:
+                    yt_desc = media_group.find("media:description")
+                    if yt_desc:
+                        yt_summary = yt_desc.text.strip()
+                
+                if not yt_summary:
+                    # entry/summary 태그 확인
+                    summary_tag = entry.find("summary")
+                    if summary_tag: yt_summary = summary_tag.text.strip()
+
+                # 키워드 필터링 (필요시)
+                text_to_check = (title + " " + yt_summary).lower()
+                if not any(k.lower() in text_to_check for k in priority_keywords):
                     continue
 
-                link = entry.find("link")["href"] if entry.find("link") else ""
-                video_id = entry.find("yt:videoId").text if entry.find("yt:videoId") else ""
-                thumbnail = f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg" if video_id else ""
+                # 한국어 요약 생성 (Gemini 사용)
+                curation_data = recreate_news_content(title, yt_summary[:500], name)
 
                 youtube_items.append({
                     "국가": "유튜브",
                     "매체": name,
                     "제목": title,
-                    "링크": link,
-                    "요약": summary_full[:150].replace('\n', ' ') + "...",
-                    "이미지": thumbnail,
-                    "수집일시": published_dt.isoformat() if published_dt else datetime.now().isoformat(),
+                    "링크": video_url,
+                    "이미지": thumb_url,
+                    "요약": curation_data["summary"],
+                    "날짜": published_dt.isoformat() if published_dt else datetime.now().isoformat(),
+                    "수집일시": datetime.now().isoformat(),
                     "type": "youtube"
                 })
         except Exception as e:
