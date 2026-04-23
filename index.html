@@ -121,12 +121,13 @@
       </div>
     </div>
 
+    <!-- 상단: 한국 뉴스 + 한국 유튜브 (split-view) -->
     <div id="content-area" class="split-view">
-      <!-- Left: News Articles -->
+      <!-- Left: Korean News Articles -->
       <section id="news-section">
         <div class="flex items-center justify-between mb-6">
           <h3 class="text-lg font-bold flex items-center gap-2">
-            <i class="far fa-newspaper text-blue-600"></i> 최신 뉴스 기사
+            <i class="far fa-newspaper text-blue-600"></i> 국내 최신 뉴스
           </h3>
         </div>
         <div id="news-list" class="bento-grid">
@@ -134,11 +135,11 @@
         </div>
       </section>
 
-      <!-- Right: YouTube Videos -->
+      <!-- Right: Korean YouTube Videos -->
       <section id="youtube-section" class="border-l border-gray-200 pl-0 lg:pl-8">
         <div class="flex items-center justify-between mb-6">
           <h3 class="text-lg font-bold flex items-center gap-2">
-            <i class="fab fa-youtube text-red-600"></i> 추천 AI 유튜브
+            <i class="fab fa-youtube text-red-600"></i> 추천 AI 유튜브 (한국)
           </h3>
         </div>
         <div id="youtube-list" class="bento-grid">
@@ -146,12 +147,40 @@
         </div>
       </section>
     </div>
+
+    <!-- 하단: 미국 기사/블로그 카드 -->
+    <section id="us-news-section" class="mt-12">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-lg font-bold flex items-center gap-2">
+          <i class="fas fa-globe-americas text-indigo-600"></i> 해외(미국) 기사 &amp; 블로그
+        </h3>
+      </div>
+      <div id="us-news-list" class="bento-grid">
+        <!-- US articles -->
+      </div>
+    </section>
   </main>
 
   <script src="news_data.js"></script>
   <script>
     let currentData = window.NEWS_DATA || [];
     let currentView = 'all';
+
+    // 한국어 유튜브 채널 화이트리스트 (이 외의 채널은 모두 제외)
+    const KOREAN_YT_CHANNELS = [
+      'Nomad Coders',
+      '코딩알려주는누나',
+      '원투코딩 OneTwoCoding',
+      '노정석',
+      '테크몽',
+      '조코딩 JoCoding'
+    ];
+
+    function isKoreanYouTube(item) {
+      if (item.type !== 'youtube') return false;
+      const m = (item.매체 || '').trim();
+      return KOREAN_YT_CHANNELS.includes(m);
+    }
 
     function init() {
       renderData();
@@ -167,7 +196,8 @@
       const contentArea = document.getElementById('content-area');
       const newsSection = document.getElementById('news-section');
       const youtubeSection = document.getElementById('youtube-section');
-      
+      const usSection = document.getElementById('us-news-section');
+
       document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('tab-active'));
       document.getElementById(`btn-${view}`).classList.add('tab-active');
 
@@ -176,27 +206,26 @@
         newsSection.style.display = 'block';
         youtubeSection.style.display = 'block';
         youtubeSection.classList.add('border-l');
+        usSection.style.display = 'block';
       } else if (view === 'news') {
         contentArea.className = 'block';
         newsSection.style.display = 'block';
         youtubeSection.style.display = 'none';
+        usSection.style.display = 'block';
       } else if (view === 'youtube') {
         contentArea.className = 'block';
         newsSection.style.display = 'none';
         youtubeSection.style.display = 'block';
         youtubeSection.classList.remove('border-l');
+        usSection.style.display = 'none';
       }
       renderData();
     }
 
-    function renderData() {
-      const newsList = document.getElementById('news-list');
-      const youtubeList = document.getElementById('youtube-list');
-
-      const newsData = currentData.filter(item => item.type === 'article' || !item.type);
-      const youtubeData = currentData.filter(item => item.type === 'youtube');
-
-      newsList.innerHTML = newsData.map(item => `
+    function articleCardHtml(item, accent) {
+      const accentColor = accent === 'us' ? 'text-indigo-600' : 'text-blue-600';
+      const hoverColor = accent === 'us' ? 'hover:text-indigo-600' : 'hover:text-blue-600';
+      return `
         <div class="card flex flex-col h-full overflow-hidden">
           ${item.이미지 ? `
             <div class="h-44 w-full overflow-hidden bg-gray-100">
@@ -205,10 +234,10 @@
           ` : ''}
           <div class="p-5 flex flex-col flex-grow">
             <div class="flex justify-between items-center mb-3">
-              <span class="text-[10px] font-bold text-blue-600 uppercase tracking-wider">${item.매체 || 'NEWS'}</span>
+              <span class="text-[10px] font-bold ${accentColor} uppercase tracking-wider">${item.매체 || 'NEWS'}</span>
               <span class="text-[10px] text-gray-400">${timeSince(item.수집일시)}</span>
             </div>
-            <a href="${item.링크}" target="_blank" class="text-base font-bold text-gray-800 hover:text-blue-600 transition-colors line-clamp-2 mb-3 leading-snug">
+            <a href="${item.링크}" target="_blank" class="text-base font-bold text-gray-800 ${hoverColor} transition-colors line-clamp-2 mb-3 leading-snug">
               ${item.제목}
             </a>
             <p class="text-xs text-gray-500 line-clamp-3 mb-4">
@@ -220,9 +249,32 @@
             </div>
           </div>
         </div>
-      `).join('');
+      `;
+    }
 
-      youtubeList.innerHTML = youtubeData.map(item => `
+    function renderData() {
+      const newsList = document.getElementById('news-list');
+      const youtubeList = document.getElementById('youtube-list');
+      const usList = document.getElementById('us-news-list');
+
+      // 국내(한국) 뉴스 기사
+      const koreanNews = currentData.filter(item =>
+        (item.type === 'article' || !item.type) && (item.국가 === '국내')
+      );
+
+      // 한국어 유튜브 채널만
+      const koreanYoutube = currentData.filter(isKoreanYouTube);
+
+      // 미국/해외 기사 (국가 === '미국')
+      const usNews = currentData.filter(item =>
+        (item.type === 'article' || !item.type) && (item.국가 === '미국')
+      );
+
+      newsList.innerHTML = koreanNews.length
+        ? koreanNews.map(item => articleCardHtml(item, 'kr')).join('')
+        : `<div class="col-span-full py-10 text-center text-gray-400 text-sm">국내 뉴스가 없습니다.</div>`;
+
+      youtubeList.innerHTML = koreanYoutube.length ? koreanYoutube.map(item => `
         <div class="card flex flex-col h-full overflow-hidden group">
           <div class="relative h-44 w-full bg-black">
             <img src="${item.이미지}" alt="youtube" class="w-full h-full object-cover">
@@ -245,7 +297,11 @@
             </p>
           </div>
         </div>
-      `).join('');
+      `).join('') : `<div class="col-span-full py-10 text-center text-gray-400 text-sm">표시할 한국어 채널 영상이 없습니다.</div>`;
+
+      usList.innerHTML = usNews.length
+        ? usNews.map(item => articleCardHtml(item, 'us')).join('')
+        : `<div class="col-span-full py-10 text-center text-gray-400 text-sm">해외 기사가 없습니다.</div>`;
     }
 
     function timeSince(date) {

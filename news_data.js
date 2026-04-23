@@ -143,7 +143,7 @@ window.NEWS_DATA = [
     "제목": "Era raises $11M to build a software platform for AI gadgets",
     "링크": "https://techcrunch.com/2026/04/23/era-computer-raises-11m-to-build-a-software-platform-for-ai-gadgets/",
     "이미지": "",
-    "요약": "Era thinks that we will see many form factors of AI hardware, including glasses, rings, and pendants",
+    "요약": "에라(Era)는 안경, 반지, 목걸이 등 우리 몸에 착용하는 다양한 형태의 AI 기기들을 하나로 연결하는 소프트웨어 플랫폼을 개발하기 위해 약 150억 원의 투자를 유치했습니다. 복잡한 기술을 넘어 일상 속 여러 기기에서 AI 기능을 자유롭게 쓸 수 있는 미래형 운영 체제를 구축하는 것이 이들의 핵심 목표입니다.",
     "수집일시": "2026-04-23T16:13:58.379340",
     "type": "article"
   },
@@ -153,7 +153,7 @@ window.NEWS_DATA = [
     "제목": "Salmon raises $100M in equity and debt to bring digital credit to underbanked Filipinos",
     "링크": "https://techcrunch.com/2026/04/23/salmon-raises-100m-in-equity-and-debt-to-bring-digital-credit-to-underbanked-filipinos/",
     "이미지": "",
-    "요약": "Salmon is targeting underbanked Filipinos, with little to no credit history, as well as people unhappy with the incumbent lenders' reliability issues.",
+    "요약": "핀테크 기업 ‘새먼(Salmon)’이 약 1억 달러의 대규모 투자를 유치하며 필리핀의 금융 소외 계층을 위한 서비스 확대에 나섰습니다. 신용 기록이 부족해 기존 은행 이용이 어려웠던 사용자들에게 쉽고 빠른 디지털 신용 서비스를 제공함으로써 필리핀의 금융 문턱을 혁신적으로 낮출 것으로 기대됩니다.",
     "수집일시": "2026-04-23T16:13:58.379670",
     "type": "article"
   },
@@ -163,7 +163,7 @@ window.NEWS_DATA = [
     "제목": "Best Fitbit Models for Beginners, Athletes, and Kids (2026)",
     "링크": "https://www.wired.com/story/best-fitbit/",
     "이미지": "https://media.wired.com/photos/69e94aa26a36ac31fa631502/master/pass/The-Best-Fitbit-Depends-on-Your-Goals.-Here's-How-to-Choose.jpg",
-    "요약": "The fitness trackers I'd recommend to beginners, athletes, and kids.",
+    "요약": "2026년형 최신 핏빗 라인업은 운동을 처음 시작하는 입문자부터 기록 단축을 목표로 하는 전문 선수, 그리고 아이들까지 모든 연령층과 목적에 맞춘 최적의 웨어러블 솔루션을 제공합니다. 복잡한 데이터 분석 대신 사용자의 라이프스타일에 맞춘 직관적인 건강 관리 가이드를 통해 온 가족이 즐겁게 신체 활동을 기록하고 관리할 수 있도록 돕습니다.",
     "수집일시": "2026-04-23T16:13:58.832354",
     "type": "article"
   },
@@ -173,7 +173,7 @@ window.NEWS_DATA = [
     "제목": "Crypto scam lures ships into Strait of Hormuz, falsely promising safe passage",
     "링크": "https://arstechnica.com/security/2026/04/crypto-scam-lures-ships-into-strait-of-hormuz-falsely-promising-safe-passage/",
     "이미지": "https://cdn.arstechnica.net/wp-content/uploads/2026/04/Tanker-Strait-of-Hormuz-500x500.jpg",
-    "요약": "Ship attacked by Iran after possibly falling for safe passage crypto scam.",
+    "요약": "호르무즈 해협을 지나는 선박들에게 암호화폐를 내면 안전한 통행을 보장해주겠다고 속이는 신종 사기가 기승을 부리고 있습니다. 실제로는 가짜 약속에 속아 경로를 변경한 선박들이 오히려 위험 구역에 진입해 이란 당국에 나포되는 등 해상 안전에 심각한 위협이 되고 있습니다.",
     "수집일시": "2026-04-23T16:13:59.024002",
     "type": "article"
   },
@@ -183,7 +183,7 @@ window.NEWS_DATA = [
     "제목": "Our newsroom AI policy",
     "링크": "https://arstechnica.com/staff/2026/04/our-newsroom-ai-policy/",
     "이미지": "https://cdn.arstechnica.net/wp-content/uploads/2026/02/ars-logo-dark-background-500x500.jpg",
-    "요약": "How Ars Technica uses, and doesn't use, generative AI.",
+    "요약": "기술 전문 매체 아스 테크니카가 독자의 신뢰를 지키기 위해 기사 작성 시 인공지능(AI)을 활용하는 명확한 기준을 마련했습니다. AI를 단순한 보조 도구로만 제한적으로 사용하고, 모든 최종 결과물은 반드시 사람이 직접 확인하고 책임진다는 투명한 운영 원칙을 담고 있습니다.",
     "수집일시": "2026-04-23T16:13:59.024218",
     "type": "article"
   },
@@ -193,7 +193,7 @@ window.NEWS_DATA = [
     "제목": "Making ChatGPT better for clinicians",
     "링크": "https://openai.com/index/making-chatgpt-better-for-clinicians",
     "이미지": "",
-    "요약": "OpenAI makes ChatGPT for Clinicians free for verified U.S. physicians, nurse practitioners, and pharmacists, supporting clinical care, documentation, and research.",
+    "요약": "OpenAI가 미국 내 전문 의료인들을 위해 '의료진 전용 챗GPT'를 무료로 공개하며 의료 혁신에 나섰습니다. 이 도구는 복잡한 의학 서류 작성부터 최신 연구 분석까지 폭넓게 지원하여, 의료진이 환자 진료에 더 집중할 수 있도록 돕는 똑똑한 비서 역할을 수행합니다.",
     "수집일시": "2026-04-23T16:13:59.435416",
     "type": "article"
   },
@@ -203,7 +203,7 @@ window.NEWS_DATA = [
     "제목": "Workspace agents",
     "링크": "https://openai.com/academy/workspace-agents",
     "이미지": "",
-    "요약": "Learn how to build, use, and scale workspace agents in ChatGPT to automate repeatable workflows, connect tools, and streamline team operations.",
+    "요약": "ChatGPT 내에서 반복되는 업무를 자동으로 처리해주는 '워크스페이스 에이전트'의 제작과 활용 방법이 공개되었습니다. 전문 지식이 없어도 다양한 업무 도구를 하나로 연결해 팀 전체의 운영 효율을 극대화할 수 있는 맞춤형 AI 비서 시대가 본격화될 전망입니다.",
     "수집일시": "2026-04-23T16:13:59.435618",
     "type": "article"
   },
@@ -213,7 +213,7 @@ window.NEWS_DATA = [
     "제목": "Introducing workspace agents in ChatGPT",
     "링크": "https://openai.com/index/introducing-workspace-agents-in-chatgpt",
     "이미지": "",
-    "요약": "Workspace agents in ChatGPT are Codex-powered agents that automate complex workflows, run in the cloud, and help teams scale work across tools securely.",
+    "요약": "챗GPT에 복잡한 업무를 알아서 처리해 주는 '워크스페이스 에이전트' 기능이 도입되었습니다. 여러 가지 업무 도구를 클라우드상에서 안전하게 연결하고 자동화하여, 팀 전체의 작업 효율을 획기적으로 높여주는 똑똑한 디지털 비서 역할을 수행합니다.",
     "수집일시": "2026-04-23T16:13:59.435793",
     "type": "article"
   },
@@ -223,7 +223,7 @@ window.NEWS_DATA = [
     "제목": "Speeding up agentic workflows with WebSockets in the Responses API",
     "링크": "https://openai.com/index/speeding-up-agentic-workflows-with-websockets",
     "이미지": "",
-    "요약": "A deep dive into the Codex agent loop, showing how WebSockets and connection-scoped caching reduced API overhead and improved model latency.",
+    "요약": "OpenAI가 AI 에이전트의 작업 속도를 획기적으로 높이기 위해 웹소켓(WebSockets) 기술을 도입했습니다. 데이터를 주고받는 통로를 계속 열어두고 자주 쓰는 정보를 미리 저장해두는 방식을 통해, AI가 훨씬 더 빠르고 끊김 없이 답변할 수 있게 되었습니다.",
     "수집일시": "2026-04-23T16:13:59.435964",
     "type": "article"
   },
@@ -233,7 +233,7 @@ window.NEWS_DATA = [
     "제목": "Introducing OpenAI Privacy Filter",
     "링크": "https://openai.com/index/introducing-openai-privacy-filter",
     "이미지": "",
-    "요약": "OpenAI Privacy Filter is an open-weight model for detecting and redacting personally identifiable information (PII) in text with state-of-the-art accuracy",
+    "요약": "OpenAI가 텍스트 속 성함이나 전화번호 같은 개인정보를 스스로 식별해 안전하게 가려주는 기술을 공개했습니다. 누구나 이용할 수 있도록 개방된 이 인공지능 모델은 높은 정확도로 민감한 정보 유출을 막아주어, 우리가 AI를 더욱 안심하고 사용할 수 있게 돕습니다.",
     "수집일시": "2026-04-23T16:13:59.436127",
     "type": "article"
   },
@@ -243,7 +243,7 @@ window.NEWS_DATA = [
     "제목": "Decoupled DiLoCo: A new frontier for resilient, distributed AI training",
     "링크": "https://deepmind.google/blog/decoupled-diloco/",
     "이미지": "https://lh3.googleusercontent.com/1-K_kcmoX-fIzTJ13T0-uF4gylS2tK00ZVvx87B2WSayzUS2fxDoDDXFq5hOhxptrBeG8AbjG_URN5OOTpGMqad9zILjMsTdAHWroiDKpziBQjzErw=w528-h297-n-nu-rw-lo",
-    "요약": "Decoupled DiLoCo: A new frontier for resilient, distributed AI training",
+    "요약": "구글 딥마인드가 분산 AI 학습 방식을 한층 유연하게 만든 '디커플드 디로코(Decoupled DiLoCo)'를 공개했습니다. 여러 지역의 컴퓨팅 자원을 네트워크 속도나 장애에 구애받지 않고 안정적으로 엮어 대형 모델을 학습시킬 수 있는 길을 열었습니다.",
     "수집일시": "2026-04-23T16:14:00.059850",
     "type": "article"
   },
@@ -253,7 +253,7 @@ window.NEWS_DATA = [
     "제목": "Partnering with industry leaders to accelerate AI transformation",
     "링크": "https://deepmind.google/blog/partnering-with-industry-leaders-to-accelerate-ai-transformation/",
     "이미지": "https://lh3.googleusercontent.com/t9KvGjgjHJMLDqzAzXuDUOXFI4IlnMiYLhRmxohCRvB1qGSr8-8-TDEI24qk8ilY4OzRB2et5dSlWOjMs6lm-R718xmtQwdiGBxOO7VjxBfMq4a3yoI=w528-h297-n-nu-rw-lo",
-    "요약": "Google DeepMind partners with global consultancies to bring the power of frontier AI to organizations around the world.",
+    "요약": "구글 딥마인드가 글로벌 컨설팅 기업들과 손을 잡고 최첨단 AI 기술을 전 세계 기업 현장에 본격적으로 확산시킵니다. 기업들이 AI 도입을 고민하는 단계를 넘어 실제 업무 혁신으로 빠르게 이어질 수 있도록 돕는 파트너십입니다.",
     "수집일시": "2026-04-23T16:14:00.060023",
     "type": "article"
   },
@@ -263,7 +263,7 @@ window.NEWS_DATA = [
     "제목": "Gemini 3.1 Flash TTS: the next generation of expressive AI speech",
     "링크": "https://deepmind.google/blog/gemini-3-1-flash-tts-the-next-generation-of-expressive-ai-speech/",
     "이미지": "https://lh3.googleusercontent.com/O9K0a0MXOACPhUzvThQiyTaWdZ95b_hS-foyHQcYMiCQCB5HKoBXYGyEjnsqcQEjHYjwfNVyqg4Ipk0G-fLiP9hd6JfbD9S-jx7ndLgImfZankCY-9I=w528-h297-n-nu-rw-lo",
-    "요약": "Our newest audio model introduces granular audio tags that give you precise control to direct AI speech for expressive audio generation.",
+    "요약": "구글의 새 음성 모델 'Gemini 3.1 Flash TTS'는 감정·억양·속도 같은 세세한 요소까지 태그로 제어할 수 있어, AI가 더 사람처럼 풍부하고 생생하게 말할 수 있습니다. 오디오북·게임·가상 비서 등에서 한층 자연스러운 음성 경험이 가능해졌습니다.",
     "수집일시": "2026-04-23T16:14:00.060163",
     "type": "article"
   },
@@ -273,7 +273,7 @@ window.NEWS_DATA = [
     "제목": "Gemini Robotics-ER 1.6: Powering real-world robotics tasks through enhanced embodied reasoning",
     "링크": "https://deepmind.google/blog/gemini-robotics-er-1-6/",
     "이미지": "https://lh3.googleusercontent.com/bQ5TgF2iHJq48mxL5ZVxz3KGmIhOj7c62H7WEWrHqIWGrMexTYoqtrAhF8z12ESUeAj4miWZrHKF-SpMkXG3VVqNtzfJDBULlkMZZw06k05QLuHCww=w528-h297-n-nu-rw-lo",
-    "요약": "Gemini Robotics ER 1.6: Enhancing spatial reasoning and multi-view understanding for autonomous robotics.",
+    "요약": "구글 딥마인드가 공개한 'Gemini Robotics-ER 1.6'은 로봇이 공간을 이해하고 여러 카메라 시점을 종합적으로 해석하는 능력을 크게 끌어올렸습니다. 덕분에 로봇이 실제 현장에서 스스로 판단하며 더 정교한 작업을 수행할 수 있게 됐습니다.",
     "수집일시": "2026-04-23T16:14:00.060316",
     "type": "article"
   },
@@ -283,7 +283,7 @@ window.NEWS_DATA = [
     "제목": "Gemma 4: Byte for byte, the most capable open models",
     "링크": "https://deepmind.google/blog/gemma-4-byte-for-byte-the-most-capable-open-models/",
     "이미지": "https://lh3.googleusercontent.com/dP82fYfjynerdo1ze8VAz5F-miu-ghwM9mrzzQoi_FDYVcG4lLTtb7id7b_IKbFVDuv9q765JG_dEWRJK8cFDrxfCeMpzjzvlj3kwqyZWA6zqt_ecw=w528-h297-n-nu-rw-lo",
-    "요약": "Gemma 4: Our most intelligent open models to date, purpose-built for advanced reasoning and agentic workflows.",
+    "요약": "구글이 공개한 오픈소스 AI 모델 'Gemma 4'는 동급에서 가장 뛰어난 추론력과 에이전트 작업 능력을 자랑합니다. 누구나 무료로 활용할 수 있으면서도 상용 모델에 근접한 성능을 내도록 설계돼, 개발자와 스타트업의 선택지가 한층 넓어질 전망입니다.",
     "수집일시": "2026-04-23T16:14:00.060444",
     "type": "article"
   },
@@ -293,7 +293,7 @@ window.NEWS_DATA = [
     "제목": "ReasoningBank: Enabling agents to learn from experience",
     "링크": "https://research.google/blog/reasoningbank-enabling-agents-to-learn-from-experience/",
     "이미지": "https://storage.googleapis.com/gweb-research2023-media/original_images/ReasoningBank-2.png",
-    "요약": "Generative AI",
+    "요약": "구글 리서치가 공개한 'ReasoningBank'는 AI 에이전트가 과거 경험을 기억하고 이를 바탕으로 점점 더 똑똑해지도록 돕는 학습 체계입니다. 매번 처음부터 시작하던 한계를 넘어, 반복 작업을 거듭할수록 성능이 향상되는 AI 에이전트를 만드는 데 활용됩니다.",
     "수집일시": "2026-04-23T16:14:00.841403",
     "type": "article"
   },
@@ -303,7 +303,7 @@ window.NEWS_DATA = [
     "제목": "AI-generated synthetic neurons speed up brain mapping",
     "링크": "https://research.google/blog/ai-generated-synthetic-neurons-speed-up-brain-mapping/",
     "이미지": "https://storage.googleapis.com/gweb-research2023-media/original_images/NeuralShapes_Hero.gif",
-    "요약": "General Science",
+    "요약": "AI가 만들어낸 가상의 뉴런 데이터를 활용해 뇌 지도를 완성하는 속도가 획기적으로 빨라졌습니다. 수많은 실험 데이터를 직접 확보하지 않고도 정교한 뇌 구조 연구가 가능해지면서, 뇌과학과 신경질환 연구에 새로운 돌파구가 열릴 것으로 기대됩니다.",
     "수집일시": "2026-04-23T16:14:00.841607",
     "type": "article"
   },
@@ -313,7 +313,7 @@ window.NEWS_DATA = [
     "제목": "Towards developing future-ready skills with generative AI",
     "링크": "https://research.google/blog/towards-developing-future-ready-skills-with-generative-ai/",
     "이미지": "https://storage.googleapis.com/gweb-research2023-media/original_images/Vantage-hero-1.gif",
-    "요약": "Education Innovation",
+    "요약": "구글 리서치가 생성형 AI를 활용해 학생들이 미래 사회에서 필요한 역량을 기를 수 있도록 돕는 교육 실험 사례를 소개했습니다. 단순한 암기가 아닌 비판적 사고와 창의적 문제 해결 능력을 키우는 방향으로 교실이 바뀌어가고 있습니다.",
     "수집일시": "2026-04-23T16:14:00.841738",
     "type": "article"
   },
@@ -323,7 +323,7 @@ window.NEWS_DATA = [
     "제목": "AutoAdapt: Automated domain adaptation for large language models",
     "링크": "https://www.microsoft.com/en-us/research/blog/autoadapt-automated-domain-adaptation-for-large-language-models/",
     "이미지": "https://www.microsoft.com/en-us/research/wp-content/uploads/2026/04/AutoAdapt-BlogHeroFeature-1400x788-1.jpg",
-    "요약": "Deploying large language models (LLMs) in real-world, high-stakes settings is harder than it should be. In high-stakes settings like law, medicine, and cloud incident response, performance and reliability can quickly break down because adap...",
+    "요약": "마이크로소프트 리서치가 거대 언어 모델(LLM)을 법률·의료·클라우드 장애 대응 같은 고위험 분야에 맞춰 자동으로 최적화하는 기술 'AutoAdapt'를 공개했습니다. 수작업에 의존하던 도메인 특화 과정을 자동화해, 현장 실무에서도 안정적으로 쓸 수 있는 AI를 훨씬 빠르게 만들 수 있게 됐습니다.",
     "수집일시": "2026-04-23T16:14:01.903517",
     "type": "article"
   },
@@ -333,7 +333,7 @@ window.NEWS_DATA = [
     "제목": "Can we AI our way to a more sustainable world?",
     "링크": "https://www.microsoft.com/en-us/research/podcast/can-we-ai-our-way-to-a-more-sustainable-world/",
     "이미지": "",
-    "요약": "Doug Burger, sustainability expert Amy Luers, and optimization researcher Ishai Menache examine the global emissions implications of datacenter operations, efficiency gains, and AI's potential across electrification, materials, and food sys...",
+    "요약": "마이크로소프트 연구진과 지속가능성 전문가들이 모여 데이터센터 배출량과 AI의 환경적 영향, 그리고 AI가 오히려 에너지·소재·식량 문제를 해결하는 데 기여할 수 있는 가능성을 논의했습니다. AI는 기후 위기의 원인이자 해법이 될 수 있다는 양면성이 함께 다뤄졌습니다.",
     "수집일시": "2026-04-23T16:14:01.903948",
     "type": "article"
   },
@@ -343,7 +343,7 @@ window.NEWS_DATA = [
     "제목": "New Future of Work: AI is driving rapid change, uneven benefits",
     "링크": "https://www.microsoft.com/en-us/research/blog/new-future-of-work-ai-is-driving-rapid-change-uneven-benefits/",
     "이미지": "https://www.microsoft.com/en-us/research/wp-content/uploads/2026/04/Jaime-Jenna-Jake-Rebecca-Ideas_Hero_Feature_River_No_Text_1400x788.jpg",
-    "요약": "For the past five years, the New Future of Work report has captured how work is changing. This year, the shift feels especially sharp. Previous editions have focused on technology’s role in increasing productivity by automating tasks, accel...",
+    "요약": "마이크로소프트의 'New Future of Work' 보고서에 따르면 AI가 업무를 빠르게 바꾸고 있지만, 그 혜택은 직군과 개인에 따라 매우 불균등하게 나타납니다. 단순 반복 업무는 자동화로 크게 줄어드는 반면, AI를 잘 활용하는 지식 노동자와 그렇지 못한 이들 사이의 격차는 더 벌어지고 있습니다.",
     "수집일시": "2026-04-23T16:14:01.904319",
     "type": "article"
   },
@@ -353,7 +353,7 @@ window.NEWS_DATA = [
     "제목": "Ideas: Steering AI toward the work future we want",
     "링크": "https://www.microsoft.com/en-us/research/podcast/ideas-steering-ai-toward-the-work-future-we-want/",
     "이미지": "",
-    "요약": "Microsoft Chief Scientist Jaime Teevan and researchers Jenna Butler, Jake Hofman, and Rebecca Janssen unpack the New Future of Work Report 2025 and explore the ideal AI-driven working world. Plus, is AI a tool or a collaborator? And why the...",
+    "요약": "마이크로소프트의 수석 과학자 제이미 티번과 연구진이 'AI가 바꿀 미래의 일하는 방식'을 주제로 이상적인 업무 환경을 모색합니다. AI는 단순한 도구인지 진짜 동료인지, 그리고 인간과 AI의 협업이 생산성과 삶의 질을 어떻게 함께 끌어올릴 수 있을지 깊이 있게 풀어냅니다.",
     "수집일시": "2026-04-23T16:14:01.904770",
     "type": "article"
   },
@@ -363,7 +363,7 @@ window.NEWS_DATA = [
     "제목": "ADeLe: Predicting and explaining AI performance across tasks",
     "링크": "https://www.microsoft.com/en-us/research/blog/adele-predicting-and-explaining-ai-performance-across-tasks/",
     "이미지": "https://www.microsoft.com/en-us/research/wp-content/uploads/2026/03/NatureADELE-BlogHeroFeature-1400x788-1-1024x576.jpg",
-    "요약": "AI benchmarks report how large language models (LLMs) perform on specific tasks but provide little insight into their underlying capabilities that drive their performance. They do not explain failures or reliably predict outcomes on new tas...",
+    "요약": "마이크로소프트 리서치의 'ADeLe'는 AI 모델이 특정 과제에서 왜 잘하고 못하는지를 성능 점수 너머까지 파고들어 설명해 줍니다. 이를 통해 새로운 과제에서의 성공·실패를 미리 예측하고, 모델 개선 방향까지 근거 있게 제시할 수 있는 길이 열렸습니다.",
     "수집일시": "2026-04-23T16:14:01.905115",
     "type": "article"
   },
@@ -373,7 +373,7 @@ window.NEWS_DATA = [
     "제목": "The Download: introducing the 10 Things That Matter in AI Right Now",
     "링크": "https://www.technologyreview.com/2026/04/22/1136310/the-download-10-things-that-matter-in-ai-right-now/",
     "이미지": "https://wp.technologyreview.com/wp-content/uploads/2026/04/09_20_JFM_MIT_TheDownload.webp?w=2127",
-    "요약": "This is today’s edition of The Download, our weekday newsletter that provides a daily dose of what’s going on in the world of technology. Introducing: 10 Things That Matter in AI Right Now What actually matters in AI right now? It’s getting...",
+    "요약": "MIT 테크놀로지 리뷰가 '지금 AI에서 정말 중요한 것 10가지' 리스트를 발표했습니다. 빠르게 쏟아지는 AI 뉴스 속에서 정말로 주목해야 할 기술·정책·사회적 변화의 핵심을 한눈에 짚어주는 가이드입니다.",
     "수집일시": "2026-04-23T16:14:02.672187",
     "type": "article"
   },
@@ -383,7 +383,7 @@ window.NEWS_DATA = [
     "제목": "AI needs a strong data fabric to deliver business value",
     "링크": "https://www.technologyreview.com/2026/04/22/1135295/ai-needs-a-strong-data-fabric-to-deliver-business-value/",
     "이미지": "https://wp.technologyreview.com/wp-content/uploads/2026/04/SAP-article-iStock-480794780.jpg",
-    "요약": "Artificial intelligence is moving quickly in the enterprise, from experimentation to everyday use. Organizations are deploying copilots, agents, and predictive systems across finance, supply chains, human resources, and customer operations....",
+    "요약": "AI가 기업 현장에서 실질적 가치를 내려면 탄탄한 '데이터 패브릭'이 먼저 필요하다는 분석입니다. 재무·공급망·인사 등 다양한 업무에 코파일럿과 AI 에이전트가 확산되고 있지만, 데이터 품질과 통합 기반이 뒷받침되지 않으면 도입 효과는 제한적일 수밖에 없다는 지적입니다.",
     "수집일시": "2026-04-23T16:14:02.672430",
     "type": "article"
   },
@@ -393,7 +393,7 @@ window.NEWS_DATA = [
     "제목": "Talking to AI agents is one thing — what about when they talk to each other? New startup BAND debuts 'universal orchestrator'",
     "링크": "https://venturebeat.com/orchestration/talking-to-ai-agents-is-one-thing-what-about-when-they-talk-to-each-other-new-startup-band-debuts-universal-orchestrator",
     "이미지": "https://images.ctfassets.net/jdtwqhzvc2n1/5u5rPow3VvRI1snYTlvxJF/97afac91fc6ab904890efdc9fe1a691c/ChatGPT_Image_Apr_23__2026__11_39_14_AM.png?w=300&q=30",
-    "요약": "For the past eighteen months, the corporate world has been obsessed with the \"builder\" phase of the generative AI revolution. Enterprises have raced to deploy autonomous agents to handle everything from customer support to complex codebase...",
+    "요약": "AI 에이전트끼리 서로 대화하는 시대가 본격화되는 가운데, 스타트업 BAND가 여러 AI 에이전트를 한데 묶어 지휘하는 '범용 오케스트레이터'를 선보였습니다. 개별 에이전트를 만드는 단계를 넘어 이들을 조화롭게 협업시키는 것이 기업 AI의 다음 과제로 떠오르고 있습니다.",
     "수집일시": "2026-04-23T16:14:02.930366",
     "type": "article"
   },
@@ -403,7 +403,7 @@ window.NEWS_DATA = [
     "제목": "OpenAI unveils Workspace Agents, a successor to custom GPTs for enterprises that can plug directly into Slack, Salesforce and more",
     "링크": "https://venturebeat.com/orchestration/openai-unveils-workspace-agents-a-successor-to-custom-gpts-for-enterprises-that-can-plug-directly-into-slack-salesforce-and-more",
     "이미지": "https://images.ctfassets.net/jdtwqhzvc2n1/4Xdu5CqjmyRwz1NBaDX14Z/b43e969be10254ca838bf1ad60a187a6/ChatGPT_Image_Apr_22__2026__07_40_47_PM.png?w=300&q=30",
-    "요약": "OpenAI introduced a new paradigm and product today that is likely to have huge implications for enterprises seeking to adopt and control fleets of AI agent workers.Called \"Workspace Agents,\" OpenAI's new offering essentially allows users on...",
+    "요약": "오픈AI가 기업용 AI 에이전트를 한 단계 끌어올린 'Workspace Agents'를 공개했습니다. 슬랙·세일즈포스 등 실제 업무 툴과 직접 연동돼, 사용자 대신 문서를 처리하고 데이터를 조회하며 업무 흐름 전체를 자동화할 수 있어 기존의 커스텀 GPT를 넘어서는 새로운 표준이 될 전망입니다.",
     "수집일시": "2026-04-23T16:14:02.932824",
     "type": "article"
   },
@@ -413,7 +413,7 @@ window.NEWS_DATA = [
     "제목": "Google and AWS split the AI agent stack between control and execution",
     "링크": "https://venturebeat.com/orchestration/google-and-aws-split-the-ai-agent-stack-between-control-and-execution",
     "이미지": "https://images.ctfassets.net/jdtwqhzvc2n1/1Vp25PZDnQQMBBb7WLhth0/f565b23d4dfbc56def7a55fae6405769/crimedy7_illustration_of_a_schism_but_related_to_artificial_i_2d035a47-60c4-4cab-9029-d5ee39e3dbdc_0.png?w=300&q=30",
-    "요약": "The era of enterprises stitching together prompt chains and shadow agents is nearing its end as more options for orchestrating complex multi-agent systems emerge. As organizations move AI agents into production, the question remains: \"how w...",
+    "요약": "구글과 AWS가 AI 에이전트 스택을 '통제(Control)'와 '실행(Execution)'으로 분리하는 새로운 아키텍처 전략을 내놨습니다. 프롬프트 짜집기로 복잡해진 기존 에이전트 구조를 대체해, 대규모 멀티 에이전트 시스템을 체계적으로 오케스트레이션할 수 있는 방향이 제시됐습니다.",
     "수집일시": "2026-04-23T16:14:02.933993",
     "type": "article"
   },
@@ -423,7 +423,7 @@ window.NEWS_DATA = [
     "제목": "Are you paying an AI ‘swarm tax’? Why single agents often beat complex systems",
     "링크": "https://venturebeat.com/orchestration/are-you-paying-an-ai-swarm-tax-why-single-agents-often-beat-complex-systems",
     "이미지": "https://images.ctfassets.net/jdtwqhzvc2n1/50hUpeJCVrEi4aq4xSiteQ/7567801aa13be503c7ff3264c7fa5f54/single_vs_multi-agent_systems.jpg?w=300&q=30",
-    "요약": "Enterprise teams building multi-agent AI systems may be paying a compute premium for gains that don't hold up under equal-budget conditions. New Stanford University research finds that single-agent systems match or outperform multi-agent ar...",
+    "요약": "여러 AI 에이전트를 묶어 쓸수록 성능이 무조건 올라간다는 통념이 스탠퍼드 대학 연구로 흔들리고 있습니다. 같은 자원을 주면 오히려 단일 에이전트가 멀티 에이전트 시스템과 비슷하거나 더 나은 결과를 내는 경우가 많아, 불필요한 '스웜 세금(swarm tax)'을 내고 있는 것은 아닌지 돌아봐야 할 시점입니다.",
     "수집일시": "2026-04-23T16:14:02.935215",
     "type": "article"
   },
@@ -433,7 +433,7 @@ window.NEWS_DATA = [
     "제목": "OpenAI launches Privacy Filter, an open source, on-device data sanitization model that removes personal information from enterprise datasets",
     "링크": "https://venturebeat.com/data/openai-launches-privacy-filter-an-open-source-on-device-data-sanitization-model-that-removes-personal-information-from-enterprise-datasets",
     "이미지": "https://images.ctfassets.net/jdtwqhzvc2n1/6XCBm5srH1Bxz7O3CpDLSp/a22758d387829873af7990a15e208306/ChatGPT_Image_Apr_22__2026__01_50_30_PM.png?w=300&q=30",
-    "요약": "In a significant shift toward local-first privacy infrastructure, OpenAI has released Privacy Filter, a specialized open-source model designed to detect and redact personally identifiable information (PII) before it ever reaches a cloud-bas...",
+    "요약": "오픈AI가 개인정보를 기기 내부에서 자동으로 가려주는 오픈소스 모델 'Privacy Filter'를 공개했습니다. 클라우드로 데이터를 보내기 전에 이름·주소·주민등록번호 같은 민감 정보를 먼저 걸러내, 기업이 AI를 활용하면서도 프라이버시 규제를 지킬 수 있도록 돕습니다.",
     "수집일시": "2026-04-23T16:14:02.937073",
     "type": "article"
   },
@@ -443,7 +443,7 @@ window.NEWS_DATA = [
     "제목": "A conversation with Kevin Scott: What’s next in AI",
     "링크": "https://blogs.microsoft.com/ai/a-conversation-with-kevin-scott-whats-next-in-ai/",
     "이미지": "",
-    "요약": "The post A conversation with Kevin Scott: What’s next in AI appeared first on The AI Blog.",
+    "요약": "마이크로소프트 최고기술책임자(CTO) 케빈 스콧이 AI의 다음 단계에 대해 솔직한 대화를 나눴습니다. 거대 모델의 한계, 에이전트·개인화 AI의 부상, 그리고 사람과 AI가 함께 일하는 미래상에 대한 통찰이 담겼습니다.",
     "수집일시": "2026-04-23T16:14:03.108391",
     "type": "article"
   },
@@ -453,7 +453,7 @@ window.NEWS_DATA = [
     "제목": "From Hot Wheels to handling content: How brands are using Microsoft AI to be more productive and imaginative",
     "링크": "https://blogs.microsoft.com/ai/from-hot-wheels-to-handling-content-how-brands-are-using-microsoft-ai-to-be-more-productive-and-imaginative/",
     "이미지": "",
-    "요약": "The post From Hot Wheels to handling content: How brands are using Microsoft AI to be more productive and imaginative appeared first on The AI Blog.",
+    "요약": "핫휠 같은 장난감 브랜드부터 콘텐츠 기획 현장까지, 전 세계 기업들이 마이크로소프트 AI를 활용해 생산성과 창의성을 동시에 끌어올리는 사례가 소개됩니다. AI가 단순한 효율화 도구를 넘어 브랜드의 상상력을 확장하는 파트너로 자리 잡고 있습니다.",
     "수집일시": "2026-04-23T16:14:03.108713",
     "type": "article"
   },
@@ -463,7 +463,7 @@ window.NEWS_DATA = [
     "제목": "How data and AI will transform contact centres for financial services",
     "링크": "https://cloudblogs.microsoft.com/industry-blog/en-gb/financial-services/2022/07/25/how-data-and-ai-will-transform-contact-centres-for-financial-services/",
     "이미지": "",
-    "요약": "The post How data and AI will transform contact centres for financial services appeared first on The AI Blog.",
+    "요약": "금융 서비스 분야의 콜센터가 데이터와 AI를 통해 어떻게 완전히 다른 모습으로 진화하는지를 다룹니다. 상담원의 단순 응대 업무는 AI가 대신하고, 사람은 복잡한 문제 해결과 고객 관계 관리에 집중하는 새로운 고객센터 모델이 제시됩니다.",
     "수집일시": "2026-04-23T16:14:03.109043",
     "type": "article"
   },
@@ -473,7 +473,7 @@ window.NEWS_DATA = [
     "제목": "AI-equipped drones study dolphins on the edge of extinction",
     "링크": "https://news.microsoft.com/apac/features/ai-drones-dolphins-maui63/",
     "이미지": "",
-    "요약": "The post AI-equipped drones study dolphins on the edge of extinction appeared first on The AI Blog.",
+    "요약": "AI 카메라를 장착한 드론이 멸종 위기에 놓인 돌고래들을 하늘에서 관찰하며 개체 수와 건강 상태를 분석합니다. 사람이 직접 접근하기 어려운 바다 환경에서도 AI 기술 덕분에 정밀한 생태 연구와 보호 활동이 가능해지고 있습니다.",
     "수집일시": "2026-04-23T16:14:03.109325",
     "type": "article"
   },
@@ -1291,7 +1291,7 @@ window.NEWS_DATA = [
     "제목": "Introducing ChatGPT Images 2.0",
     "링크": "https://openai.com/index/introducing-chatgpt-images-2-0",
     "이미지": "",
-    "요약": "ChatGPT Images 2.0 introduces a state-of-the-art image generation model with improved text rendering, multilingual support, and advanced visual reasoning.",
+    "요약": "오픈AI가 한층 진화한 이미지 생성 모델 'ChatGPT Images 2.0'을 공개했습니다. 이미지 속 글자를 훨씬 정확하게 쓰고, 다국어를 지원하며, 복잡한 장면도 논리적으로 이해하고 그려내는 등 디자인·마케팅 현장에서 곧바로 활용할 수 있는 수준으로 발전했습니다.",
     "수집일시": "2026-04-24T01:05:56.138273",
     "type": "article"
   },
@@ -1301,7 +1301,7 @@ window.NEWS_DATA = [
     "제목": "OpenAI helps Hyatt advance AI among colleagues",
     "링크": "https://openai.com/index/hyatt-advances-ai-with-chatgpt-enterprise",
     "이미지": "",
-    "요약": "Hyatt deploys ChatGPT Enterprise across its global workforce, using GPT-5.4 and Codex to improve productivity, operations, and guest experiences.",
+    "요약": "글로벌 호텔 체인 하얏트가 전 세계 직원들에게 '챗GPT 엔터프라이즈'를 도입하고 GPT-5.4와 코덱스를 활용해 업무 방식을 혁신합니다. 예약·운영 효율은 물론 투숙객 응대 서비스까지 AI가 촘촘히 지원하면서, 호텔 산업의 디지털 전환이 새로운 단계로 접어들고 있습니다.",
     "수집일시": "2026-04-24T01:05:56.138496",
     "type": "article"
   },
@@ -1311,7 +1311,7 @@ window.NEWS_DATA = [
     "제목": "Introducing GPT-Rosalind for life sciences research",
     "링크": "https://openai.com/index/introducing-gpt-rosalind",
     "이미지": "",
-    "요약": "OpenAI introduces GPT-Rosalind, a frontier reasoning model built to accelerate drug discovery, genomics analysis, protein reasoning, and scientific research workflows.",
+    "요약": "오픈AI가 신약 개발과 유전체 분석, 단백질 연구 등 생명과학 전반에 특화된 추론 모델 'GPT-Rosalind'를 공개했습니다. 복잡한 과학 데이터를 체계적으로 해석하고 연구자들의 실험 설계까지 돕도록 설계돼, 바이오·제약 업계의 연구 속도를 크게 앞당길 것으로 기대됩니다.",
     "수집일시": "2026-04-24T01:05:56.138724",
     "type": "article"
   },
@@ -1321,7 +1321,7 @@ window.NEWS_DATA = [
     "제목": "Gemini 3.1 Flash Live: Making audio AI more natural and reliable",
     "링크": "https://deepmind.google/blog/gemini-3-1-flash-live-making-audio-ai-more-natural-and-reliable/",
     "이미지": "https://lh3.googleusercontent.com/X3xXSd8ns-IojsGTjvadPFyaBWT5bBGhubcQd_WSiIgQ9bESUPceaHtfOxwgYzwv3P-Gtz2r3sWs-1XFB5X72HuTMbVz30hqJCKOxBaQdq1Oq6895A=w528-h297-n-nu-rw-lo",
-    "요약": "Our latest voice model has improved precision and lower latency to make voice interactions more fluid, natural and precise.",
+    "요약": "구글의 최신 음성 AI 모델 'Gemini 3.1 Flash Live'는 더 정확하고 반응 속도가 빠른 실시간 대화를 제공합니다. 끊김 없이 자연스럽게 이어지는 음성 상호작용 덕분에 AI 비서·고객센터·통역 서비스에서 사람과 대화하는 듯한 경험이 가능해졌습니다.",
     "수집일시": "2026-04-24T01:05:57.533992",
     "type": "article"
   },
@@ -1331,7 +1331,7 @@ window.NEWS_DATA = [
     "제목": "Improving the academic workflow: Introducing two AI agents for better figures and peer review",
     "링크": "https://research.google/blog/improving-the-academic-workflow-introducing-two-ai-agents-for-better-figures-and-peer-review/",
     "이미지": "https://storage.googleapis.com/gweb-research2023-media/original_images/PaperVizAgent__ScholarPeer-1.png",
-    "요약": "Generative AI",
+    "요약": "구글 리서치가 논문의 그림을 다듬고 동료 평가(피어 리뷰)를 돕는 두 개의 AI 에이전트를 공개했습니다. 연구자들이 가장 많은 시간을 쓰던 시각화와 리뷰 과정을 AI가 보조하면서, 학술 연구의 품질과 속도를 동시에 끌어올릴 수 있게 됐습니다.",
     "수집일시": "2026-04-24T01:05:58.641490",
     "type": "article"
   },
@@ -1341,7 +1341,7 @@ window.NEWS_DATA = [
     "제목": "Building better AI benchmarks: How many raters are enough?",
     "링크": "https://research.google/blog/building-better-ai-benchmarks-how-many-raters-are-enough/",
     "이미지": "https://storage.googleapis.com/gweb-research2023-media/original_images/ForestVTree-0-Hero.png",
-    "요약": "Algorithms & Theory",
+    "요약": "AI 모델을 평가하는 벤치마크에서 '몇 명의 평가자가 있어야 결과를 믿을 수 있는가'라는 근본적 질문을 다룹니다. 구글 리서치는 통계적 분석을 통해 더 공정하고 재현 가능한 AI 성능 측정 방법론을 제시했습니다.",
     "수집일시": "2026-04-24T01:05:58.641671",
     "type": "article"
   },
@@ -1351,7 +1351,7 @@ window.NEWS_DATA = [
     "제목": "Systematic debugging for AI agents: Introducing the AgentRx framework",
     "링크": "https://www.microsoft.com/en-us/research/blog/systematic-debugging-for-ai-agents-introducing-the-agentrx-framework/",
     "이미지": "https://www.microsoft.com/en-us/research/wp-content/uploads/2026/03/AgentRx-BlogHeroFeature-1400x788-1.jpg",
-    "요약": "As AI agents transition from simple chatbots to autonomous systems capable of managing cloud incidents, navigating complex web interfaces, and executing multi-step API workflows, a new challenge has emerged: transparency. When a human makes...",
+    "요약": "마이크로소프트 리서치가 AI 에이전트의 오류를 체계적으로 진단·수정하는 프레임워크 'AgentRx'를 공개했습니다. 에이전트가 복잡한 업무를 처리할 때 어디서 왜 실패했는지 투명하게 보여줘, 사람이 끝까지 믿고 맡길 수 있는 자율 시스템을 만드는 기반이 됩니다.",
     "수집일시": "2026-04-24T01:06:00.488057",
     "type": "article"
   },
@@ -1361,7 +1361,7 @@ window.NEWS_DATA = [
     "제목": "PlugMem: Transforming raw agent interactions into reusable knowledge",
     "링크": "https://www.microsoft.com/en-us/research/blog/from-raw-interaction-to-reusable-knowledge-rethinking-memory-for-ai-agents/",
     "이미지": "https://www.microsoft.com/en-us/research/wp-content/uploads/2026/03/PlugMem-BlogHeroFeature-1400x788-1-scaled.jpg",
-    "요약": "It seems counterintuitive: giving AI agents more memory can make them less effective. As interaction logs accumulate, they grow large, fill with irrelevant content, and become increasingly difficult to use. More memory means that agents mus...",
+    "요약": "AI 에이전트에게 무작정 많은 기억을 주면 오히려 성능이 떨어진다는 점에 착안해, 마이크로소프트가 '플러그멤(PlugMem)' 기술을 제안했습니다. 쌓여가는 대화·행동 로그를 그대로 쓰는 대신 재사용 가능한 지식으로 정제함으로써, 에이전트가 더 똑똑하고 효율적으로 일하도록 돕습니다.",
     "수집일시": "2026-04-24T01:06:00.488469",
     "type": "article"
   },
@@ -1371,7 +1371,7 @@ window.NEWS_DATA = [
     "제목": "Roundtables: Unveiling The 10 Things That Matter in AI Right Now",
     "링크": "https://www.technologyreview.com/2026/04/21/1135486/roundtables-unveiling-the-10-things-that-matter-in-ai-right-now/",
     "이미지": "",
-    "요약": "Listen to the session or watch below Subscribers saw a special edition of Roundtables simulcast live from EmTech AI, MIT Technology Review’s signature conference for AI leadership. Subscribers got an exclusive first look at a new list captu...",
+    "요약": "MIT 테크놀로지 리뷰가 주최한 'EmTech AI' 컨퍼런스에서 'AI에서 지금 가장 중요한 10가지'를 공개하는 특별 라운드테이블이 열렸습니다. AI 리더들이 기술·비즈니스·규제 전반의 핵심 흐름을 한자리에서 정리해, 독자들이 숲 전체를 조망할 수 있도록 돕습니다.",
     "수집일시": "2026-04-24T01:06:01.370272",
     "type": "article"
   },
@@ -1381,7 +1381,7 @@ window.NEWS_DATA = [
     "제목": "Google doesn't pay the Nvidia tax. Its new TPUs explain why.",
     "링크": "https://venturebeat.com/orchestration/google-doesnt-pay-the-nvidia-tax-its-new-tpus-explain-why",
     "이미지": "https://images.ctfassets.net/jdtwqhzvc2n1/7Lv60ZibdUZoJ7qlsTTtBS/28670e6d74be8e010be8906057eb9bae/PXL_20260422_025515735.jpg?w=300&q=30",
-    "요약": "Every frontier AI lab right now is rationing two things: electricity and compute. Most of them buy their compute for model training from the same supplier, at the steep gross margins that have turned Nvidia into one of the most valuable com...",
+    "요약": "구글이 자체 설계한 신형 TPU 덕분에 엔비디아 GPU에 의존하지 않고도 대규모 AI를 학습·운영할 수 있게 됐습니다. 경쟁사들이 비싼 '엔비디아 세금'을 내는 동안 구글은 자체 칩으로 비용을 대폭 낮추며, AI 인프라 경쟁에서 구조적 우위를 굳혀 가고 있습니다.",
     "수집일시": "2026-04-24T01:06:01.848736",
     "type": "article"
   },
@@ -1391,7 +1391,7 @@ window.NEWS_DATA = [
     "제목": "Salesforce’s Agentforce Vibes 2.0 targets a hidden failure: context overload in AI agents",
     "링크": "https://venturebeat.com/orchestration/salesforces-agentforce-vibes-2-0-targets-a-hidden-failure-context-overload-in-ai-agents",
     "이미지": "https://images.ctfassets.net/jdtwqhzvc2n1/6VdAsRWYUYHxLrBm6wNunN/59f5d901453d586c1258054428db24c6/crimedy7_illustration_of_a_robot_that_is_so_overwhelmed_with__e33daa08-90c2-46bf-8da1-914393d67905_1.png?w=300&q=30",
-    "요약": "When startup fundraising platform VentureCrowd began deploying AI coding agents, they saw the same gains as other enterprises: they cut the front-end development cycle by 90% in some projects.However, it didn’t come easy or without a lot of...",
+    "요약": "세일즈포스가 공개한 'Agentforce Vibes 2.0'은 AI 에이전트가 과도한 컨텍스트에 압도돼 엉뚱한 결과를 내는 '컨텍스트 과부하' 문제를 정조준합니다. 방대한 정보를 똑똑하게 걸러내고 필요한 것만 집중하게 해, 실제 업무에서 신뢰하고 쓸 수 있는 엔터프라이즈 AI 에이전트를 지향합니다.",
     "수집일시": "2026-04-24T01:06:01.850008",
     "type": "article"
   },
@@ -1401,7 +1401,7 @@ window.NEWS_DATA = [
     "제목": "Online math tutoring service uses AI to help boost students’ skills and confidence",
     "링크": "https://blogs.microsoft.com/ai/eedi-online-math-quiz/",
     "이미지": "",
-    "요약": "The post Online math tutoring service uses AI to help boost students’ skills and confidence appeared first on The AI Blog.",
+    "요약": "온라인 수학 튜터링 서비스가 AI를 도입해 학생들의 실력과 자신감을 동시에 끌어올리고 있습니다. 학생 개개인의 수준에 맞춘 문제와 피드백을 제공해, 혼자 공부하면서도 개인 과외를 받는 듯한 학습 경험이 가능해졌습니다.",
     "수집일시": "2026-04-24T01:06:02.394896",
     "type": "article"
   },
@@ -1411,7 +1411,7 @@ window.NEWS_DATA = [
     "제목": "AI-Mimi is building inclusive TV experiences for Deaf and Hard of Hearing user in Japan",
     "링크": "https://blogs.microsoft.com/accessibility/ai-mimi-is-building-inclusive-tv-experiences-for-deaf-and-hard-of-hearing-user-in-japan/",
     "이미지": "",
-    "요약": "The post AI-Mimi is building inclusive TV experiences for Deaf and Hard of Hearing user in Japan appeared first on The AI Blog.",
+    "요약": "일본의 'AI-Mimi' 프로젝트는 청각 장애인과 난청인을 위한 포용적인 TV 시청 환경을 AI로 구축합니다. 자막 자동 생성과 시각적 보조 정보를 통해, 모든 사람이 방송 콘텐츠를 동등하게 즐길 수 있는 미디어 환경을 만들어가고 있습니다.",
     "수집일시": "2026-04-24T01:06:02.395323",
     "type": "article"
   },
@@ -1421,7 +1421,7 @@ window.NEWS_DATA = [
     "제목": "Microsoft’s framework for building AI systems responsibly",
     "링크": "https://blogs.microsoft.com/on-the-issues/2022/06/21/microsofts-framework-for-building-ai-systems-responsibly/",
     "이미지": "",
-    "요약": "The post Microsoft’s framework for building AI systems responsibly appeared first on The AI Blog.",
+    "요약": "마이크로소프트가 AI 시스템을 책임감 있게 만들기 위한 내부 프레임워크를 공유했습니다. 공정성·투명성·개인정보 보호 같은 원칙을 기획 단계부터 개발·배포 전 과정에 녹여내는 방법을 제시해, 다른 기업들에게도 참고할 수 있는 모범 사례가 됩니다.",
     "수집일시": "2026-04-24T01:06:02.395721",
     "type": "article"
   },
@@ -1431,7 +1431,7 @@ window.NEWS_DATA = [
     "제목": "Singapore develops Asia’s first AI-based mobile app for shark and ray fin identification to combat illegal wildlife trade",
     "링크": "https://news.microsoft.com/en-sg/2022/06/08/singapore-develops-asias-first-ai-based-mobile-app-for-shark-and-ray-fin-identification-to-combat-illegal-wildlife-trade/",
     "이미지": "",
-    "요약": "The post Singapore develops Asia’s first AI-based mobile app for shark and ray fin identification to combat illegal wildlife trade appeared first on The AI Blog.",
+    "요약": "싱가포르가 아시아 최초로 불법 야생동물 거래를 막기 위한 AI 기반 모바일 앱을 선보였습니다. 상어와 가오리 지느러미를 촬영하면 즉시 종(種)을 식별해 주는 기술로, 현장 단속과 보호 활동의 효율을 크게 높일 것으로 기대됩니다.",
     "수집일시": "2026-04-24T01:06:02.396115",
     "type": "article"
   },
@@ -1441,7 +1441,7 @@ window.NEWS_DATA = [
     "제목": "The opportunity at home – can AI drive innovation in personal assistant devices and sign language?",
     "링크": "https://blogs.microsoft.com/accessibility/the-opportunity-at-home-can-ai-drive-innovation-in-personal-assistant-devices-and-sign-language/",
     "이미지": "",
-    "요약": "The post The opportunity at home – can AI drive innovation in personal assistant devices and sign language? appeared first on The AI Blog.",
+    "요약": "AI가 가정용 개인 비서 기기와 수어 통역 영역에서 새로운 혁신을 이끌 가능성을 다룹니다. 말이 불편하거나 시각·청각에 제약이 있는 사용자까지 배려하는 차세대 홈 AI가, 기술을 넘어 삶의 질을 바꾸는 도구로 자리 잡을 수 있을지 짚어봅니다.",
     "수집일시": "2026-04-24T01:06:02.396506",
     "type": "article"
   },
