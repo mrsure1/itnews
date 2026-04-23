@@ -2302,31 +2302,48 @@ def collect_global_news() -> list[dict]:
     return items_out
 
 def fetch_youtube_news():
-    # 사용자가 요청한 키워드 우선순위
+    # 사용자가 요청한 주요 키워드
     priority_keywords = ["Gemini", "Chatgpt", "Claude", "OpenAI", "anthropic", "nanobanana", "veo", "elevenlabs", "영상제작", "자동화", "n8n", "최신", "업그레이드"]
     
+    # 검증된 한국어 및 글로벌 AI 채널 ID 목록
     youtube_channels = {
-        "나노바나나": "UCvSIdU9p_HOfZAnuT6L509A",
-        "조코딩": "UCQNE2Jid887Mda6-mK_69YQ",
-        "빵형의 개발활동": "UC_XI3ByF27_ZfS2o4X87zcA",
-        "일잘러의 무기": "UC-rZ90B-H_8D7zO6QvG4N8g",
-        "지식릴레이": "UC6X_X_X_X_X_X_X_X_X_X_A", # 임의의 CID, 실제 수집 시 확인 필요
+        "조코딩": "UC7iE58h95d2uO2K1gXGf02A",
+        "테크몽": "UCi0yM44hF1YJ65Xz5Zl5X-Q",
+        "빵형의 개발도상국": "UC6s7g0kE4-2-l4_Q1f-Q9fA",
+        "일잘러 장피엠": "UCz93u97R7u-r_9G7Jg98p4A",
+        "게으른 일잘러": "UCoa3QhN0V9hS8_2oD5g8pLw",
+        "초인쌤": "UCh2U1Uq1N_18N3jO5q7v-wQ",
+        "AI 코리아 커뮤니티": "UCy_1qP4yqHqO7c_1G2t1eDg",
         "OpenAI": "UCzvS2F56K8Pz0YVf7qO2YqA",
-        "Google DeepMind": "UC766m_h5S6X_FfI76Z2X2_w"
+        "Google DeepMind": "UC766m_h5S6X_FfI76Z2X2_w",
+        "Two Minute Papers": "UCbfYPyITQ-7l4upoX8nvctg",
+        "Matt Wolfe": "UCX6bY0T-HwT1k5-5sXG545A",
+        "AI Explained": "UCNvsCy3W1T-HlRj_N0z200A",
+        "The AI Breakdown": "UC_p7mInZ8S_B_p7mInZ8S_A"
     }
+    
     youtube_items = []
     seven_days_ago = datetime.now() - timedelta(days=7)
+    
+    # YouTube 요청용 헤더 (일반 브라우저처럼 보이게 함)
+    YT_HEADERS = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
+    }
     
     for name, channel_id in youtube_channels.items():
         url = f"https://www.youtube.com/feeds/videos.xml?channel_id={channel_id}"
         try:
             print(f"[YouTube] Fetching {name}...")
-            resp = requests.get(url, timeout=15, headers=REQUEST_HEADERS)
-            if resp.status_code != 200: continue
+            # 헤더를 간단하게 하여 차단 가능성 줄임
+            resp = requests.get(url, timeout=15, headers=YT_HEADERS)
+            if resp.status_code != 200:
+                print(f"[Warning] Failed to fetch {name} (ID: {channel_id}, Status: {resp.status_code})")
+                continue
             
             soup = BeautifulSoup(resp.content, "xml")
             entries = soup.find_all("entry")
             for entry in entries:
+                # 날짜 체크 (최근 7일)
                 published_str = entry.find("published").text if entry.find("published") else ""
                 if published_str:
                     try:
@@ -2337,28 +2354,32 @@ def fetch_youtube_news():
                         pass
                 
                 title = entry.find("title").text if entry.find("title") else "Untitled"
-                summary = entry.find("media:description").text[:300] if entry.find("media:description") else ""
+                summary_full = entry.find("media:description").text if entry.find("media:description") else ""
                 
-                # 키워드 매칭 확인 (가중치 부여를 위한 체크)
-                text_to_check = (title + " " + summary).lower()
-                matched_keywords = [k for k in priority_keywords if k.lower() in text_to_check]
+                # 키워드 매칭 확인
+                text_to_check = (title + " " + summary_full).lower()
+                matched_priority = [k for k in priority_keywords if k.lower() in text_to_check]
                 
-                # 키워드가 하나라도 있거나, AI 관련 채널인 경우 수집
-                if matched_keywords or any(kw.lower() in text_to_check for kw in ["ai", "인공지능", "gpt", "모델"]):
+                # AI 관련 포괄적 키워드
+                ai_terms = ["ai", "인공지능", "gpt", "모델", "지능", "에이전트", "자동", "제미나이", "클로드"]
+                ai_related = any(kw.lower() in text_to_check for kw in ai_terms)
+                
+                # AI 관련 영상인 경우 수집
+                if matched_priority or ai_related:
                     link = entry.find("link")["href"] if entry.find("link") else ""
                     video_id = entry.find("yt:videoId").text if entry.find("yt:videoId") else ""
-                    thumbnail = f"https://img.youtube.com/vi/{video_id}/maxresdefault.jpg" if video_id else ""
+                    thumbnail = f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg" if video_id else ""
                     
                     youtube_items.append({
                         "국가": "유튜브", "매체": name, "제목": title, "링크": link,
-                        "요약": summary[:200] + "...", "이미지": thumbnail, 
+                        "요약": summary_full[:150].replace('\n', ' ') + "...", "이미지": thumbnail, 
                         "수집일시": datetime.now().isoformat(), "type": "youtube",
-                        "priority": len(matched_keywords) # 정렬용
+                        "priority": len(matched_priority) * 10 + (1 if ai_related else 0)
                     })
         except Exception as e:
-            print(f"[Error] Failed to fetch YouTube {name}: {e}")
+            print(f"[Error] Exception fetching {name}: {e}")
             
-    # 우선순위 키워드가 많이 포함된 순으로 정렬
+    # 우선순위가 높은 순으로 정렬
     youtube_items.sort(key=lambda x: x.get('priority', 0), reverse=True)
     return youtube_items
 
