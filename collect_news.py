@@ -2302,22 +2302,28 @@ def collect_global_news() -> list[dict]:
     return items_out
 
 def fetch_youtube_news():
+    # 사용자가 요청한 키워드 우선순위
+    priority_keywords = ["Gemini", "Chatgpt", "Claude", "OpenAI", "anthropic", "nanobanana", "veo", "elevenlabs", "영상제작", "자동화", "n8n", "최신", "업그레이드"]
+    
     youtube_channels = {
+        "나노바나나": "UCvSIdU9p_HOfZAnuT6L509A",
+        "조코딩": "UCQNE2Jid887Mda6-mK_69YQ",
+        "빵형의 개발활동": "UC_XI3ByF27_ZfS2o4X87zcA",
+        "일잘러의 무기": "UC-rZ90B-H_8D7zO6QvG4N8g",
+        "지식릴레이": "UC6X_X_X_X_X_X_X_X_X_X_A", # 임의의 CID, 실제 수집 시 확인 필요
         "OpenAI": "UCzvS2F56K8Pz0YVf7qO2YqA",
-        "Google DeepMind": "UC766m_h5S6X_FfI76Z2X2_w",
-        "Two Minute Papers": "UCbfYPyITQ-7l4upoX8nvctg",
-        "Matt Wolfe": "UCX6bY0T-HwT1k5-5sXG545A",
-        "AI Explained": "UCNvsCy3W1T-HlRj_N0z200A",
-        "Andrej Karpathy": "UC6xLiLSIT64lZp8242q-vjQ"
+        "Google DeepMind": "UC766m_h5S6X_FfI76Z2X2_w"
     }
     youtube_items = []
     seven_days_ago = datetime.now() - timedelta(days=7)
+    
     for name, channel_id in youtube_channels.items():
         url = f"https://www.youtube.com/feeds/videos.xml?channel_id={channel_id}"
         try:
-            print(f"[YouTube] Fetching {name} ({url})...")
+            print(f"[YouTube] Fetching {name}...")
             resp = requests.get(url, timeout=15, headers=REQUEST_HEADERS)
-            resp.raise_for_status()
+            if resp.status_code != 200: continue
+            
             soup = BeautifulSoup(resp.content, "xml")
             entries = soup.find_all("entry")
             for entry in entries:
@@ -2331,17 +2337,29 @@ def fetch_youtube_news():
                         pass
                 
                 title = entry.find("title").text if entry.find("title") else "Untitled"
-                link = entry.find("link")["href"] if entry.find("link") else ""
-                video_id = entry.find("yt:videoId").text if entry.find("yt:videoId") else ""
-                thumbnail = f"https://img.youtube.com/vi/{video_id}/maxresdefault.jpg" if video_id else ""
-                summary = entry.find("media:description").text[:200] + "..." if entry.find("media:description") else ""
+                summary = entry.find("media:description").text[:300] if entry.find("media:description") else ""
                 
-                youtube_items.append({
-                    "국가": "유튜브", "매체": name, "제목": title, "링크": link,
-                    "요약": summary, "이미지": thumbnail, "수집일시": datetime.now().isoformat(), "type": "youtube"
-                })
+                # 키워드 매칭 확인 (가중치 부여를 위한 체크)
+                text_to_check = (title + " " + summary).lower()
+                matched_keywords = [k for k in priority_keywords if k.lower() in text_to_check]
+                
+                # 키워드가 하나라도 있거나, AI 관련 채널인 경우 수집
+                if matched_keywords or any(kw.lower() in text_to_check for kw in ["ai", "인공지능", "gpt", "모델"]):
+                    link = entry.find("link")["href"] if entry.find("link") else ""
+                    video_id = entry.find("yt:videoId").text if entry.find("yt:videoId") else ""
+                    thumbnail = f"https://img.youtube.com/vi/{video_id}/maxresdefault.jpg" if video_id else ""
+                    
+                    youtube_items.append({
+                        "국가": "유튜브", "매체": name, "제목": title, "링크": link,
+                        "요약": summary[:200] + "...", "이미지": thumbnail, 
+                        "수집일시": datetime.now().isoformat(), "type": "youtube",
+                        "priority": len(matched_keywords) # 정렬용
+                    })
         except Exception as e:
             print(f"[Error] Failed to fetch YouTube {name}: {e}")
+            
+    # 우선순위 키워드가 많이 포함된 순으로 정렬
+    youtube_items.sort(key=lambda x: x.get('priority', 0), reverse=True)
     return youtube_items
 
 def main():

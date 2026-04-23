@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" class="dark">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,136 +9,145 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --glass-bg: rgba(23, 23, 23, 0.7);
-      --glass-border: rgba(255, 255, 255, 0.1);
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
       --accent-primary: #3b82f6;
       --accent-secondary: #8b5cf6;
+      --card-border: rgba(0, 0, 0, 0.05);
+      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     }
     body {
       font-family: 'Inter', 'Noto Sans KR', sans-serif;
-      background: #0a0a0a;
-      color: #e5e5e5;
+      background: var(--bg-primary);
+      color: var(--text-primary);
       overflow-x: hidden;
     }
-    .glass {
-      background: var(--glass-bg);
+    .glass-header {
+      background: rgba(255, 255, 255, 0.8);
       backdrop-filter: blur(12px);
-      border: 1px solid var(--glass-border);
+      border-bottom: 1px solid var(--card-border);
+    }
+    .hero-banner {
+      height: 200px;
+      background: url('banner.png') center/cover no-repeat;
+      border-radius: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 2rem;
+      box-shadow: var(--card-shadow);
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(255,255,255,0.9), rgba(255,255,255,0.1));
+      display: flex;
+      align-items: center;
+      padding: 0 3rem;
+    }
+    .card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--card-border);
       border-radius: 1rem;
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s ease;
     }
-    .gradient-text {
-      background: linear-gradient(135deg, #60a5fa, #a78bfa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .card-hover {
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .card-hover:hover {
+    .card:hover {
       transform: translateY(-5px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
       border-color: var(--accent-primary);
-      box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
     }
     .tab-active {
       background: var(--accent-primary);
-      color: white;
-      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+      color: white !important;
+      box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
     }
     .split-view {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
+      gap: 2rem;
     }
     @media (max-width: 1024px) {
       .split-view { grid-template-columns: 1fr; }
     }
     .bento-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 1.5rem;
     }
-    /* 스크롤바 디자인 */
+    /* 스크롤바 */
     ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #0a0a0a; }
-    ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #444; }
-
-    .video-container {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      overflow: hidden;
-    }
-    .video-container iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
+    ::-webkit-scrollbar-track { background: var(--bg-primary); }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
   </style>
 </head>
 <body class="min-h-screen pb-12">
 
   <!-- Header -->
-  <header class="sticky top-0 z-50 px-6 py-4 glass border-b border-white/10 mx-4 mt-4 mb-8">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+  <header class="sticky top-0 z-50 glass-header px-6 py-3">
+    <div class="max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20">
-          <i class="fas fa-robot text-white text-xl"></i>
+        <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center shadow-md">
+          <i class="fas fa-robot text-white"></i>
         </div>
-        <h1 class="text-2xl font-bold gradient-text">AI News Hub</h1>
+        <h1 class="text-xl font-bold text-gray-800">AI News Hub</h1>
       </div>
 
-      <!-- Navigation Tabs -->
-      <nav class="flex p-1 bg-white/5 rounded-2xl border border-white/10">
-        <button id="btn-all" onclick="switchView('all')" class="px-6 py-2 rounded-xl text-sm font-medium transition-all duration-300 tab-active">전체보기</button>
-        <button id="btn-news" onclick="switchView('news')" class="px-6 py-2 rounded-xl text-sm font-medium transition-all duration-300 hover:bg-white/10">뉴스</button>
-        <button id="btn-youtube" onclick="switchView('youtube')" class="px-6 py-2 rounded-xl text-sm font-medium transition-all duration-300 hover:bg-white/10">유튜브</button>
+      <nav class="flex p-1 bg-gray-100 rounded-xl">
+        <button id="btn-all" onclick="switchView('all')" class="px-5 py-1.5 rounded-lg text-sm font-semibold transition-all tab-active">전체보기</button>
+        <button id="btn-news" onclick="switchView('news')" class="px-5 py-1.5 rounded-lg text-sm font-semibold text-gray-500 hover:text-gray-800 transition-all">뉴스</button>
+        <button id="btn-youtube" onclick="switchView('youtube')" class="px-5 py-1.5 rounded-lg text-sm font-semibold text-gray-500 hover:text-gray-800 transition-all">유튜브</button>
       </nav>
 
-      <div class="hidden md:flex items-center gap-4 text-sm text-gray-400">
-        <span id="last-update">업데이트 확인 중...</span>
-        <button onclick="location.reload()" class="p-2 hover:bg-white/10 rounded-lg transition-colors">
+      <div class="hidden md:flex items-center gap-4 text-xs text-gray-400">
+        <span id="last-update">마지막 업데이트 확인 중...</span>
+        <button onclick="location.reload()" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
           <i class="fas fa-sync-alt"></i>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="max-w-[1600px] mx-auto px-6">
+  <main class="max-w-[1600px] mx-auto px-6 mt-6">
+    <!-- Hero Banner -->
+    <div class="hero-banner">
+      <div class="hero-overlay">
+        <div>
+          <h2 class="text-3xl font-extrabold text-gray-900 mb-2">AI News Hub</h2>
+          <p class="text-gray-600 font-medium">최신 AI 기술과 트렌드를 한눈에 확인하세요.</p>
+        </div>
+      </div>
+    </div>
+
     <div id="content-area" class="split-view">
-      
       <!-- Left: News Articles -->
-      <section id="news-section" class="flex flex-col gap-6">
-        <div class="flex items-center justify-between">
-          <h2 class="text-xl font-bold flex items-center gap-2">
-            <i class="far fa-newspaper text-blue-400"></i> 최신 신문 기사
-          </h2>
+      <section id="news-section">
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="text-lg font-bold flex items-center gap-2">
+            <i class="far fa-newspaper text-blue-600"></i> 최신 뉴스 기사
+          </h3>
         </div>
         <div id="news-list" class="bento-grid">
-          <!-- Articles will be loaded here -->
-          <div class="col-span-full py-20 text-center text-gray-500">데이터를 불러오는 중...</div>
+          <div class="col-span-full py-20 text-center text-gray-400">로딩 중...</div>
         </div>
       </section>
 
       <!-- Right: YouTube Videos -->
-      <section id="youtube-section" class="flex flex-col gap-6 border-l border-white/5 pl-0 lg:pl-6">
-        <div class="flex items-center justify-between">
-          <h2 class="text-xl font-bold flex items-center gap-2">
-            <i class="fab fa-youtube text-red-500"></i> AI 유튜브 트렌드
-          </h2>
+      <section id="youtube-section" class="border-l border-gray-200 pl-0 lg:pl-8">
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="text-lg font-bold flex items-center gap-2">
+            <i class="fab fa-youtube text-red-600"></i> 추천 AI 유튜브
+          </h3>
         </div>
         <div id="youtube-list" class="bento-grid">
-          <!-- Videos will be loaded here -->
+          <!-- Videos -->
         </div>
       </section>
-
     </div>
   </main>
 
-  <!-- Data Load Script -->
   <script src="news_data.js"></script>
   <script>
     let currentData = window.NEWS_DATA || [];
@@ -149,7 +158,7 @@
       if (currentData.length > 0) {
         const lastItem = currentData[0];
         const lastUpdate = new Date(lastItem.수집일시);
-        document.getElementById('last-update').innerText = `마지막 업데이트: ${lastUpdate.toLocaleString('ko-KR')}`;
+        document.getElementById('last-update').innerText = `업데이트: ${lastUpdate.toLocaleString('ko-KR')}`;
       }
     }
 
@@ -159,26 +168,24 @@
       const newsSection = document.getElementById('news-section');
       const youtubeSection = document.getElementById('youtube-section');
       
-      // Update Buttons
-      document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('tab-active', 'bg-white/10'));
+      document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('tab-active'));
       document.getElementById(`btn-${view}`).classList.add('tab-active');
 
       if (view === 'all') {
         contentArea.className = 'split-view';
-        newsSection.classList.remove('hidden');
-        youtubeSection.classList.remove('hidden');
+        newsSection.style.display = 'block';
+        youtubeSection.style.display = 'block';
         youtubeSection.classList.add('border-l');
       } else if (view === 'news') {
         contentArea.className = 'block';
-        newsSection.classList.remove('hidden');
-        youtubeSection.classList.add('hidden');
+        newsSection.style.display = 'block';
+        youtubeSection.style.display = 'none';
       } else if (view === 'youtube') {
         contentArea.className = 'block';
-        newsSection.classList.add('hidden');
-        youtubeSection.classList.remove('hidden');
+        newsSection.style.display = 'none';
+        youtubeSection.style.display = 'block';
         youtubeSection.classList.remove('border-l');
       }
-
       renderData();
     }
 
@@ -189,46 +196,51 @@
       const newsData = currentData.filter(item => item.type === 'article' || !item.type);
       const youtubeData = currentData.filter(item => item.type === 'youtube');
 
-      // Render News
       newsList.innerHTML = newsData.map(item => `
-        <div class="glass card-hover p-5 flex flex-col gap-4 overflow-hidden relative group">
-          <div class="flex justify-between items-start">
-            <span class="text-xs font-semibold px-2 py-1 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30">${item.매체 || 'News'}</span>
-            <span class="text-[10px] text-gray-500">${timeSince(item.수집일시)}</span>
-          </div>
-          <a href="${item.링크}" target="_blank" class="text-lg font-bold hover:text-blue-400 transition-colors line-clamp-2 leading-snug">
-            ${item.제목}
-          </a>
-          <p class="text-sm text-gray-400 line-clamp-3">
-            ${item.요약 || '상세 내용은 링크를 통해 확인해 주세요.'}
-          </p>
-          <div class="mt-auto pt-4 flex justify-between items-center border-t border-white/5">
-             <span class="text-xs text-gray-500">${item.국가 || ''}</span>
-             <i class="fas fa-external-link-alt text-xs text-gray-600 group-hover:text-blue-400"></i>
+        <div class="card flex flex-col h-full overflow-hidden">
+          ${item.이미지 ? `
+            <div class="h-44 w-full overflow-hidden bg-gray-100">
+              <img src="${item.이미지}" alt="news" class="w-full h-full object-cover" onerror="this.style.display='none'">
+            </div>
+          ` : ''}
+          <div class="p-5 flex flex-col flex-grow">
+            <div class="flex justify-between items-center mb-3">
+              <span class="text-[10px] font-bold text-blue-600 uppercase tracking-wider">${item.매체 || 'NEWS'}</span>
+              <span class="text-[10px] text-gray-400">${timeSince(item.수집일시)}</span>
+            </div>
+            <a href="${item.링크}" target="_blank" class="text-base font-bold text-gray-800 hover:text-blue-600 transition-colors line-clamp-2 mb-3 leading-snug">
+              ${item.제목}
+            </a>
+            <p class="text-xs text-gray-500 line-clamp-3 mb-4">
+              ${item.요약 || '상세 내용은 링크를 참조하세요.'}
+            </p>
+            <div class="mt-auto flex justify-between items-center text-[10px] text-gray-400 pt-3 border-t border-gray-50">
+              <span>${item.국가 || '국내'}</span>
+              <i class="fas fa-arrow-right"></i>
+            </div>
           </div>
         </div>
       `).join('');
 
-      // Render YouTube
       youtubeList.innerHTML = youtubeData.map(item => `
-        <div class="glass card-hover overflow-hidden group">
-          <div class="relative aspect-video">
-            <img src="${item.이미지}" alt="${item.제목}" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-              <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center shadow-xl shadow-red-600/30">
-                <i class="fas fa-play text-white ml-1"></i>
+        <div class="card flex flex-col h-full overflow-hidden group">
+          <div class="relative h-44 w-full bg-black">
+            <img src="${item.이미지}" alt="youtube" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+              <div class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center shadow-lg">
+                <i class="fas fa-play text-white text-xs ml-0.5"></i>
               </div>
             </div>
           </div>
-          <div class="p-5 flex flex-col gap-3">
-            <div class="flex justify-between items-center">
-              <span class="text-xs font-bold text-red-400 uppercase tracking-wider">${item.매체}</span>
-              <span class="text-[10px] text-gray-500">${timeSince(item.수집일시)}</span>
+          <div class="p-5 flex flex-col flex-grow">
+            <div class="flex justify-between items-center mb-3">
+              <span class="text-[10px] font-bold text-red-600 uppercase tracking-wider">${item.매체}</span>
+              <span class="text-[10px] text-gray-400">${timeSince(item.수집일시)}</span>
             </div>
-            <a href="${item.링크}" target="_blank" class="text-lg font-bold line-clamp-2 leading-tight group-hover:text-red-400 transition-colors">
+            <a href="${item.링크}" target="_blank" class="text-base font-bold text-gray-800 hover:text-red-600 transition-colors line-clamp-2 mb-3 leading-snug">
               ${item.제목}
             </a>
-            <p class="text-sm text-gray-400 line-clamp-3">
+            <p class="text-xs text-gray-500 line-clamp-2">
               ${item.요약}
             </p>
           </div>
