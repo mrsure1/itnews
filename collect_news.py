@@ -2306,8 +2306,17 @@ def collect_global_news() -> list[dict]:
                 if not any(kw in text_to_check for kw in ai_keywords):
                     continue
 
+                # 글로벌 기사용 썸네일 생성 (텍스트 포함 SVG)
+                image_url, prompt, provider = generate_reference_image(
+                    title=title,
+                    source=name,
+                    article_uid=hashlib.md5(link.encode()).hexdigest(),
+                    context_text=title
+                )
+
                 items_out.append({
                     "국가": "미국", "매체": name, "제목": title, "링크": link,
+                    "이미지": image_url,
                     "수집일시": datetime.now().isoformat(), "type": "article"
                 })
         except Exception as e:
@@ -2336,7 +2345,7 @@ def fetch_youtube_news():
     }
     
     youtube_items = []
-    seven_days_ago = datetime.now() - timedelta(days=7)
+    thirty_days_ago = datetime.now() - timedelta(days=30)
     
     # YouTube 요청용 헤더 (일반 브라우저처럼 보이게 함)
     YT_HEADERS = {
@@ -2361,7 +2370,7 @@ def fetch_youtube_news():
                 if published_str:
                     try:
                         published_dt = datetime.fromisoformat(published_str.replace("Z", "+00:00"))
-                        if published_dt.replace(tzinfo=None) < seven_days_ago:
+                        if published_dt.replace(tzinfo=None) < thirty_days_ago:
                             continue
                     except ValueError:
                         pass
