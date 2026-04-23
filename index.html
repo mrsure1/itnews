@@ -556,7 +556,10 @@
 
         // 최신 업데이트 시간
         const times = data.map(x => x["수집일시"] ?? x.collected_at).filter(Boolean).sort();
-        if (times.length) $("lastUpdated").textContent = `Last update: ${times[times.length - 1]}`;
+        if (times.length) {
+          const raw = times[times.length - 1];
+          $("lastUpdated").textContent = `최종 업데이트: ${raw} (KST)`;
+        }
 
         buildDateTabs(data);
 

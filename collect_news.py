@@ -7,7 +7,7 @@ import random
 import re
 import sys
 import time
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import quote_plus, urljoin
 
@@ -2464,7 +2464,7 @@ def collect_news() -> list[dict]:
     _company_variant_source_cache.clear()
     _company_last_variant_index.clear()
 
-    now = datetime.now().strftime("%Y-%m-%d %H:%M")
+    now = datetime.now(timezone(timedelta(hours=9))).strftime("%Y-%m-%d %H:%M")
     IMAGE_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     COMPANY_IMAGE_POOL_DIR.mkdir(parents=True, exist_ok=True)
 
