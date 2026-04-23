@@ -2368,11 +2368,18 @@ def collect_global_news(now: str) -> list[dict]:
         "The Verge": "https://www.theverge.com/rss/index.xml",
         "Wired": "https://www.wired.com/feed/rss",
         "Ars Technica": "https://feeds.arstechnica.com/arstechnica/index",
-        # New Tech Blogs
+        # 주요 기술 블로그
         "OpenAI Blog": "https://openai.com/news/rss.xml",
         "Google DeepMind": "https://deepmind.google/blog/rss.xml",
         "Google Research": "https://research.google/blog/rss",
         "Microsoft Research": "https://www.microsoft.com/en-us/research/feed/",
+        # GeeksNews (긱스뉴스) - 한국 개발자 커뮤니티 IT/AI 뉴스
+        "GeeksNews": "https://news.hada.io/rss",
+        # AI 전문 뉴스 소스
+        "MIT Tech Review AI": "https://www.technologyreview.com/feed/",
+        "VentureBeat AI": "https://venturebeat.com/feed/",
+        "The AI Blog (MS)": "https://blogs.microsoft.com/ai/feed/",
+        "Anthropic Blog": "https://www.anthropic.com/rss.xml",
     }
 
     for source, url in usa_feeds.items():
