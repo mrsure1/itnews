@@ -2149,6 +2149,12 @@ def collect_domestic_news(now: str) -> list[dict]:
         summary = curation["summary"]
         image_prompt = curation["image_prompt"]
 
+        # AI 키워드 필터링 (AI 관련 내용만 수집)
+        ai_keywords = ["ai", "인공지능", "gpt", "모델", "지능", "에이전트", "자동", "제미나이", "클로드", "openai", "anthropic", "gemini", "chatgpt"]
+        text_to_check = (title + " " + original_content).lower()
+        if not any(kw in text_to_check for kw in ai_keywords):
+            continue
+
         # Image Assignment Logic
         final_image = ""
         provider = ""
@@ -2293,6 +2299,13 @@ def collect_global_news() -> list[dict]:
                 if entry.find("link"):
                     link = entry.find("link").text.strip()
                     if not link and entry.find("link").get("href"): link = entry.find("link").get("href")
+                
+                # AI 키워드 필터링
+                ai_keywords = ["ai", "intelligence", "gpt", "model", "agent", "automation", "gemini", "claude", "openai", "anthropic"]
+                text_to_check = title.lower()
+                if not any(kw in text_to_check for kw in ai_keywords):
+                    continue
+
                 items_out.append({
                     "국가": "미국", "매체": name, "제목": title, "링크": link,
                     "수집일시": datetime.now().isoformat(), "type": "article"
