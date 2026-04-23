@@ -7,7 +7,7 @@ import random
 import re
 import sys
 import time
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 from pathlib import Path
 from urllib.parse import quote_plus, urljoin
 
@@ -2374,7 +2374,7 @@ def collect_global_news(now: str) -> list[dict]:
         "Google Research": "https://research.google/blog/rss",
         "Microsoft Research": "https://www.microsoft.com/en-us/research/feed/",
         # GeeksNews (긱스뉴스) - 한국 개발자 커뮤니티 IT/AI 뉴스
-        "GeeksNews": "https://news.hada.io/rss/news",
+        "GeeksNews": "https://news.hada.io/rss",
         # AI 전문 뉴스 소스
         "MIT Tech Review AI": "https://www.technologyreview.com/feed/",
         "VentureBeat AI": "https://venturebeat.com/feed/",
@@ -2464,7 +2464,7 @@ def collect_news() -> list[dict]:
     _company_variant_source_cache.clear()
     _company_last_variant_index.clear()
 
-    now = datetime.now(timezone(timedelta(hours=9))).strftime("%Y-%m-%d %H:%M")
+    now = datetime.now().strftime("%Y-%m-%d %H:%M")
     IMAGE_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     COMPANY_IMAGE_POOL_DIR.mkdir(parents=True, exist_ok=True)
 
