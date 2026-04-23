@@ -2374,7 +2374,7 @@ def collect_global_news(now: str) -> list[dict]:
         "Google Research": "https://research.google/blog/rss",
         "Microsoft Research": "https://www.microsoft.com/en-us/research/feed/",
         # GeeksNews (긱스뉴스) - 한국 개발자 커뮤니티 IT/AI 뉴스
-        "GeeksNews": "https://news.hada.io/rss",
+        "GeeksNews": "https://news.hada.io/rss/news",
         # AI 전문 뉴스 소스
         "MIT Tech Review AI": "https://www.technologyreview.com/feed/",
         "VentureBeat AI": "https://venturebeat.com/feed/",
