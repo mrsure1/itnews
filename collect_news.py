@@ -2306,9 +2306,9 @@ def fetch_youtube_news():
         "OpenAI": "UCzvS2F56K8Pz0YVf7qO2YqA",
         "Google DeepMind": "UC766m_h5S6X_FfI76Z2X2_w",
         "Two Minute Papers": "UCbfYPyITQ-7l4upoX8nvctg",
-        "Matt Wolfe": "UC_f53ZEJcuInoo6v_5I89Q",
-        "AI Explained": "UCN79Y95z14Y_68jXv-Y",
-        "Andrej Karpathy": "UCP7jMX897n7Oaw"
+        "Matt Wolfe": "UCX6bY0T-HwT1k5-5sXG545A",
+        "AI Explained": "UCNvsCy3W1T-HlRj_N0z200A",
+        "Andrej Karpathy": "UC6xLiLSIT64lZp8242q-vjQ"
     }
     youtube_items = []
     seven_days_ago = datetime.now() - timedelta(days=7)
