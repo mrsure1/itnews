@@ -76,6 +76,38 @@
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 1.5rem;
     }
+    /* 날짜 탭 */
+    .date-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1.5px solid #e2e8f0;
+      background: #fff;
+      color: #64748b;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all .18s ease;
+    }
+    .date-tab:hover {
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+    }
+    .date-tab.selected {
+      background: #eff6ff;
+      border-color: #93c5fd;
+      color: #2563eb;
+      box-shadow: 0 4px 10px rgba(59,130,246,0.15);
+    }
+    .date-tab .count {
+      font-size: 10px;
+      color: #94a3b8;
+      font-weight: 500;
+    }
+    .date-tab.selected .count { color: #60a5fa; }
     /* 스크롤바 */
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: var(--bg-primary); }
@@ -119,6 +151,13 @@
           <p class="text-gray-600 font-medium">최신 AI 기술과 트렌드를 한눈에 확인하세요.</p>
         </div>
       </div>
+    </div>
+
+    <!-- 날짜별 보기 (최근 7일) -->
+    <div id="date-tabs" class="flex flex-wrap gap-2 items-center mb-8">
+      <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mr-2">
+        <i class="far fa-calendar-alt mr-1"></i> 날짜별 보기
+      </span>
     </div>
 
     <!-- 상단: 한국 뉴스 + 한국 유튜브 (split-view) -->
@@ -165,6 +204,7 @@
   <script>
     let currentData = window.NEWS_DATA || [];
     let currentView = 'all';
+    let selectedDate = 'all'; // 'all' 또는 'YYYY-MM-DD'
 
     // 한국어 유튜브 채널 화이트리스트 (이 외의 채널은 모두 제외)
     const KOREAN_YT_CHANNELS = [
@@ -173,7 +213,8 @@
       '원투코딩 OneTwoCoding',
       '노정석',
       '테크몽',
-      '조코딩 JoCoding'
+      '조코딩 JoCoding',
+      '빵형의 개발도상국'
     ];
 
     function isKoreanYouTube(item) {
@@ -182,7 +223,77 @@
       return KOREAN_YT_CHANNELS.includes(m);
     }
 
+    // 아이템의 수집일시에서 YYYY-MM-DD 추출
+    function getItemDate(item) {
+      const raw = item.수집일시 || item.collected_at || '';
+      if (!raw) return '';
+      if (raw.includes('T')) return raw.split('T')[0];
+      if (raw.includes(' ')) return raw.split(' ')[0];
+      return raw.slice(0, 10);
+    }
+
+    // 선택된 날짜 기준으로 아이템 필터링
+    function filterByDate(items) {
+      if (selectedDate === 'all') return items;
+      return items.filter(item => getItemDate(item) === selectedDate);
+    }
+
+    // 최근 7일치 날짜 목록을 오늘 기준으로 생성 (최신순)
+    function buildDateTabs() {
+      const tabEl = document.getElementById('date-tabs');
+      if (!tabEl) return;
+
+      // 데이터에 존재하는 날짜별 아이템 수 집계
+      const counts = {};
+      currentData.forEach(item => {
+        const d = getItemDate(item);
+        if (!d) return;
+        counts[d] = (counts[d] || 0) + 1;
+      });
+
+      // 오늘부터 6일 전까지 최대 7개 날짜 나열 (최신 → 과거)
+      const today = new Date();
+      const dates = [];
+      for (let i = 0; i < 7; i++) {
+        const d = new Date(today);
+        d.setDate(today.getDate() - i);
+        const yyyy = d.getFullYear();
+        const mm = String(d.getMonth() + 1).padStart(2, '0');
+        const dd = String(d.getDate()).padStart(2, '0');
+        dates.push(`${yyyy}-${mm}-${dd}`);
+      }
+
+      const totalCount = currentData.length;
+      const labels = ['오늘', '어제', '2일 전', '3일 전', '4일 전', '5일 전', '6일 전'];
+
+      let html = `<span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mr-2">
+        <i class="far fa-calendar-alt mr-1"></i> 날짜별 보기
+      </span>`;
+
+      // '전체' 버튼
+      html += `<button class="date-tab ${selectedDate === 'all' ? 'selected' : ''}" onclick="filterDate('all')">
+        전체 <span class="count">${totalCount}</span>
+      </button>`;
+
+      dates.forEach((d, i) => {
+        const c = counts[d] || 0;
+        const mmdd = d.slice(5).replace('-', '.');
+        html += `<button class="date-tab ${selectedDate === d ? 'selected' : ''}" onclick="filterDate('${d}')" ${c === 0 ? 'style="opacity:.45;"' : ''}>
+          ${labels[i]} <span class="text-[10px] font-normal opacity-70">(${mmdd})</span> <span class="count">${c}</span>
+        </button>`;
+      });
+
+      tabEl.innerHTML = html;
+    }
+
+    function filterDate(date) {
+      selectedDate = date;
+      buildDateTabs();
+      renderData();
+    }
+
     function init() {
+      buildDateTabs();
       renderData();
       if (currentData.length > 0) {
         const lastItem = currentData[0];
@@ -257,22 +368,24 @@
       const youtubeList = document.getElementById('youtube-list');
       const usList = document.getElementById('us-news-list');
 
+      const dateScope = filterByDate(currentData);
+
       // 국내(한국) 뉴스 기사
-      const koreanNews = currentData.filter(item =>
+      const koreanNews = dateScope.filter(item =>
         (item.type === 'article' || !item.type) && (item.국가 === '국내')
       );
 
       // 한국어 유튜브 채널만
-      const koreanYoutube = currentData.filter(isKoreanYouTube);
+      const koreanYoutube = dateScope.filter(isKoreanYouTube);
 
       // 미국/해외 기사 (국가 === '미국')
-      const usNews = currentData.filter(item =>
+      const usNews = dateScope.filter(item =>
         (item.type === 'article' || !item.type) && (item.국가 === '미국')
       );
 
       newsList.innerHTML = koreanNews.length
         ? koreanNews.map(item => articleCardHtml(item, 'kr')).join('')
-        : `<div class="col-span-full py-10 text-center text-gray-400 text-sm">국내 뉴스가 없습니다.</div>`;
+        : `<div class="col-span-full py-10 text-center text-gray-400 text-sm">해당 날짜의 국내 뉴스가 없습니다.</div>`;
 
       youtubeList.innerHTML = koreanYoutube.length ? koreanYoutube.map(item => `
         <div class="card flex flex-col h-full overflow-hidden group">
@@ -297,11 +410,11 @@
             </p>
           </div>
         </div>
-      `).join('') : `<div class="col-span-full py-10 text-center text-gray-400 text-sm">표시할 한국어 채널 영상이 없습니다.</div>`;
+      `).join('') : `<div class="col-span-full py-10 text-center text-gray-400 text-sm">해당 날짜의 한국 유튜브 영상이 없습니다.</div>`;
 
       usList.innerHTML = usNews.length
         ? usNews.map(item => articleCardHtml(item, 'us')).join('')
-        : `<div class="col-span-full py-10 text-center text-gray-400 text-sm">해외 기사가 없습니다.</div>`;
+        : `<div class="col-span-full py-10 text-center text-gray-400 text-sm">해당 날짜의 해외 기사가 없습니다.</div>`;
     }
 
     function timeSince(date) {

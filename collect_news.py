@@ -2356,15 +2356,15 @@ def fetch_youtube_news():
 
     # 검증된 한국어 AI 유튜브 채널 ID (실제 채널 ID)
     # 채널 홈 URL: youtube.com/@채널명 → 소스코드에서 "externalId" 검색으로 확인
+    # 한국어로 진행되는 AI/개발 관련 채널만 수집 (영어 전용 채널은 프론트에서도 제외)
     youtube_channels = {
         "조코딩 JoCoding": "UCQNE2JmbasNYbjGAcuBiRRg",
         "빵형의 개발도상국": "UC9PB9nKYqKEx_N3KM-JVTpg",
         "테크몽": "UCFX6adXoyQKxft933NB3rmA",
         "노정석": "UCz-BiVywYdO6iXhjXkw_Kgw",
         "원투코딩 OneTwoCoding": "UCPaKutl_0Ip43VSXAq_d7GA",
-        "코딩알려주는누나": "UCfBvs0ZJdTA43NQrnI9imGA",     # 검증 완료
-        "Nomad Coders": "UCUpJs89fSBXNolQGOYKn0YQ",        # 검증 완료
-        "Google for Developers": "UC_x5XG1OV2P6uZZ5FSM9Ttw",  # 검증 완료
+        "코딩알려주는누나": "UCfBvs0ZJdTA43NQrnI9imGA",
+        "Nomad Coders": "UCUpJs89fSBXNolQGOYKn0YQ",
     }
 
     youtube_items = []
