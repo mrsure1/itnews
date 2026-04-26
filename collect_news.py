@@ -2426,7 +2426,8 @@ def _is_ai_music(title: str = "", channel: str = "", description: str = "") -> b
 
 def _build_youtube_item(*, title: str, video_url: str, video_id: str,
                         published_dt: datetime | None, channel_name: str,
-                        description: str, source_tag: str) -> dict:
+                        description: str, source_tag: str,
+                        view_count: int | None = None) -> dict:
     thumb_url = f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg" if video_id else ""
     curation_data = recreate_news_content(title, (description or "")[:500], channel_name)
     return {
@@ -2436,11 +2437,57 @@ def _build_youtube_item(*, title: str, video_url: str, video_id: str,
         "링크": video_url,
         "이미지": thumb_url,
         "요약": curation_data["summary"],
+        # 영상 게시일(YouTube 표기 그대로). 카드의 시간 표시는 이 값을 우선 사용.
+        "published_at": (published_dt.isoformat() if published_dt else ""),
         "날짜": (published_dt.isoformat() if published_dt else datetime.now().isoformat()),
         "수집일시": datetime.now().isoformat(),
+        "video_id": video_id,
+        # YouTube 조회수 (정수). 알 수 없으면 None.
+        "view_count": view_count,
         "type": "youtube",
         "source": source_tag,  # 'global_official' | 'kw_search'
     }
+
+
+def _fetch_video_view_counts(video_ids: list[str]) -> dict[str, int]:
+    """YouTube Data API videos.list 로 video_id → viewCount 매핑.
+
+    API 키가 없으면 빈 dict 반환. videos.list 는 50개씩 쪼개서 호출 (무료 quota 1unit/call).
+    """
+    api_key = os.getenv("YOUTUBE_API_KEY", "").strip()
+    if not api_key or not video_ids:
+        return {}
+
+    result: dict[str, int] = {}
+    # 중복 제거 + 50개 단위로 분할
+    uniq_ids = list(dict.fromkeys([v for v in video_ids if v]))
+    for i in range(0, len(uniq_ids), 50):
+        chunk = uniq_ids[i:i + 50]
+        try:
+            r = requests.get(
+                "https://www.googleapis.com/youtube/v3/videos",
+                params={
+                    "part": "statistics",
+                    "id": ",".join(chunk),
+                    "key": api_key,
+                },
+                timeout=15,
+            )
+            if r.status_code != 200:
+                print(f"  [warn] videos.list status {r.status_code}: {r.text[:200]}")
+                continue
+            data = r.json()
+            for it in data.get("items", []):
+                vid = it.get("id")
+                vc = it.get("statistics", {}).get("viewCount")
+                if vid and vc is not None:
+                    try:
+                        result[vid] = int(vc)
+                    except (TypeError, ValueError):
+                        pass
+        except Exception as e:
+            print(f"  [error] videos.list: {e}")
+    return result
 
 
 def _fetch_global_official_videos() -> list[dict]:
@@ -2480,11 +2527,21 @@ def _fetch_global_official_videos() -> list[dict]:
                 video_id = vid_tag.text if vid_tag else ""
 
                 description = ""
+                view_count = None
                 media_group = entry.find("media:group")
                 if media_group:
                     yt_desc = media_group.find("media:description")
                     if yt_desc and yt_desc.text:
                         description = yt_desc.text.strip()
+                    # RSS feed 의 조회수 (캐시되어 약간 지연될 수 있음)
+                    media_community = media_group.find("media:community")
+                    if media_community:
+                        stats = media_community.find("media:statistics")
+                        if stats and stats.get("views"):
+                            try:
+                                view_count = int(stats.get("views"))
+                            except (TypeError, ValueError):
+                                pass
 
                 # AI 음악 영상은 수집 제외
                 if _is_ai_music(title, name, description):
@@ -2495,6 +2552,7 @@ def _fetch_global_official_videos() -> list[dict]:
                     title=title, video_url=video_url, video_id=video_id,
                     published_dt=published_dt, channel_name=name,
                     description=description, source_tag="global_official",
+                    view_count=view_count,
                 ))
         except Exception as e:
             print(f"  [error] {name}: {e}")
@@ -2574,6 +2632,7 @@ def _fetch_korean_keyword_search() -> list[dict]:
                     channel_name=channel_title,
                     description=description,
                     source_tag="kw_search",
+                    view_count=None,  # 아래 fetch_youtube_news 에서 일괄 enrich
                 ))
         except Exception as e:
             print(f"  [error] '{q}': {e}")
@@ -2599,6 +2658,18 @@ def fetch_youtube_news():
         if link and link not in seen_links:
             seen_links.add(link)
             deduped.append(it)
+
+    # view_count 가 비어 있는 영상 (주로 키워드 검색분, RSS 에 stats 없는 항목) 을
+    # YouTube Data API videos.list 로 일괄 보충. 실패하면 그대로 None.
+    missing_ids = [it.get("video_id") for it in deduped
+                   if it.get("type") == "youtube" and not it.get("view_count") and it.get("video_id")]
+    if missing_ids:
+        print(f"[YouTube] viewCount 보충 호출: {len(missing_ids)}개")
+        view_map = _fetch_video_view_counts(missing_ids)
+        for it in deduped:
+            vid = it.get("video_id")
+            if vid in view_map and not it.get("view_count"):
+                it["view_count"] = view_map[vid]
 
     # 게시일 기준 최신순 정렬 (게시일이 없으면 수집일시로 폴백)
     def _sort_key(x):

@@ -609,6 +609,12 @@
           ? `<span class="ml-1 px-1.5 py-0.5 rounded bg-red-50 text-red-600 text-[9px] font-bold uppercase tracking-wider border border-red-100">공식</span>`
           : '';
         const pinnedBadge = item.pinned ? pinnedBadgeHtml() : '';
+        const viewCountStr = formatViewCount(item.view_count);
+        const postedAgo = timeSince(videoPostedAt(item));
+        // YouTube 채널 표기와 동일하게 "조회수 X · X시간 전" 형식
+        const metaLine = viewCountStr
+          ? `${viewCountStr} <span class="text-gray-300 mx-0.5">·</span> ${postedAgo}`
+          : postedAgo;
         return `
         <a href="${item.링크 || '#'}" target="_blank" rel="noopener noreferrer" class="card group flex flex-col h-full overflow-hidden ${item.pinned ? 'ring-1 ring-amber-200' : ''}">
           <div class="relative h-44 w-full bg-black">
@@ -620,13 +626,15 @@
             </div>
           </div>
           <div class="p-5 flex flex-col flex-grow">
-            <div class="flex justify-between items-center mb-3">
+            <div class="flex justify-between items-center mb-2">
               <span class="text-[10px] font-bold text-red-600 uppercase tracking-wider flex items-center">${item.매체}${officialBadge}${pinnedBadge}</span>
-              <span class="text-[10px] text-gray-400">${timeSince(item.수집일시)}</span>
             </div>
-            <h4 class="text-base font-bold text-gray-800 group-hover:text-red-600 transition-colors line-clamp-2 mb-3 leading-snug">
+            <h4 class="text-base font-bold text-gray-800 group-hover:text-red-600 transition-colors line-clamp-2 mb-2 leading-snug">
               ${item.제목}
             </h4>
+            <div class="text-[11px] text-gray-500 mb-2 flex items-center gap-1">
+              ${metaLine}
+            </div>
             <p class="text-xs text-gray-500 line-clamp-2">
               ${item.요약}
             </p>
@@ -638,6 +646,25 @@
       usList.innerHTML = usNews.length
         ? usNews.map(item => articleCardHtml(item, 'us')).join('')
         : `<div class="col-span-full py-10 text-center text-gray-400 text-sm">해당 날짜의 해외 기사가 없습니다.</div>`;
+    }
+
+    // 영상 게시일 우선 (YouTube 표기와 동일하게). 폴백: 수집일시.
+    function videoPostedAt(item) {
+      return item.published_at || item.날짜 || item.수집일시 || '';
+    }
+
+    // 조회수 한국식 포맷 (YouTube 표기와 동일: 1.2만회 / 12만회 / 1.5억회 / 1,234회)
+    function formatViewCount(n) {
+      if (n === null || n === undefined || n === '' || isNaN(Number(n))) return '';
+      n = Number(n);
+      if (n < 1000)      return `조회수 ${n.toLocaleString('ko-KR')}회`;
+      if (n < 10000)     return `조회수 ${(n / 1000).toFixed(1).replace(/\.0$/, '')}천회`;
+      if (n < 100000000) {
+        const v = n / 10000;
+        return `조회수 ${v >= 10 ? Math.floor(v) : v.toFixed(1).replace(/\.0$/, '')}만회`;
+      }
+      const v = n / 100000000;
+      return `조회수 ${v >= 10 ? Math.floor(v) : v.toFixed(1).replace(/\.0$/, '')}억회`;
     }
 
     function timeSince(date) {
