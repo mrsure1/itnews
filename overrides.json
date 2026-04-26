@@ -2,18 +2,5 @@
   "deleted": [
     "https://www.youtube.com/watch?v=Y99HgkQohMs"
   ],
-  "pinned": [
-    {
-      "type": "youtube",
-      "국가": "유튜브",
-      "매체": "코딩알려주는누나",
-      "제목": "국비지원 AI 부트캠프 3개월 현실 후기 | 학생으로서 3개월간 직접 수료했습니다.",
-      "링크": "https://www.youtube.com/watch?v=3V5o097pfrY",
-      "이미지": "https://i.ytimg.com/vi/3V5o097pfrY/hqdefault.jpg",
-      "요약": "관리자가 추가한 큐레이션",
-      "수집일시": "2026-04-27T09:00:00",
-      "pinned_for_date": "2026-04-27",
-      "pinned_at": "2026-04-26T15:09:18.192Z"
-    }
-  ]
+  "pinned": []
 }
