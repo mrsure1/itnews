@@ -235,6 +235,7 @@
       return todayStr();
     }
     function getItemDate(item) {
+      if (item.pinned_for_date) return item.pinned_for_date;
       const raw = item.수집일시 || item.collected_at || '';
       if (!raw) return '';
       if (raw.includes('T')) return raw.split('T')[0];
@@ -243,6 +244,7 @@
     }
     function timeSince(date) {
       const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+      if (seconds < 0) return '방금';
       if (seconds < 60) return '방금';
       const m = Math.floor(seconds / 60); if (m < 60) return `${m}분 전`;
       const h = Math.floor(m / 60); if (h < 24) return `${h}시간 전`;
@@ -592,6 +594,7 @@
       if (!url) return showToast('URL 은 필수입니다.', 'error');
       if (!title) return showToast('제목은 필수입니다.', 'error');
 
+      const nowIso = new Date().toISOString();
       const item = {
         type: category === '유튜브' ? 'youtube' : 'article',
         국가: category,
@@ -599,10 +602,11 @@
         제목: title,
         링크: url,
         이미지: image || (isYouTubeUrl(url) ? autoYouTubeThumb(url) : ''),
-        요약: summary || '관리자가 추가한 큐레이션',
-        수집일시: `${date}T09:00:00`,
+        요약: summary || '',
+        // 수집일시는 항상 현재 시각 (미래 시각 방지). 분류 날짜는 pinned_for_date로 별도 보관.
+        수집일시: nowIso,
         pinned_for_date: date,
-        pinned_at: new Date().toISOString(),
+        pinned_at: nowIso,
       };
 
       try {

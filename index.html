@@ -323,6 +323,8 @@
 
     // 아이템의 수집일시에서 YYYY-MM-DD 추출
     function getItemDate(item) {
+      // 핀 항목은 사용자가 지정한 표시 날짜(pinned_for_date)를 우선 사용
+      if (item.pinned_for_date) return item.pinned_for_date;
       const raw = item.수집일시 || item.collected_at || '';
       if (!raw) return '';
       if (raw.includes('T')) return raw.split('T')[0];
@@ -418,8 +420,8 @@
       const pinned = (overridesData.pinned || []).map(p => ({
         ...p,
         pinned: true,
-        // 수집일시가 비어 있으면 pinned_for_date 기준으로 채움
-        수집일시: p.수집일시 || `${p.pinned_for_date || todayStr()}T09:00:00`,
+        // 수집일시는 미래 시각이면 현재로 클램프 (옛날 핀의 09:00:00 폴백 + 시계 차이 방어)
+        수집일시: (p.수집일시 && new Date(p.수집일시) <= new Date()) ? p.수집일시 : new Date().toISOString(),
       }));
       currentData = [...filtered, ...pinned];
     }
@@ -594,6 +596,8 @@
 
     function timeSince(date) {
       const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+      // 미래 시각 방어: 음수면 '방금'으로 처리 (시계 차이/타임존/관리자 입력으로 미래가 들어오는 경우)
+      if (seconds < 0) return '방금';
       let interval = seconds / 31536000;
       if (interval > 1) return Math.floor(interval) + "년 전";
       interval = seconds / 2592000;
