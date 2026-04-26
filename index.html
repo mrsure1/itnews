@@ -265,8 +265,24 @@
       return `${yyyy}-${mm}-${dd}`;
     }
 
-    // 초기값은 오늘. 오늘 데이터가 0개면 init()에서 'all' 로 폴백.
+    // 초기값은 오늘. 오늘 데이터가 0개면 init()에서 가장 최근에 데이터가 있는 날짜로 자동 폴백.
     let selectedDate = todayStr();
+
+    // 표시할 데이터가 1개 이상 있는 가장 최근 날짜를 반환.
+    // 오늘 → 어제 → ... 6일 전 순서로 검사. 모두 없으면 오늘 반환.
+    function effectiveDate() {
+      const today = new Date();
+      for (let i = 0; i < 7; i++) {
+        const d = new Date(today);
+        d.setDate(today.getDate() - i);
+        const yyyy = d.getFullYear();
+        const mm = String(d.getMonth() + 1).padStart(2, '0');
+        const dd = String(d.getDate()).padStart(2, '0');
+        const dateStr = `${yyyy}-${mm}-${dd}`;
+        if (currentData.some(item => getItemDate(item) === dateStr)) return dateStr;
+      }
+      return todayStr();
+    }
 
     // 글로벌 AI 공식 채널 (영어 OK, [공식] 배지 표시)
     const GLOBAL_OFFICIAL_CHANNELS = [
@@ -412,9 +428,9 @@
       await loadOverrides();
       applyOverrides();
 
-      // 오늘 수집된 항목 수 확인 → 0개면 '전체'로 폴백 (액션 누락된 날 빈 화면 방지)
-      const todayCount = currentData.filter(item => getItemDate(item) === todayStr()).length;
-      if (todayCount === 0) selectedDate = 'all';
+      // 오늘 데이터가 없으면 가장 최근에 데이터 있는 날짜로 자동 폴백 (액션 미실행 시 어제 등).
+      // 7일 전까지 모두 비어 있으면 effectiveDate() 가 오늘을 그대로 반환 → 빈 화면 메시지 노출.
+      selectedDate = effectiveDate();
 
       buildDateTabs();
       renderData();

@@ -212,7 +212,7 @@
     let overridesData = { deleted: [], pinned: [] };
     let overridesSha = null;  // GitHub API: 파일 수정 시 필수
     let allItems = [];        // 합성된 표시용 데이터
-    let selectedDate = todayStr();
+    let selectedDate = todayStr();  // applyOverridesAndRender() 에서 effectiveDate() 로 보정됨
 
     // ========================
     // 유틸
@@ -220,6 +220,19 @@
     function todayStr() {
       const d = new Date();
       return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    }
+    // 표시할 데이터가 1개 이상 있는 가장 최근 날짜 (오늘 → 6일 전). 모두 0개면 오늘.
+    function effectiveDate() {
+      const today = new Date();
+      for (let i = 0; i < 7; i++) {
+        const d = new Date(today); d.setDate(today.getDate() - i);
+        const yyyy = d.getFullYear();
+        const mm = String(d.getMonth()+1).padStart(2,'0');
+        const dd = String(d.getDate()).padStart(2,'0');
+        const dateStr = `${yyyy}-${mm}-${dd}`;
+        if (allItems.some(it => getItemDate(it) === dateStr)) return dateStr;
+      }
+      return todayStr();
     }
     function getItemDate(item) {
       const raw = item.수집일시 || item.collected_at || '';
@@ -403,6 +416,19 @@
         수집일시: p.수집일시 || `${p.pinned_for_date || todayStr()}T09:00:00`,
       }));
       allItems = [...filtered, ...pinned];
+
+      // 선택된 날짜에 데이터가 0개면 effectiveDate()로 보정 (오늘 데이터 없으면 어제 등으로 자동 이동).
+      // 단, 사용자가 명시적으로 'all' 또는 다른 날짜를 클릭해 선택한 경우는 존중.
+      if (selectedDate !== 'all' && !allItems.some(it => getItemDate(it) === selectedDate)) {
+        selectedDate = effectiveDate();
+      }
+
+      // 폼 기본 날짜도 효과적인 날짜로 동기화 (사용자가 폼에서 직접 바꾸기 전까지)
+      const pinDateInput = document.getElementById('pin-date');
+      if (pinDateInput && !pinDateInput.dataset.userTouched) {
+        pinDateInput.value = effectiveDate();
+      }
+
       buildDateTabs();
       renderAll();
     }
@@ -548,7 +574,9 @@
 
     function resetPinForm() {
       ['pin-url','pin-title','pin-media','pin-image','pin-summary'].forEach(id => document.getElementById(id).value = '');
-      document.getElementById('pin-date').value = todayStr();
+      const pinDate = document.getElementById('pin-date');
+      pinDate.value = effectiveDate();
+      delete pinDate.dataset.userTouched;
       document.getElementById('pin-category').value = '국내';
     }
 
@@ -607,7 +635,11 @@
     // ========================
     (async function main() {
       updateAuthUI();
-      document.getElementById('pin-date').value = todayStr();
+
+      // 폼 날짜를 사용자가 직접 바꾸면 표시(effective)로 자동 보정하지 않음
+      const pinDateInput = document.getElementById('pin-date');
+      pinDateInput.value = todayStr();
+      pinDateInput.addEventListener('input', () => { pinDateInput.dataset.userTouched = '1'; });
 
       // 카드 그리드에서 X 버튼 클릭을 이벤트 위임으로 처리 (URL 인라인 escape 안전성 ↑)
       document.getElementById('all-list').addEventListener('click', (e) => {
