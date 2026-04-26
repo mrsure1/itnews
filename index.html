@@ -113,6 +113,40 @@
       font-weight: 500;
     }
     .date-tab.selected .count { color: #60a5fa; }
+    /* Floating top 버튼 */
+    .scroll-top-btn {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      width: 48px;
+      height: 48px;
+      border-radius: 9999px;
+      background: var(--accent-primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 24px rgba(59, 130, 246, 0.35), 0 4px 8px rgba(0,0,0,0.1);
+      cursor: pointer;
+      z-index: 60;
+      opacity: 0;
+      transform: translateY(20px) scale(0.8);
+      pointer-events: none;
+      transition: opacity .25s ease, transform .25s ease, background-color .2s ease;
+      border: none;
+    }
+    .scroll-top-btn:hover {
+      background: #2563eb;
+      transform: translateY(0) scale(1.05);
+    }
+    .scroll-top-btn.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+    @media (max-width: 640px) {
+      .scroll-top-btn { right: 16px; bottom: 16px; width: 44px; height: 44px; }
+    }
     /* 스크롤바 */
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: var(--bg-primary); }
@@ -206,11 +240,28 @@
     </section>
   </main>
 
+  <!-- Floating: 맨 위로 -->
+  <button id="scroll-top-btn" class="scroll-top-btn" aria-label="맨 위로" title="맨 위로"
+          onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
   <script src="news_data.js"></script>
   <script>
     let currentData = window.NEWS_DATA || [];
     let currentView = 'all';
-    let selectedDate = 'all'; // 'all' 또는 'YYYY-MM-DD'
+
+    // YYYY-MM-DD 형식의 오늘 날짜 (로컬 타임존 기준)
+    function todayStr() {
+      const d = new Date();
+      const yyyy = d.getFullYear();
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const dd = String(d.getDate()).padStart(2, '0');
+      return `${yyyy}-${mm}-${dd}`;
+    }
+
+    // 초기값은 오늘. 오늘 데이터가 0개면 init()에서 'all' 로 폴백.
+    let selectedDate = todayStr();
 
     // 글로벌 AI 공식 채널 (영어 OK, [공식] 배지 표시)
     const GLOBAL_OFFICIAL_CHANNELS = [
@@ -319,6 +370,10 @@
     }
 
     function init() {
+      // 오늘 수집된 항목 수 확인 → 0개면 '전체'로 폴백 (액션 누락된 날 빈 화면 방지)
+      const todayCount = currentData.filter(item => getItemDate(item) === todayStr()).length;
+      if (todayCount === 0) selectedDate = 'all';
+
       buildDateTabs();
       renderData();
       if (currentData.length > 0) {
@@ -326,6 +381,14 @@
         const lastUpdate = new Date(lastItem.수집일시);
         document.getElementById('last-update').innerText = `업데이트: ${lastUpdate.toLocaleString('ko-KR')}`;
       }
+
+      const topBtn = document.getElementById('scroll-top-btn');
+      const onScroll = () => {
+        if (window.scrollY > 320) topBtn.classList.add('visible');
+        else topBtn.classList.remove('visible');
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
     }
 
     function switchView(view) {
