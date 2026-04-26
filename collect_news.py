@@ -2369,7 +2369,6 @@ GLOBAL_OFFICIAL_CHANNELS = {
     "Microsoft Developer":   "UCsMica-v34Irf9KVTh6xx-g",
     "Cursor":                "UC6YYHJzM6PhZ2Yey9BQiUaw",
     "ElevenLabs":            "UC-ew9TfeD887qUSiWWAAj1w",
-    "Suno":                  "UCsul6HuOrgIJuhL_tnWuAng",
     "Runway":                "UCUBqu_z5uP0AZhYtuyFZB3g",
     "Hugging Face":          "UCHlNU7kIZhRgSbhHvFoy72w",
     "Perplexity":            "UCTSqI4c58ffN6l5Mbdat6dg",
@@ -2387,7 +2386,6 @@ YOUTUBE_SEARCH_QUERIES = [
     "AI 이미지 생성",
     "Nano Banana 이미지",
     "Midjourney 사용법",
-    "Suno AI 음악",
     "ElevenLabs 음성",
     "Sora AI 영상",
     "Veo Google 영상",
@@ -2402,6 +2400,28 @@ _HANGUL_RE = re.compile(r"[\uac00-\ud7a3]")
 
 def _has_korean(text: str) -> bool:
     return bool(_HANGUL_RE.search(text or ""))
+
+
+# AI 음악 영상은 수집에서 제외 (사용자 요청).
+# 제목 + 채널명 만 검사 (요약/설명은 'studio'/'audio'/'included' 같은 단어에 'udio'가 부분 매치되어
+# false positive 가 다수 발생하므로 제외). 'udio' 단독 키워드도 audio false positive 위험으로 제외.
+_AI_MUSIC_KEYWORDS = (
+    "suno",
+    "ai 음악", "ai음악", "a.i 음악",
+    "ai 노래", "ai노래", "ai 작곡", "ai작곡",
+    "ai 커버", "ai커버", "ai cover",
+    "ai song", "ai music", "ai-generated music", "ai generated music",
+    "ai 보컬", "ai보컬", "ai vocal",
+    "음악 만들기", "노래 만들기",
+    "ai로 만든 음악", "ai가 만든 음악", "ai로 작곡",
+    "ai로 만든 노래", "ai가 만든 노래",
+)
+
+
+def _is_ai_music(title: str = "", channel: str = "", description: str = "") -> bool:  # noqa: ARG001
+    # description 은 일부러 무시 (요약/설명 본문은 false positive 다발)
+    text = f"{title} {channel}".lower()
+    return any(k in text for k in _AI_MUSIC_KEYWORDS)
 
 
 def _build_youtube_item(*, title: str, video_url: str, video_id: str,
@@ -2465,6 +2485,11 @@ def _fetch_global_official_videos() -> list[dict]:
                     yt_desc = media_group.find("media:description")
                     if yt_desc and yt_desc.text:
                         description = yt_desc.text.strip()
+
+                # AI 음악 영상은 수집 제외
+                if _is_ai_music(title, name, description):
+                    print(f"  [skip-music] {name}: {title[:60]}")
+                    continue
 
                 items.append(_build_youtube_item(
                     title=title, video_url=video_url, video_id=video_id,
@@ -2533,6 +2558,11 @@ def _fetch_korean_keyword_search() -> list[dict]:
 
                 # 한국어 컨텐츠 필터: 제목 또는 채널명에 한글이 있어야 통과
                 if not (_has_korean(title) or _has_korean(channel_title)):
+                    continue
+
+                # AI 음악 영상은 수집 제외
+                if _is_ai_music(title, channel_title, description):
+                    print(f"  [skip-music] {channel_title}: {title[:60]}")
                     continue
 
                 seen_video_ids.add(vid)

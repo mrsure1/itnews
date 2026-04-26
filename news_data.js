@@ -1496,18 +1496,6 @@ window.NEWS_DATA = [
   },
   {
     "국가": "유튜브",
-    "매체": "FEMO[피모]",
-    "제목": "Suno : &quot;이제 음악계의 &#39;유튜브&#39;가 되고 싶어&quot;",
-    "링크": "https://www.youtube.com/watch?v=x9D2evqSQW0",
-    "이미지": "https://img.youtube.com/vi/x9D2evqSQW0/hqdefault.jpg",
-    "요약": "단순한 생성 도구를 넘어 플랫폼 중심의 '콘텐츠 아이디' 시스템과 수익 분배 구조로 진화하고 있는 AI 음악의 현재와 미래! 과거 유튜브 ...",
-    "날짜": "2026-04-23T12:01:42",
-    "수집일시": "2026-04-26T15:05:28.912733",
-    "type": "youtube",
-    "source": "kw_search"
-  },
-  {
-    "국가": "유튜브",
     "매체": "긍정필터",
     "제목": "AI 영상 만드려면, 무조건 이것부터 써보세요! | 구글이 고퀄리티의 영상 AI를 무료로 풀었습니다. (VEO 3.1 사용법 전부 공개!)",
     "링크": "https://www.youtube.com/watch?v=gK5pOtHOaMQ",
@@ -1604,18 +1592,6 @@ window.NEWS_DATA = [
   },
   {
     "국가": "유튜브",
-    "매체": "안목 ANMOK",
-    "제목": "[Playlist] 다가올 여름을 닮은 선율 | Suno AI가 만든 감성 인디곡 Playlist",
-    "링크": "https://www.youtube.com/watch?v=byCGkdBcENA",
-    "이미지": "https://img.youtube.com/vi/byCGkdBcENA/hqdefault.jpg",
-    "요약": "코끝을 스치는 바람에서 이제 여름 냄새가 나기 시작했어요. 짙어지는 초록색 풀잎과 조금씩 길어지는 오후의 햇살을 담았습니다.",
-    "날짜": "2026-04-20T09:00:47",
-    "수집일시": "2026-04-26T15:05:28.912582",
-    "type": "youtube",
-    "source": "kw_search"
-  },
-  {
-    "국가": "유튜브",
     "매체": "지투지 - 지식에서 지혜로",
     "제목": "[Open Source] AI 에이전트 구축 및 진화 과정스스로 코드를 고치고 진화하는 AI 에이전트 자동화 아키텍처 완전 정복",
     "링크": "https://www.youtube.com/watch?v=DX03uFWHIM8",
@@ -1623,18 +1599,6 @@ window.NEWS_DATA = [
     "요약": "00:00 프로젝트 소개 01:25 차세대 기술 스택 아키텍처 개요 02:22 인프라의 핵심: 영구 메모리와 신뢰성 지투지(Z2Z)의 역할 05:10 ...",
     "날짜": "2026-04-19T22:27:28",
     "수집일시": "2026-04-26T15:05:30.736825",
-    "type": "youtube",
-    "source": "kw_search"
-  },
-  {
-    "국가": "유튜브",
-    "매체": "침착맨",
-    "제목": "AI로 노래 만들기",
-    "링크": "https://www.youtube.com/watch?v=ptxaH5gboBM",
-    "이미지": "https://img.youtube.com/vi/ptxaH5gboBM/hqdefault.jpg",
-    "요약": "침착맨 AI 노래 전곡 듣기: https://suno.com/@eumjoongdal ▷같이 보면 좋은 추천 영상 ...",
-    "날짜": "2026-04-19T10:01:23",
-    "수집일시": "2026-04-26T15:05:28.912776",
     "type": "youtube",
     "source": "kw_search"
   },
@@ -1659,18 +1623,6 @@ window.NEWS_DATA = [
     "요약": "Grok 유료 결제 전에 꼭 보세요. 이번 영상에서는 Google Opal로 VEO 3.1을 활용해 코딩 없이 AI 영상 생성 앱을 만드는 방법을 정리 ...",
     "날짜": "2026-04-17T11:25:39",
     "수집일시": "2026-04-26T15:05:29.986389",
-    "type": "youtube",
-    "source": "kw_search"
-  },
-  {
-    "국가": "유튜브",
-    "매체": "미쿠조아",
-    "제목": "Suno Ai - OMEN",
-    "링크": "https://www.youtube.com/watch?v=ZrNe2h9MHWU",
-    "이미지": "https://img.youtube.com/vi/ZrNe2h9MHWU/hqdefault.jpg",
-    "요약": "짧고 굵게 만들었습니다. #메오티 #조강현 #조그스 #오만팝.",
-    "날짜": "2026-04-17T02:50:11",
-    "수집일시": "2026-04-26T15:05:28.912686",
     "type": "youtube",
     "source": "kw_search"
   },
@@ -1912,18 +1864,6 @@ window.NEWS_DATA = [
   },
   {
     "국가": "유튜브",
-    "매체": "듣고자장 listen sleep",
-    "제목": "오늘의 마침표 | A | AI노래 | Suno | Gemini | Pixverse | Sora | seedance 2.0 | VibeMe AI | 위닛 | 2026.04.07",
-    "링크": "https://www.youtube.com/watch?v=XKqDowrRCFA",
-    "이미지": "https://img.youtube.com/vi/XKqDowrRCFA/hqdefault.jpg",
-    "요약": "오늘의 마침표 | A | AI노래 | Suno | Gemini | Pixverse | Sora | seedance 2.0 | VibeMe AI | 위닛 | 2026.04.07 Suno 와 Gemini 그리고 ...",
-    "날짜": "2026-04-26T15:00:51",
-    "수집일시": "2026-04-26T15:03:31.415331",
-    "type": "youtube",
-    "source": "kw_search"
-  },
-  {
-    "국가": "유튜브",
     "매체": "잡동샤니",
     "제목": "현실감 미쳤다는 새로나온 GPT 이미지 생성 모델.. 와 신기하다..",
     "링크": "https://www.youtube.com/watch?v=oTpf3vF56OQ",
@@ -1984,18 +1924,6 @@ window.NEWS_DATA = [
   },
   {
     "국가": "유튜브",
-    "매체": "엔비츠 아카데미(enbeatz)",
-    "제목": "[SUNO AI 7강] 내 목소리로 만드는 AI 음원! 리믹스 마스터 클래스 #3: 멜로디 &amp; 완곡 팁",
-    "링크": "https://www.youtube.com/watch?v=LRZRR6UG0eU",
-    "이미지": "https://img.youtube.com/vi/LRZRR6UG0eU/hqdefault.jpg",
-    "요약": "당신의 음악적 상상력을 현실로! All About e-Music Making, **엔비츠 아카데미(EnBeATz Academy)**입니다. 드디어 [SUNO AI ...",
-    "날짜": "2026-04-22T01:07:59",
-    "수집일시": "2026-04-26T15:03:30.622347",
-    "type": "youtube",
-    "source": "kw_search"
-  },
-  {
-    "국가": "유튜브",
     "매체": "정서불안 김햄찌",
     "제목": "백문이 불여일견",
     "링크": "https://www.youtube.com/watch?v=jQauWVet2TY",
@@ -2027,18 +1955,6 @@ window.NEWS_DATA = [
     "요약": "구글 계정만 있으면 누구나 바로 쓸 수 있어요. 편집 프로그램 없이 AI 애니메이션 영상 만드는 법, 이 영상 하나로 다 알려드립니다.",
     "날짜": "2026-04-18T04:51:53",
     "수집일시": "2026-04-26T15:03:31.808966",
-    "type": "youtube",
-    "source": "kw_search"
-  },
-  {
-    "국가": "유튜브",
-    "매체": "설시달맘",
-    "제목": "suno ai 제작 음악 일할때 힐링이나 위로를 받고 싶을때 듣는 노래 모음",
-    "링크": "https://www.youtube.com/watch?v=3VCenouK2xw",
-    "이미지": "https://img.youtube.com/vi/3VCenouK2xw/hqdefault.jpg",
-    "요약": "ai 제작 플레이 리스트로 힐링 이나 위로를 주는 노래들 15곡 입니다.",
-    "날짜": "2026-04-16T09:33:21",
-    "수집일시": "2026-04-26T15:03:30.622232",
     "type": "youtube",
     "source": "kw_search"
   },
@@ -2180,18 +2096,6 @@ window.NEWS_DATA = [
     "curation_model": "",
     "curation_mode": "curation-fallback",
     "type": "article"
-  },
-  {
-    "국가": "유튜브",
-    "매체": "Mr Lee Sound",
-    "제목": "K-테크노 트로트[미운 여자]  #suno #트로트 #국내발라드모음 #ai음악",
-    "링크": "https://www.youtube.com/watch?v=3kBD22v6_5Y",
-    "이미지": "https://img.youtube.com/vi/3kBD22v6_5Y/hqdefault.jpg",
-    "요약": "AI와 음악이 만나는 새로운 시대, 이 채널에서는 AI Music Creator로서 누구나 쉽게 음악을 만들고, 유튜브에서 돈 버는 방법까지 연결 ...",
-    "날짜": "2026-04-26T12:32:06",
-    "수집일시": "2026-04-26T14:10:34.081407",
-    "type": "youtube",
-    "source": "kw_search"
   },
   {
     "국가": "유튜브",
