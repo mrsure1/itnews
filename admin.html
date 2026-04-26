@@ -270,15 +270,26 @@
         btn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white hover:bg-blue-700 transition-colors';
       }
     }
-    function onAuthBtn() {
+    async function onAuthBtn() {
       if (getPat()) {
-        if (confirm('로그아웃 하시겠습니까? (sessionStorage에서 PAT 삭제)')) setPat('');
+        if (confirm('로그아웃 하시겠습니까? (sessionStorage에서 PAT 삭제)')) {
+          setPat('');
+          overridesSha = null;
+        }
         return;
       }
       const t = prompt('GitHub Personal Access Token (fine-grained, contents:write) 을 입력하세요.\n\n탭을 닫으면 자동으로 삭제됩니다.');
       if (t && t.trim()) {
         setPat(t.trim());
-        showToast('PAT 등록 완료. 이제 변경 작업이 가능합니다.', 'success');
+        showToast('PAT 확인 중...', 'info');
+        try {
+          // 토큰 유효성 검증 + sha 확보 (PUT 전 422 방지)
+          await fetchOverrides();
+          applyOverridesAndRender();
+          showToast('PAT 등록 완료. 변경 작업이 가능합니다.', 'success');
+        } catch (e) {
+          showToast('PAT 검증 실패: ' + e.message, 'error');
+        }
       }
     }
 
@@ -338,8 +349,29 @@
         showToast('PAT 가 필요합니다. 우상단 [PAT 입력] 버튼을 누르세요.', 'error');
         throw new Error('PAT_REQUIRED');
       }
+
+      // sha가 없으면 먼저 GET으로 가져와 확보 (없는 파일이면 404 → 신규 생성).
+      // 이 단계가 없으면 GitHub PUT API가 422 "sha wasn't supplied" 로 거부함.
+      if (!overridesSha) {
+        try {
+          const head = await gh(`contents/${OVERRIDES_PATH}`);
+          overridesSha = head.sha;
+          // 동시에 본문도 동기화해 두면 동시편집 충돌도 줄어듦
+          try {
+            const decoded = JSON.parse(decodeURIComponent(escape(atob(head.content.replace(/\n/g, '')))));
+            overridesData = {
+              deleted: Array.from(new Set([...(decoded.deleted || []), ...(overridesData.deleted || [])])),
+              pinned: mergePinned(decoded.pinned || [], overridesData.pinned || []),
+            };
+          } catch {}
+        } catch (e) {
+          if (!String(e.message).includes('GitHub API 404')) throw e;
+          // 404: 파일 없음 → 신규 생성으로 진행 (sha 미포함)
+          overridesSha = null;
+        }
+      }
+
       const json = JSON.stringify(overridesData, null, 2) + '\n';
-      // UTF-8 → base64
       const b64 = btoa(unescape(encodeURIComponent(json)));
       const body = { message, content: b64 };
       if (overridesSha) body.sha = overridesSha;
@@ -349,6 +381,14 @@
         body: JSON.stringify(body),
       });
       overridesSha = data.content?.sha || null;
+    }
+
+    // 핀 항목 병합: URL 기준 중복 제거, 로컬(현재 화면)값을 우선
+    function mergePinned(remote, local) {
+      const map = new Map();
+      for (const p of remote) map.set(p.링크 || p.link, p);
+      for (const p of local)  map.set(p.링크 || p.link, p);
+      return Array.from(map.values());
     }
 
     // ========================
