@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>AI News Hub — 관리자</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --accent-primary: #3b82f6;
+      --card-border: rgba(0, 0, 0, 0.05);
+      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    body {
+      font-family: 'Inter', 'Noto Sans KR', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
+    .card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--card-border);
+      border-radius: 1rem;
+      box-shadow: var(--card-shadow);
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+    .date-tab {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 16px; border-radius: 9999px;
+      font-size: 12px; font-weight: 600;
+      border: 1.5px solid #e2e8f0; background: #fff; color: #64748b;
+      cursor: pointer; white-space: nowrap; transition: all .18s ease;
+    }
+    .date-tab:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+    .date-tab.selected {
+      background: #eff6ff; border-color: #93c5fd; color: #2563eb;
+      box-shadow: 0 4px 10px rgba(59,130,246,0.15);
+    }
+    .delete-btn {
+      position: absolute; top: 8px; right: 8px; z-index: 10;
+      width: 30px; height: 30px; border-radius: 9999px;
+      background: rgba(239, 68, 68, 0.95); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; opacity: 0; transition: opacity .15s ease;
+      border: none; box-shadow: 0 4px 8px rgba(239,68,68,0.4);
+    }
+    .card:hover .delete-btn { opacity: 1; }
+    .delete-btn:hover { background: rgb(220, 38, 38); transform: scale(1.08); }
+
+    .pinned-badge {
+      display: inline-flex; align-items: center; gap: 3px;
+      padding: 2px 6px; margin-left: 4px;
+      background: #fef3c7; color: #b45309; border: 1px solid #fde68a;
+      border-radius: 4px; font-size: 9px; font-weight: 700;
+      letter-spacing: .04em; text-transform: uppercase;
+    }
+    .ring-pin { box-shadow: 0 0 0 2px #fcd34d, var(--card-shadow); }
+    .toast {
+      position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%);
+      background: #1e293b; color: #fff; padding: 10px 18px; border-radius: 8px;
+      font-size: 13px; opacity: 0; pointer-events: none; transition: opacity .25s ease;
+      z-index: 100; box-shadow: 0 10px 30px rgba(0,0,0,0.35); max-width: 80%;
+    }
+    .toast.show { opacity: 1; }
+    .toast.error { background: #b91c1c; }
+    .toast.success { background: #15803d; }
+  </style>
+</head>
+<body class="min-h-screen pb-16">
+
+  <header class="sticky top-0 z-40 bg-white/85 backdrop-blur border-b border-gray-100 px-6 py-3">
+    <div class="max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between items-center gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center shadow-md">
+          <i class="fas fa-user-shield text-white"></i>
+        </div>
+        <div>
+          <h1 class="text-xl font-bold text-gray-800">AI News Hub <span class="text-amber-600">관리자</span></h1>
+          <p class="text-[11px] text-gray-400">일반 화면: <a href="index.html" class="underline">index.html</a></p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <span id="auth-status" class="text-xs text-gray-500"><i class="fas fa-lock mr-1"></i>인증 필요</span>
+        <button id="auth-btn" onclick="onAuthBtn()" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white hover:bg-blue-700 transition-colors">
+          PAT 입력
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-[1600px] mx-auto px-6 mt-6">
+
+    <!-- 안내 박스 -->
+    <div id="intro-box" class="mb-6 p-5 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-900">
+      <p class="font-bold mb-2"><i class="fas fa-info-circle mr-1"></i> 처음 사용 시</p>
+      <ol class="list-decimal ml-6 space-y-1 text-[13px]">
+        <li><a class="underline font-semibold" target="_blank" rel="noopener" href="https://github.com/settings/personal-access-tokens/new">GitHub Fine-grained PAT 발급</a> → Repository access: <code class="bg-amber-100 px-1 rounded">mrsure1/itnews</code> 만 선택 → Permissions: <code class="bg-amber-100 px-1 rounded">Contents: Read and write</code> 권한 부여.</li>
+        <li>발급받은 토큰을 우상단 <span class="font-bold">[PAT 입력]</span> 버튼으로 등록 (브라우저 sessionStorage 보관, 탭 닫으면 자동 삭제).</li>
+        <li>이후 카드 우상단 <span class="font-bold text-red-600">×</span> 버튼으로 삭제, 아래 폼으로 URL 핀 고정.</li>
+      </ol>
+    </div>
+
+    <!-- URL 추가 폼 -->
+    <section class="mb-8 p-6 bg-white border border-gray-100 rounded-xl shadow-sm">
+      <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+        <i class="fas fa-thumbtack text-amber-500"></i> 새 URL 핀 고정
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-start">
+        <div class="md:col-span-3">
+          <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1">표시 날짜</label>
+          <input id="pin-date" type="date" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-blue-400">
+        </div>
+        <div class="md:col-span-3">
+          <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1">분류</label>
+          <select id="pin-category" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-blue-400">
+            <option value="국내">국내 뉴스</option>
+            <option value="미국">해외(미국) 기사</option>
+            <option value="유튜브">유튜브</option>
+          </select>
+        </div>
+        <div class="md:col-span-6">
+          <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1">URL</label>
+          <div class="flex gap-2">
+            <input id="pin-url" type="url" placeholder="https://..." class="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-blue-400">
+            <button onclick="onFetchMeta()" class="px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-xs font-semibold text-gray-700 whitespace-nowrap">
+              <i class="fas fa-magic mr-1"></i> 메타 자동 채움
+            </button>
+          </div>
+          <p class="text-[11px] text-gray-400 mt-1">
+            YouTube 링크는 자동으로 제목·채널·썸네일이 채워집니다. 일반 기사는 아래 필드를 수동 입력하세요.
+          </p>
+        </div>
+
+        <div class="md:col-span-6">
+          <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1">제목</label>
+          <input id="pin-title" type="text" placeholder="제목 (자동 또는 수동 입력)" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-blue-400">
+        </div>
+        <div class="md:col-span-3">
+          <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1">매체/채널</label>
+          <input id="pin-media" type="text" placeholder="매체명" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-blue-400">
+        </div>
+        <div class="md:col-span-3">
+          <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1">이미지 URL (선택)</label>
+          <input id="pin-image" type="url" placeholder="https://..." class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-blue-400">
+        </div>
+        <div class="md:col-span-12">
+          <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1">요약 (선택)</label>
+          <textarea id="pin-summary" rows="2" placeholder="짧은 요약 (선택)" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-blue-400"></textarea>
+        </div>
+
+        <div class="md:col-span-12 flex justify-end gap-2 mt-2">
+          <button onclick="resetPinForm()" class="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm font-semibold text-gray-700">초기화</button>
+          <button id="pin-submit-btn" onclick="onSubmitPin()" class="px-5 py-2 rounded-lg bg-amber-500 hover:bg-amber-600 text-sm font-semibold text-white shadow">
+            <i class="fas fa-thumbtack mr-1"></i> 핀 고정으로 추가
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 날짜별 보기 -->
+    <div id="date-tabs" class="flex flex-wrap gap-2 items-center mb-6"></div>
+
+    <!-- 본문: 카드 그리드 -->
+    <section class="mt-4">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-base font-bold flex items-center gap-2 text-gray-700">
+          <i class="far fa-newspaper text-blue-600"></i>
+          전체 카드 (관리자 보기)
+          <span id="count-summary" class="ml-2 text-xs font-normal text-gray-400"></span>
+        </h2>
+        <button onclick="reloadAll()" class="text-xs px-3 py-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-600">
+          <i class="fas fa-sync-alt mr-1"></i> 새로고침
+        </button>
+      </div>
+      <div id="all-list" class="bento-grid">
+        <div class="col-span-full py-20 text-center text-gray-400">로딩 중...</div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="news_data.js"></script>
+  <script>
+    // ========================
+    // 설정
+    // ========================
+    const REPO_OWNER = 'mrsure1';
+    const REPO_NAME = 'itnews';
+    const OVERRIDES_PATH = 'overrides.json';
+    const STORAGE_KEY = 'itnews_admin_pat';
+
+    // ========================
+    // 상태
+    // ========================
+    const RAW_NEWS_DATA = window.NEWS_DATA || [];
+    let overridesData = { deleted: [], pinned: [] };
+    let overridesSha = null;  // GitHub API: 파일 수정 시 필수
+    let allItems = [];        // 합성된 표시용 데이터
+    let selectedDate = todayStr();
+
+    // ========================
+    // 유틸
+    // ========================
+    function todayStr() {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    }
+    function getItemDate(item) {
+      const raw = item.수집일시 || item.collected_at || '';
+      if (!raw) return '';
+      if (raw.includes('T')) return raw.split('T')[0];
+      if (raw.includes(' ')) return raw.split(' ')[0];
+      return raw.slice(0, 10);
+    }
+    function timeSince(date) {
+      const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+      if (seconds < 60) return '방금';
+      const m = Math.floor(seconds / 60); if (m < 60) return `${m}분 전`;
+      const h = Math.floor(m / 60); if (h < 24) return `${h}시간 전`;
+      const d = Math.floor(h / 24); if (d < 30) return `${d}일 전`;
+      return new Date(date).toLocaleDateString('ko-KR');
+    }
+    function escapeHtml(s) {
+      return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+    function showToast(msg, kind='info') {
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.className = `toast show ${kind}`;
+      setTimeout(() => { el.className = 'toast'; }, 3000);
+    }
+
+    // ========================
+    // 인증 (PAT)
+    // ========================
+    function getPat() {
+      return sessionStorage.getItem(STORAGE_KEY) || '';
+    }
+    function setPat(token) {
+      if (token) sessionStorage.setItem(STORAGE_KEY, token);
+      else sessionStorage.removeItem(STORAGE_KEY);
+      updateAuthUI();
+    }
+    function updateAuthUI() {
+      const status = document.getElementById('auth-status');
+      const btn = document.getElementById('auth-btn');
+      if (getPat()) {
+        status.innerHTML = '<i class="fas fa-check-circle text-green-600 mr-1"></i>인증됨';
+        btn.textContent = '로그아웃';
+        btn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors';
+      } else {
+        status.innerHTML = '<i class="fas fa-lock mr-1"></i>인증 필요 (변경 작업만 차단)';
+        btn.textContent = 'PAT 입력';
+        btn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white hover:bg-blue-700 transition-colors';
+      }
+    }
+    function onAuthBtn() {
+      if (getPat()) {
+        if (confirm('로그아웃 하시겠습니까? (sessionStorage에서 PAT 삭제)')) setPat('');
+        return;
+      }
+      const t = prompt('GitHub Personal Access Token (fine-grained, contents:write) 을 입력하세요.\n\n탭을 닫으면 자동으로 삭제됩니다.');
+      if (t && t.trim()) {
+        setPat(t.trim());
+        showToast('PAT 등록 완료. 이제 변경 작업이 가능합니다.', 'success');
+      }
+    }
+
+    // ========================
+    // GitHub Contents API
+    // ========================
+    async function gh(path, opts={}) {
+      const pat = getPat();
+      if (!pat) throw new Error('PAT_REQUIRED');
+      const r = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/${path}`, {
+        ...opts,
+        headers: {
+          'Authorization': `Bearer ${pat}`,
+          'Accept': 'application/vnd.github+json',
+          'X-GitHub-Api-Version': '2022-11-28',
+          ...(opts.headers || {}),
+        },
+      });
+      if (!r.ok) {
+        const text = await r.text();
+        throw new Error(`GitHub API ${r.status}: ${text.slice(0, 200)}`);
+      }
+      return r.json();
+    }
+
+    async function fetchOverrides() {
+      // GitHub API 로 오버라이드 + sha 가져오기 (PAT 있을 때).
+      // PAT 없으면 정적 파일로 폴백 (보기 전용).
+      if (getPat()) {
+        try {
+          const data = await gh(`contents/${OVERRIDES_PATH}`);
+          overridesSha = data.sha;
+          const decoded = JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g, '')))));
+          overridesData = {
+            deleted: Array.isArray(decoded.deleted) ? decoded.deleted : [],
+            pinned: Array.isArray(decoded.pinned) ? decoded.pinned : [],
+          };
+          return;
+        } catch (e) {
+          console.warn('[fetchOverrides via API] failed, falling back to static:', e);
+        }
+      }
+      try {
+        const r = await fetch(`overrides.json?t=${Date.now()}`, { cache: 'no-store' });
+        if (r.ok) {
+          const decoded = await r.json();
+          overridesData = {
+            deleted: Array.isArray(decoded.deleted) ? decoded.deleted : [],
+            pinned: Array.isArray(decoded.pinned) ? decoded.pinned : [],
+          };
+        }
+      } catch {}
+    }
+
+    async function commitOverrides(message) {
+      if (!getPat()) {
+        showToast('PAT 가 필요합니다. 우상단 [PAT 입력] 버튼을 누르세요.', 'error');
+        throw new Error('PAT_REQUIRED');
+      }
+      const json = JSON.stringify(overridesData, null, 2) + '\n';
+      // UTF-8 → base64
+      const b64 = btoa(unescape(encodeURIComponent(json)));
+      const body = { message, content: b64 };
+      if (overridesSha) body.sha = overridesSha;
+      const data = await gh(`contents/${OVERRIDES_PATH}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      overridesSha = data.content?.sha || null;
+    }
+
+    // ========================
+    // 합성 + 렌더
+    // ========================
+    function applyOverridesAndRender() {
+      const deletedSet = new Set(overridesData.deleted || []);
+      const filtered = RAW_NEWS_DATA.filter(it => !deletedSet.has(it.링크 || it.link));
+      const pinned = (overridesData.pinned || []).map(p => ({
+        ...p,
+        pinned: true,
+        수집일시: p.수집일시 || `${p.pinned_for_date || todayStr()}T09:00:00`,
+      }));
+      allItems = [...filtered, ...pinned];
+      buildDateTabs();
+      renderAll();
+    }
+
+    function buildDateTabs() {
+      const el = document.getElementById('date-tabs');
+      const counts = {};
+      allItems.forEach(it => {
+        const d = getItemDate(it); if (!d) return;
+        counts[d] = (counts[d] || 0) + 1;
+      });
+      const today = new Date();
+      const dates = [];
+      for (let i = 0; i < 7; i++) {
+        const d = new Date(today); d.setDate(today.getDate() - i);
+        const yyyy = d.getFullYear();
+        const mm = String(d.getMonth()+1).padStart(2,'0');
+        const dd = String(d.getDate()).padStart(2,'0');
+        dates.push(`${yyyy}-${mm}-${dd}`);
+      }
+      const labels = ['오늘','어제','2일 전','3일 전','4일 전','5일 전','6일 전'];
+      let html = `<span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mr-2"><i class="far fa-calendar-alt mr-1"></i> 날짜별 보기</span>`;
+      html += `<button class="date-tab ${selectedDate==='all'?'selected':''}" onclick="filterDate('all')">전체 <span class="text-[10px] font-normal opacity-70">(${allItems.length})</span></button>`;
+      dates.forEach((d, i) => {
+        const c = counts[d] || 0;
+        const mmdd = d.slice(5).replace('-', '.');
+        html += `<button class="date-tab ${selectedDate===d?'selected':''}" onclick="filterDate('${d}')" ${c===0?'style="opacity:.45"':''}>${labels[i]} <span class="text-[10px] font-normal opacity-70">(${mmdd})</span> <span class="text-[10px] font-normal opacity-70">${c}</span></button>`;
+      });
+      el.innerHTML = html;
+    }
+    function filterDate(d) { selectedDate = d; renderAll(); }
+
+    function renderAll() {
+      const list = document.getElementById('all-list');
+      const scope = (selectedDate === 'all')
+        ? allItems
+        : allItems.filter(it => getItemDate(it) === selectedDate);
+
+      // 핀 우선
+      const pinnedFirst = [...scope.filter(it => it.pinned), ...scope.filter(it => !it.pinned)];
+
+      const summary = document.getElementById('count-summary');
+      summary.textContent = `${pinnedFirst.length}개 (핀 ${overridesData.pinned.length} / 삭제 ${overridesData.deleted.length})`;
+
+      if (!pinnedFirst.length) {
+        list.innerHTML = `<div class="col-span-full py-12 text-center text-gray-400 text-sm">표시할 카드가 없습니다.</div>`;
+        return;
+      }
+      list.innerHTML = pinnedFirst.map(it => cardHtml(it)).join('');
+    }
+
+    function cardHtml(item) {
+      const isYouTube = item.type === 'youtube' || item.국가 === '유튜브';
+      const country = item.국가 || (isYouTube ? '유튜브' : '국내');
+      const accent = country === '미국' ? 'text-indigo-600' : (country === '유튜브' ? 'text-red-600' : 'text-blue-600');
+      const href = item.링크 || '#';
+      const link = item.링크 || item.link || '';
+      const pinnedRing = item.pinned ? 'ring-pin' : '';
+      const pinnedBadge = item.pinned ? `<span class="pinned-badge"><i class="fas fa-thumbtack"></i> 고정</span>` : '';
+      const delBtnLabel = item.pinned ? '핀 해제' : '삭제';
+      const delAction = item.pinned ? 'unpin' : 'delete';
+
+      return `
+        <div class="card overflow-hidden flex flex-col ${pinnedRing}">
+          <button class="delete-btn" title="${delBtnLabel}" data-action="${delAction}" data-url="${escapeHtml(link)}">
+            <i class="fas fa-${item.pinned ? 'times' : 'times'}"></i>
+          </button>
+          <a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer" class="flex flex-col h-full no-underline text-inherit">
+            ${item.이미지 ? `
+              <div class="${isYouTube ? 'h-44 bg-black' : 'h-44 bg-gray-100'} w-full overflow-hidden">
+                <img src="${escapeHtml(item.이미지)}" alt="thumb" class="w-full h-full object-cover" onerror="this.style.display='none'">
+              </div>` : ''}
+            <div class="p-5 flex flex-col flex-grow">
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-[10px] font-bold ${accent} uppercase tracking-wider flex items-center">${escapeHtml(item.매체 || 'NEWS')}${pinnedBadge}</span>
+                <span class="text-[10px] text-gray-400">${timeSince(item.수집일시)}</span>
+              </div>
+              <h4 class="text-base font-bold text-gray-800 line-clamp-2 mb-3 leading-snug">${escapeHtml(item.제목 || '')}</h4>
+              <p class="text-xs text-gray-500 line-clamp-3 mb-3">${escapeHtml(item.요약 || '')}</p>
+              <div class="mt-auto flex justify-between items-center text-[10px] text-gray-400 pt-3 border-t border-gray-50">
+                <span>${escapeHtml(country)} ${item.source === 'global_official' ? '· 공식' : (item.source === 'kw_search' ? '· 검색' : '')}</span>
+                <span class="text-blue-500"><i class="fas fa-arrow-up-right-from-square text-[9px]"></i> 열기</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      `;
+    }
+
+    // ========================
+    // 액션: 삭제 / 핀 해제 / 핀 추가
+    // ========================
+    async function onDelete(link) {
+      if (!link) return;
+      if (!confirm('이 카드를 화면에서 영구 숨김 처리합니다. 진행할까요?')) return;
+      try {
+        if (!overridesData.deleted.includes(link)) overridesData.deleted.push(link);
+        await commitOverrides(`admin: 카드 숨김 (${link.slice(0, 80)})`);
+        showToast('숨김 처리 완료. 본 화면에 즉시 반영, 일반 화면은 1~2분 후 반영됩니다.', 'success');
+        applyOverridesAndRender();
+      } catch (e) {
+        showToast('실패: ' + e.message, 'error');
+      }
+    }
+
+    async function onUnpin(link) {
+      if (!link) return;
+      if (!confirm('이 핀 고정을 해제합니다. 진행할까요?')) return;
+      try {
+        overridesData.pinned = (overridesData.pinned || []).filter(p => (p.링크 || p.link) !== link);
+        await commitOverrides(`admin: 핀 해제 (${link.slice(0, 80)})`);
+        showToast('핀 해제 완료.', 'success');
+        applyOverridesAndRender();
+      } catch (e) {
+        showToast('실패: ' + e.message, 'error');
+      }
+    }
+
+    function isYouTubeUrl(url) {
+      return /youtube\.com\/watch\?v=|youtu\.be\//.test(url);
+    }
+
+    async function onFetchMeta() {
+      const url = document.getElementById('pin-url').value.trim();
+      if (!url) return showToast('URL 을 먼저 입력하세요.', 'error');
+      if (!isYouTubeUrl(url)) {
+        showToast('YouTube 외 URL은 자동 추출이 제한됩니다. 수동 입력해 주세요.', 'info');
+        return;
+      }
+      try {
+        const r = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(url)}&format=json`);
+        if (!r.ok) throw new Error('oembed status ' + r.status);
+        const j = await r.json();
+        document.getElementById('pin-title').value = j.title || '';
+        document.getElementById('pin-media').value = j.author_name || 'YouTube';
+        document.getElementById('pin-image').value = j.thumbnail_url || '';
+        document.getElementById('pin-category').value = '유튜브';
+        showToast('YouTube 메타 자동 채움 완료.', 'success');
+      } catch (e) {
+        showToast('자동 추출 실패: ' + e.message, 'error');
+      }
+    }
+
+    function resetPinForm() {
+      ['pin-url','pin-title','pin-media','pin-image','pin-summary'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('pin-date').value = todayStr();
+      document.getElementById('pin-category').value = '국내';
+    }
+
+    async function onSubmitPin() {
+      const url = document.getElementById('pin-url').value.trim();
+      const title = document.getElementById('pin-title').value.trim();
+      const date = document.getElementById('pin-date').value || todayStr();
+      const category = document.getElementById('pin-category').value;
+      const media = document.getElementById('pin-media').value.trim() || '(수동) 큐레이션';
+      const image = document.getElementById('pin-image').value.trim();
+      const summary = document.getElementById('pin-summary').value.trim();
+
+      if (!url) return showToast('URL 은 필수입니다.', 'error');
+      if (!title) return showToast('제목은 필수입니다.', 'error');
+
+      const item = {
+        type: category === '유튜브' ? 'youtube' : 'article',
+        국가: category,
+        매체: media,
+        제목: title,
+        링크: url,
+        이미지: image || (isYouTubeUrl(url) ? autoYouTubeThumb(url) : ''),
+        요약: summary || '관리자가 추가한 큐레이션',
+        수집일시: `${date}T09:00:00`,
+        pinned_for_date: date,
+        pinned_at: new Date().toISOString(),
+      };
+
+      try {
+        // 같은 URL 핀이 이미 있으면 교체
+        overridesData.pinned = (overridesData.pinned || []).filter(p => (p.링크 || p.link) !== url);
+        overridesData.pinned.push(item);
+        // deleted 에 같은 URL 있으면 제거 (충돌 회피)
+        overridesData.deleted = (overridesData.deleted || []).filter(u => u !== url);
+        await commitOverrides(`admin: 핀 추가 (${date}, ${title.slice(0, 60)})`);
+        showToast('핀 추가 완료.', 'success');
+        resetPinForm();
+        applyOverridesAndRender();
+      } catch (e) {
+        showToast('실패: ' + e.message, 'error');
+      }
+    }
+
+    function autoYouTubeThumb(url) {
+      const m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]{11})/);
+      return m ? `https://img.youtube.com/vi/${m[1]}/hqdefault.jpg` : '';
+    }
+
+    async function reloadAll() {
+      try { await fetchOverrides(); applyOverridesAndRender(); showToast('새로고침 완료.', 'success'); }
+      catch (e) { showToast('실패: ' + e.message, 'error'); }
+    }
+
+    // ========================
+    // 부트
+    // ========================
+    (async function main() {
+      updateAuthUI();
+      document.getElementById('pin-date').value = todayStr();
+
+      // 카드 그리드에서 X 버튼 클릭을 이벤트 위임으로 처리 (URL 인라인 escape 안전성 ↑)
+      document.getElementById('all-list').addEventListener('click', (e) => {
+        const btn = e.target.closest('button.delete-btn');
+        if (!btn) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const action = btn.dataset.action;
+        const url = btn.dataset.url || '';
+        if (action === 'delete') onDelete(url);
+        else if (action === 'unpin') onUnpin(url);
+      });
+
+      await fetchOverrides();
+      applyOverridesAndRender();
+    })();
+  </script>
+</body>
+</html>

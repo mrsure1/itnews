@@ -248,7 +248,12 @@
 
   <script src="news_data.js"></script>
   <script>
-    let currentData = window.NEWS_DATA || [];
+    // 자동 수집 데이터 (Action 이 매일 갱신)
+    const RAW_NEWS_DATA = window.NEWS_DATA || [];
+    // 본인이 admin.html 에서 관리하는 오버라이드 (삭제/핀)
+    let overridesData = { deleted: [], pinned: [] };
+    // 합성 결과 (RAW_NEWS_DATA + pinned − deleted)
+    let currentData = [];
     let currentView = 'all';
 
     // YYYY-MM-DD 형식의 오늘 날짜 (로컬 타임존 기준)
@@ -369,7 +374,44 @@
       renderData();
     }
 
-    function init() {
+    // overrides.json 비동기 로드 (캐시 무력화 + 5분 주기 재로드)
+    async function loadOverrides() {
+      try {
+        const r = await fetch(`overrides.json?t=${Date.now()}`, { cache: 'no-store' });
+        if (!r.ok) throw new Error('overrides.json fetch failed: ' + r.status);
+        const data = await r.json();
+        overridesData = {
+          deleted: Array.isArray(data.deleted) ? data.deleted : [],
+          pinned: Array.isArray(data.pinned) ? data.pinned : [],
+        };
+      } catch (e) {
+        console.warn('[overrides] fallback to empty:', e);
+        overridesData = { deleted: [], pinned: [] };
+      }
+    }
+
+    // RAW_NEWS_DATA + overrides 를 합성해 currentData 갱신
+    function applyOverrides() {
+      const deletedSet = new Set(overridesData.deleted || []);
+      // 1) 자동 수집분에서 삭제된 URL 제외
+      const filtered = RAW_NEWS_DATA.filter(item => {
+        const link = item.링크 || item.link;
+        return !deletedSet.has(link);
+      });
+      // 2) 핀 항목에 표시용 메타데이터 부여
+      const pinned = (overridesData.pinned || []).map(p => ({
+        ...p,
+        pinned: true,
+        // 수집일시가 비어 있으면 pinned_for_date 기준으로 채움
+        수집일시: p.수집일시 || `${p.pinned_for_date || todayStr()}T09:00:00`,
+      }));
+      currentData = [...filtered, ...pinned];
+    }
+
+    async function init() {
+      await loadOverrides();
+      applyOverrides();
+
       // 오늘 수집된 항목 수 확인 → 0개면 '전체'로 폴백 (액션 누락된 날 빈 화면 방지)
       const todayCount = currentData.filter(item => getItemDate(item) === todayStr()).length;
       if (todayCount === 0) selectedDate = 'all';
@@ -389,6 +431,14 @@
       };
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
+
+      // 5분마다 overrides.json 재로드 → 본인이 admin.html 에서 변경한 내용 자동 반영
+      setInterval(async () => {
+        await loadOverrides();
+        applyOverrides();
+        buildDateTabs();
+        renderData();
+      }, 5 * 60 * 1000);
     }
 
     function switchView(view) {
@@ -422,12 +472,17 @@
       renderData();
     }
 
+    function pinnedBadgeHtml() {
+      return `<span class="ml-1 px-1.5 py-0.5 rounded bg-amber-50 text-amber-700 text-[9px] font-bold uppercase tracking-wider border border-amber-200"><i class="fas fa-thumbtack mr-0.5"></i>고정</span>`;
+    }
+
     function articleCardHtml(item, accent) {
       const accentColor = accent === 'us' ? 'text-indigo-600' : 'text-blue-600';
       const hoverColor = accent === 'us' ? 'group-hover:text-indigo-600' : 'group-hover:text-blue-600';
       const href = item.링크 || '#';
+      const pinnedBadge = item.pinned ? pinnedBadgeHtml() : '';
       return `
-        <a href="${href}" target="_blank" rel="noopener noreferrer" class="card group flex flex-col h-full overflow-hidden">
+        <a href="${href}" target="_blank" rel="noopener noreferrer" class="card group flex flex-col h-full overflow-hidden ${item.pinned ? 'ring-1 ring-amber-200' : ''}">
           ${item.이미지 ? `
             <div class="h-44 w-full overflow-hidden bg-gray-100">
               <img src="${item.이미지}" alt="news" class="w-full h-full object-cover" onerror="this.style.display='none'">
@@ -435,7 +490,7 @@
           ` : ''}
           <div class="p-5 flex flex-col flex-grow">
             <div class="flex justify-between items-center mb-3">
-              <span class="text-[10px] font-bold ${accentColor} uppercase tracking-wider">${item.매체 || 'NEWS'}</span>
+              <span class="text-[10px] font-bold ${accentColor} uppercase tracking-wider flex items-center">${item.매체 || 'NEWS'}${pinnedBadge}</span>
               <span class="text-[10px] text-gray-400">${timeSince(item.수집일시)}</span>
             </div>
             <h4 class="text-base font-bold text-gray-800 ${hoverColor} transition-colors line-clamp-2 mb-3 leading-snug">
@@ -453,6 +508,13 @@
       `;
     }
 
+    // 핀(고정) 항목을 항상 배열의 맨 앞으로 이동시키는 안정 정렬
+    function sortPinnedFirst(items) {
+      const pinned = items.filter(it => it.pinned);
+      const rest = items.filter(it => !it.pinned);
+      return [...pinned, ...rest];
+    }
+
     function renderData() {
       const newsList = document.getElementById('news-list');
       const youtubeList = document.getElementById('youtube-list');
@@ -461,17 +523,17 @@
       const dateScope = filterByDate(currentData);
 
       // 국내(한국) 뉴스 기사
-      const koreanNews = dateScope.filter(item =>
+      const koreanNews = sortPinnedFirst(dateScope.filter(item =>
         (item.type === 'article' || !item.type) && (item.국가 === '국내')
-      );
+      ));
 
       // 유튜브: 글로벌 공식 + 한국어 컨텐츠
-      const youtubeVideos = dateScope.filter(shouldShowYouTube);
+      const youtubeVideos = sortPinnedFirst(dateScope.filter(shouldShowYouTube));
 
       // 미국/해외 기사 (국가 === '미국')
-      const usNews = dateScope.filter(item =>
+      const usNews = sortPinnedFirst(dateScope.filter(item =>
         (item.type === 'article' || !item.type) && (item.국가 === '미국')
-      );
+      ));
 
       newsList.innerHTML = koreanNews.length
         ? koreanNews.map(item => articleCardHtml(item, 'kr')).join('')
@@ -482,8 +544,9 @@
         const officialBadge = official
           ? `<span class="ml-1 px-1.5 py-0.5 rounded bg-red-50 text-red-600 text-[9px] font-bold uppercase tracking-wider border border-red-100">공식</span>`
           : '';
+        const pinnedBadge = item.pinned ? pinnedBadgeHtml() : '';
         return `
-        <a href="${item.링크 || '#'}" target="_blank" rel="noopener noreferrer" class="card group flex flex-col h-full overflow-hidden">
+        <a href="${item.링크 || '#'}" target="_blank" rel="noopener noreferrer" class="card group flex flex-col h-full overflow-hidden ${item.pinned ? 'ring-1 ring-amber-200' : ''}">
           <div class="relative h-44 w-full bg-black">
             <img src="${item.이미지}" alt="youtube" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
@@ -494,7 +557,7 @@
           </div>
           <div class="p-5 flex flex-col flex-grow">
             <div class="flex justify-between items-center mb-3">
-              <span class="text-[10px] font-bold text-red-600 uppercase tracking-wider flex items-center">${item.매체}${officialBadge}</span>
+              <span class="text-[10px] font-bold text-red-600 uppercase tracking-wider flex items-center">${item.매체}${officialBadge}${pinnedBadge}</span>
               <span class="text-[10px] text-gray-400">${timeSince(item.수집일시)}</span>
             </div>
             <h4 class="text-base font-bold text-gray-800 group-hover:text-red-600 transition-colors line-clamp-2 mb-3 leading-snug">
