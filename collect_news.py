@@ -2349,96 +2349,236 @@ def collect_global_news() -> list[dict]:
             print(f"[Error] Failed to fetch {name}: {e}")
     return items_out
 
-def fetch_youtube_news():
-    """한국어 AI 유튜브 채널에서 최신 영상을 수집합니다. (RSS 기반, 빠른 방식)"""
-    priority_keywords = ["gemini", "chatgpt", "claude", "openai", "anthropic", "nanobanana", "veo", "elevenlabs",
-                         "영상제작", "자동화", "n8n", "최신", "업그레이드", "gpt", "ai", "인공지능", "에이전트"]
+# ===========================
+# YouTube 수집: 하이브리드 전략
+#  - Tier 1: 글로벌 AI 공식 채널 RSS (영어 허용)
+#  - Tier 3: YouTube Data API v3 키워드 검색 (한국어 한정)
+# ===========================
 
-    # 검증된 한국어 AI 유튜브 채널 ID (실제 채널 ID)
-    # 채널 홈 URL: youtube.com/@채널명 → 소스코드에서 "externalId" 검색으로 확인
-    # 한국어로 진행되는 AI/개발 관련 채널만 수집 (영어 전용 채널은 프론트에서도 제외)
-    youtube_channels = {
-        "조코딩 JoCoding": "UCQNE2JmbasNYbjGAcuBiRRg",
-        "빵형의 개발도상국": "UC9PB9nKYqKEx_N3KM-JVTpg",
-        "테크몽": "UCFX6adXoyQKxft933NB3rmA",
-        "노정석": "UCz-BiVywYdO6iXhjXkw_Kgw",
-        "원투코딩 OneTwoCoding": "UCPaKutl_0Ip43VSXAq_d7GA",
-        "코딩알려주는누나": "UCfBvs0ZJdTA43NQrnI9imGA",
-        "Nomad Coders": "UCUpJs89fSBXNolQGOYKn0YQ",
+# Tier 1: 검증된 글로벌 AI 공식 채널 (영어 허용)
+GLOBAL_OFFICIAL_CHANNELS = {
+    "OpenAI":                "UCXZCJLdBC09xxGZ6gcdrc6A",
+    "Anthropic":             "UCrDwWp7EBBv4NwvScIpBDOA",
+    "Google DeepMind":       "UCP7jMXSY2xbc3KCAE0MHQ-A",
+    "Google for Developers": "UC_x5XG1OV2P6uZZ5FSM9Ttw",
+    "NVIDIA":                "UCHuiy8bXnmK5nisYHUd1J5g",
+    "NVIDIA AI":             "UCpmsQ0J0JzKwRZ9xA4tNnnA",
+    "NVIDIA Developer":      "UCBHcMCGaiJhv-ESTcWGJPcw",
+    "AI at Meta":            "UC5qxlwEKM7-5YZudb24l0bg",
+    "Microsoft":             "UCFtEEv80fQVKkD4h1PF-Xqw",
+    "Microsoft Developer":   "UCsMica-v34Irf9KVTh6xx-g",
+    "Cursor":                "UC6YYHJzM6PhZ2Yey9BQiUaw",
+    "ElevenLabs":            "UC-ew9TfeD887qUSiWWAAj1w",
+    "Suno":                  "UCsul6HuOrgIJuhL_tnWuAng",
+    "Runway":                "UCUBqu_z5uP0AZhYtuyFZB3g",
+    "Hugging Face":          "UCHlNU7kIZhRgSbhHvFoy72w",
+    "Perplexity":            "UCTSqI4c58ffN6l5Mbdat6dg",
+}
+
+# Tier 3: YouTube Data API 키워드 (한국어 컨텐츠 검색)
+# 카테고리별로 한국어 검색어 → relevanceLanguage=ko & regionCode=KR
+YOUTUBE_SEARCH_QUERIES = [
+    "ChatGPT 사용법",
+    "OpenAI GPT 최신",
+    "Claude Anthropic 사용법",
+    "Gemini Google AI",
+    "Cursor AI 코딩",
+    "Antigravity AI",
+    "AI 이미지 생성",
+    "Nano Banana 이미지",
+    "Midjourney 사용법",
+    "Suno AI 음악",
+    "ElevenLabs 음성",
+    "Sora AI 영상",
+    "Veo Google 영상",
+    "Runway AI 영상",
+    "AI 에이전트 자동화",
+    "n8n AI 자동화",
+]
+
+# 한글 포함 여부 검사용 정규식
+_HANGUL_RE = re.compile(r"[\uac00-\ud7a3]")
+
+
+def _has_korean(text: str) -> bool:
+    return bool(_HANGUL_RE.search(text or ""))
+
+
+def _build_youtube_item(*, title: str, video_url: str, video_id: str,
+                        published_dt: datetime | None, channel_name: str,
+                        description: str, source_tag: str) -> dict:
+    thumb_url = f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg" if video_id else ""
+    curation_data = recreate_news_content(title, (description or "")[:500], channel_name)
+    return {
+        "국가": "유튜브",
+        "매체": channel_name,
+        "제목": title,
+        "링크": video_url,
+        "이미지": thumb_url,
+        "요약": curation_data["summary"],
+        "날짜": (published_dt.isoformat() if published_dt else datetime.now().isoformat()),
+        "수집일시": datetime.now().isoformat(),
+        "type": "youtube",
+        "source": source_tag,  # 'global_official' | 'kw_search'
     }
 
-    youtube_items = []
-    thirty_days_ago = datetime.now() - timedelta(days=30)
 
-    YT_HEADERS = {
-        "User-Agent": "Mozilla/5.0 (compatible; Feedfetcher-Google; +http://www.google.com/feedfetcher.html)"
-    }
+def _fetch_global_official_videos() -> list[dict]:
+    """Tier 1: 글로벌 공식 채널 RSS 수집 (영어 허용, 키워드 필터 없음)."""
+    items: list[dict] = []
+    cutoff = datetime.now() - timedelta(days=14)
+    headers = {"User-Agent": "Mozilla/5.0 (compatible; Feedfetcher-Google; +http://www.google.com/feedfetcher.html)"}
 
-    for name, channel_id in youtube_channels.items():
+    for name, channel_id in GLOBAL_OFFICIAL_CHANNELS.items():
         url = f"https://www.youtube.com/feeds/videos.xml?channel_id={channel_id}"
         try:
-            print(f"[YouTube] Fetching {name}...")
-            resp = requests.get(url, timeout=8, headers=YT_HEADERS)
+            print(f"[YT/Official] {name}...")
+            resp = requests.get(url, timeout=8, headers=headers)
             if resp.status_code != 200:
-                print(f"[Warning] {name} (ID: {channel_id}) → {resp.status_code}")
+                print(f"  [warn] {name} → {resp.status_code}")
                 continue
 
             soup = BeautifulSoup(resp.content, "xml")
-            entries = soup.find_all("entry")
+            entries = soup.find_all("entry")[:5]  # 채널당 최신 5개
 
             for entry in entries:
-                published_str = entry.find("published").text if entry.find("published") else ""
                 published_dt = None
-                if published_str:
+                pub_tag = entry.find("published")
+                if pub_tag and pub_tag.text:
                     try:
-                        published_dt = datetime.fromisoformat(published_str.replace("Z", "+00:00")).replace(tzinfo=None)
-                        if published_dt < thirty_days_ago: continue
-                    except ValueError: pass
+                        published_dt = datetime.fromisoformat(pub_tag.text.replace("Z", "+00:00")).replace(tzinfo=None)
+                        if published_dt < cutoff:
+                            continue
+                    except ValueError:
+                        pass
 
-                title = entry.find("title").text if entry.find("title") else "Untitled"
+                title_tag = entry.find("title")
+                title = title_tag.text if title_tag else "Untitled"
+                link_tag = entry.find("link")
+                video_url = link_tag["href"] if link_tag else ""
+                vid_tag = entry.find("yt:videoId")
+                video_id = vid_tag.text if vid_tag else ""
 
-                video_url = entry.find("link")["href"] if entry.find("link") else ""
-                video_id = entry.find("yt:videoId").text if entry.find("yt:videoId") else ""
-                thumb_url = f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg" if video_id else ""
-
-                # 영상 설명 추출
-                yt_summary = ""
+                description = ""
                 media_group = entry.find("media:group")
                 if media_group:
                     yt_desc = media_group.find("media:description")
-                    if yt_desc:
-                        yt_summary = yt_desc.text.strip()
-                
-                if not yt_summary:
-                    # entry/summary 태그 확인
-                    summary_tag = entry.find("summary")
-                    if summary_tag: yt_summary = summary_tag.text.strip()
+                    if yt_desc and yt_desc.text:
+                        description = yt_desc.text.strip()
 
-                # 키워드 필터링 (필요시)
-                text_to_check = (title + " " + yt_summary).lower()
-                if not any(k.lower() in text_to_check for k in priority_keywords):
+                items.append(_build_youtube_item(
+                    title=title, video_url=video_url, video_id=video_id,
+                    published_dt=published_dt, channel_name=name,
+                    description=description, source_tag="global_official",
+                ))
+        except Exception as e:
+            print(f"  [error] {name}: {e}")
+
+    return items
+
+
+def _fetch_korean_keyword_search() -> list[dict]:
+    """Tier 3: YouTube Data API v3 키워드 검색 (한국어 한정).
+
+    환경변수 YOUTUBE_API_KEY 가 없으면 빈 리스트 반환 (API 키 미설정 시 안전 폴백).
+    """
+    api_key = os.getenv("YOUTUBE_API_KEY", "").strip()
+    if not api_key:
+        print("[YT/Search] YOUTUBE_API_KEY 미설정 → 키워드 검색 스킵")
+        return []
+
+    items: list[dict] = []
+    seen_video_ids: set[str] = set()
+    # 최근 14일 이내 영상만
+    published_after = (datetime.utcnow() - timedelta(days=14)).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+    for q in YOUTUBE_SEARCH_QUERIES:
+        try:
+            print(f"[YT/Search] '{q}' 검색...")
+            params = {
+                "part": "snippet",
+                "q": q,
+                "type": "video",
+                "maxResults": 5,
+                "order": "relevance",
+                "relevanceLanguage": "ko",
+                "regionCode": "KR",
+                "publishedAfter": published_after,
+                "key": api_key,
+            }
+            r = requests.get(
+                "https://www.googleapis.com/youtube/v3/search",
+                params=params,
+                timeout=15,
+            )
+            if r.status_code != 200:
+                print(f"  [warn] '{q}' → status {r.status_code}: {r.text[:200]}")
+                continue
+            data = r.json()
+            for it in data.get("items", []):
+                vid = it.get("id", {}).get("videoId")
+                if not vid or vid in seen_video_ids:
+                    continue
+                snippet = it.get("snippet", {})
+                title = snippet.get("title", "Untitled")
+                description = snippet.get("description", "")
+                channel_title = snippet.get("channelTitle", "YouTube")
+                published_at = snippet.get("publishedAt", "")
+                published_dt = None
+                if published_at:
+                    try:
+                        published_dt = datetime.fromisoformat(published_at.replace("Z", "+00:00")).replace(tzinfo=None)
+                    except ValueError:
+                        pass
+
+                # 한국어 컨텐츠 필터: 제목 또는 채널명에 한글이 있어야 통과
+                if not (_has_korean(title) or _has_korean(channel_title)):
                     continue
 
-                # 한국어 요약 생성 (Gemini 사용)
-                curation_data = recreate_news_content(title, yt_summary[:500], name)
-
-                youtube_items.append({
-                    "국가": "유튜브",
-                    "매체": name,
-                    "제목": title,
-                    "링크": video_url,
-                    "이미지": thumb_url,
-                    "요약": curation_data["summary"],
-                    "날짜": published_dt.isoformat() if published_dt else datetime.now().isoformat(),
-                    "수집일시": datetime.now().isoformat(),
-                    "type": "youtube"
-                })
+                seen_video_ids.add(vid)
+                items.append(_build_youtube_item(
+                    title=title,
+                    video_url=f"https://www.youtube.com/watch?v={vid}",
+                    video_id=vid,
+                    published_dt=published_dt,
+                    channel_name=channel_title,
+                    description=description,
+                    source_tag="kw_search",
+                ))
         except Exception as e:
-            print(f"[Error] {name}: {e}")
+            print(f"  [error] '{q}': {e}")
 
-    # 날짜 기준 최신순 정렬
-    youtube_items.sort(key=lambda x: x.get("수집일시", ""), reverse=True)
-    return youtube_items
+    return items
+
+
+def fetch_youtube_news():
+    """글로벌 공식 채널 + 한국어 키워드 검색 (하이브리드).
+
+    - Tier 1 (글로벌 공식 RSS): 영어 OK. OpenAI/Anthropic/Google/NVIDIA/Meta/Cursor/ElevenLabs 등.
+    - Tier 3 (YouTube Data API 검색): 한국어 한정. ChatGPT/Claude/Suno/Cursor 등 키워드.
+    """
+    youtube_items: list[dict] = []
+    youtube_items.extend(_fetch_global_official_videos())
+    youtube_items.extend(_fetch_korean_keyword_search())
+
+    # 링크 기준 중복 제거 (Tier 우선순위: 먼저 등장한 항목 유지)
+    seen_links: set[str] = set()
+    deduped: list[dict] = []
+    for it in youtube_items:
+        link = it.get("링크")
+        if link and link not in seen_links:
+            seen_links.add(link)
+            deduped.append(it)
+
+    # 게시일 기준 최신순 정렬 (게시일이 없으면 수집일시로 폴백)
+    def _sort_key(x):
+        return x.get("날짜") or x.get("수집일시", "")
+    deduped.sort(key=_sort_key, reverse=True)
+
+    print(f"[YouTube] 총 수집: {len(deduped)}개 "
+          f"(공식 {sum(1 for x in deduped if x.get('source') == 'global_official')}, "
+          f"검색 {sum(1 for x in deduped if x.get('source') == 'kw_search')})")
+    return deduped
 
 def main():
     json_name = "news_data.json"

@@ -183,7 +183,8 @@
       <section id="youtube-section" class="border-l border-gray-200 pl-0 lg:pl-8">
         <div class="flex items-center justify-between mb-6">
           <h3 class="text-lg font-bold flex items-center gap-2">
-            <i class="fab fa-youtube text-red-600"></i> 추천 AI 유튜브 (한국)
+            <i class="fab fa-youtube text-red-600"></i> 추천 AI 유튜브
+            <span class="text-[10px] font-medium text-gray-400 ml-1">글로벌 공식 + 한국어 키워드</span>
           </h3>
         </div>
         <div id="youtube-list" class="bento-grid">
@@ -211,21 +212,41 @@
     let currentView = 'all';
     let selectedDate = 'all'; // 'all' 또는 'YYYY-MM-DD'
 
-    // 한국어 유튜브 채널 화이트리스트 (이 외의 채널은 모두 제외)
-    const KOREAN_YT_CHANNELS = [
-      'Nomad Coders',
-      '코딩알려주는누나',
-      '원투코딩 OneTwoCoding',
-      '노정석',
-      '테크몽',
-      '조코딩 JoCoding',
-      '빵형의 개발도상국'
+    // 글로벌 AI 공식 채널 (영어 OK, [공식] 배지 표시)
+    const GLOBAL_OFFICIAL_CHANNELS = [
+      'OpenAI', 'Anthropic', 'Google DeepMind', 'Google for Developers',
+      'NVIDIA', 'NVIDIA AI', 'NVIDIA Developer',
+      'AI at Meta', 'Microsoft', 'Microsoft Developer',
+      'Cursor', 'ElevenLabs', 'Suno', 'Suno ai', 'Runway',
+      'Hugging Face', 'Perplexity'
     ];
 
-    function isKoreanYouTube(item) {
-      if (item.type !== 'youtube') return false;
+    // 기존 한국 크리에이터 (과거 수집분 호환)
+    const LEGACY_KOREAN_CHANNELS = [
+      'Nomad Coders', '코딩알려주는누나', '원투코딩 OneTwoCoding',
+      '노정석', '테크몽', '조코딩 JoCoding', '빵형의 개발도상국'
+    ];
+
+    function isOfficialChannel(item) {
       const m = (item.매체 || '').trim();
-      return KOREAN_YT_CHANNELS.includes(m);
+      return item.source === 'global_official' || GLOBAL_OFFICIAL_CHANNELS.includes(m);
+    }
+
+    // 한글이 포함된 텍스트인지 검사
+    function hasKorean(text) {
+      return /[\uac00-\ud7a3]/.test(text || '');
+    }
+
+    // 표시 대상 유튜브 영상:
+    //  - 글로벌 공식 채널: 영어 OK
+    //  - 그 외: 제목 또는 채널명에 한글이 있어야 표시 (한국어 컨텐츠)
+    //  - 과거 한국 크리에이터 데이터도 표시
+    function shouldShowYouTube(item) {
+      if (item.type !== 'youtube') return false;
+      if (isOfficialChannel(item)) return true;
+      const m = (item.매체 || '').trim();
+      if (LEGACY_KOREAN_CHANNELS.includes(m)) return true;
+      return hasKorean(item.제목) || hasKorean(item.매체);
     }
 
     // 아이템의 수집일시에서 YYYY-MM-DD 추출
@@ -381,8 +402,8 @@
         (item.type === 'article' || !item.type) && (item.국가 === '국내')
       );
 
-      // 한국어 유튜브 채널만
-      const koreanYoutube = dateScope.filter(isKoreanYouTube);
+      // 유튜브: 글로벌 공식 + 한국어 컨텐츠
+      const youtubeVideos = dateScope.filter(shouldShowYouTube);
 
       // 미국/해외 기사 (국가 === '미국')
       const usNews = dateScope.filter(item =>
@@ -393,7 +414,12 @@
         ? koreanNews.map(item => articleCardHtml(item, 'kr')).join('')
         : `<div class="col-span-full py-10 text-center text-gray-400 text-sm">해당 날짜의 국내 뉴스가 없습니다.</div>`;
 
-      youtubeList.innerHTML = koreanYoutube.length ? koreanYoutube.map(item => `
+      youtubeList.innerHTML = youtubeVideos.length ? youtubeVideos.map(item => {
+        const official = isOfficialChannel(item);
+        const officialBadge = official
+          ? `<span class="ml-1 px-1.5 py-0.5 rounded bg-red-50 text-red-600 text-[9px] font-bold uppercase tracking-wider border border-red-100">공식</span>`
+          : '';
+        return `
         <a href="${item.링크 || '#'}" target="_blank" rel="noopener noreferrer" class="card group flex flex-col h-full overflow-hidden">
           <div class="relative h-44 w-full bg-black">
             <img src="${item.이미지}" alt="youtube" class="w-full h-full object-cover">
@@ -405,7 +431,7 @@
           </div>
           <div class="p-5 flex flex-col flex-grow">
             <div class="flex justify-between items-center mb-3">
-              <span class="text-[10px] font-bold text-red-600 uppercase tracking-wider">${item.매체}</span>
+              <span class="text-[10px] font-bold text-red-600 uppercase tracking-wider flex items-center">${item.매체}${officialBadge}</span>
               <span class="text-[10px] text-gray-400">${timeSince(item.수집일시)}</span>
             </div>
             <h4 class="text-base font-bold text-gray-800 group-hover:text-red-600 transition-colors line-clamp-2 mb-3 leading-snug">
@@ -416,7 +442,8 @@
             </p>
           </div>
         </a>
-      `).join('') : `<div class="col-span-full py-10 text-center text-gray-400 text-sm">해당 날짜의 한국 유튜브 영상이 없습니다.</div>`;
+      `;
+      }).join('') : `<div class="col-span-full py-10 text-center text-gray-400 text-sm">해당 날짜의 추천 유튜브 영상이 없습니다.</div>`;
 
       usList.innerHTML = usNews.length
         ? usNews.map(item => articleCardHtml(item, 'us')).join('')
