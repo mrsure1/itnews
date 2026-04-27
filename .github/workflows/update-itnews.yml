@@ -28,24 +28,59 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Verify YouTube API secret
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: |
+          if [ -z "$YOUTUBE_API_KEY" ]; then
+            echo "YOUTUBE_API_KEY secret is not set."
+            exit 1
+          fi
+          echo "YOUTUBE_API_KEY secret is set."
+
       - name: Run IT News and YouTube collectors
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          PYTHONUTF8: "1"
         run: |
           python collect_news.py
 
-      - name: Verify YouTube items
+      - name: Verify YouTube keyword search items
         run: |
           python - <<'PY'
           import json
+          from datetime import datetime, timedelta
           from pathlib import Path
 
           data = json.loads(Path("news_data.json").read_text(encoding="utf-8"))
-          youtube_count = sum(1 for item in data if item.get("type") == "youtube")
-          print(f"YouTube items in news_data.json: {youtube_count}")
-          if youtube_count == 0:
-              raise SystemExit("No YouTube items were collected.")
+          now = datetime.now()
+          cutoff = now - timedelta(hours=6)
+
+          def parsed_collected_at(item):
+              raw = item.get("수집일시") or item.get("collected_at") or ""
+              if not raw:
+                  return None
+              try:
+                  return datetime.fromisoformat(raw)
+              except ValueError:
+                  return None
+
+          recent_youtube = [
+              item for item in data
+              if item.get("type") == "youtube"
+              and (dt := parsed_collected_at(item)) is not None
+              and dt >= cutoff
+          ]
+          keyword_items = [item for item in recent_youtube if item.get("source") == "kw_search"]
+
+          print(f"Recent YouTube items collected in this run window: {len(recent_youtube)}")
+          print(f"Recent Korean keyword-search YouTube items: {len(keyword_items)}")
+
+          if not recent_youtube:
+              raise SystemExit("No recent YouTube items were collected.")
+          if not keyword_items:
+              raise SystemExit("No Korean YouTube keyword-search items were collected. Check YOUTUBE_API_KEY/search quota or query response.")
           PY
 
       - name: Commit and Push changes
