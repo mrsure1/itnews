@@ -246,7 +246,9 @@
     <i class="fas fa-arrow-up"></i>
   </button>
 
-  <script src="news_data.js"></script>
+  <script>
+    document.write(`<script src="news_data.js?v=${Date.now()}"><\/script>`);
+  </script>
   <script>
     // 자동 수집 데이터 (Action 이 매일 갱신)
     const RAW_NEWS_DATA = window.NEWS_DATA || [];

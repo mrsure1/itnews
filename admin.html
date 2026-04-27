@@ -195,7 +195,9 @@
 
   <div id="toast" class="toast"></div>
 
-  <script src="news_data.js"></script>
+  <script>
+    document.write(`<script src="news_data.js?v=${Date.now()}"><\/script>`);
+  </script>
   <script>
     // ========================
     // 설정
@@ -253,6 +255,21 @@
     }
     function escapeHtml(s) {
       return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+    function videoPostedAt(item) {
+      return item.published_at || item.날짜 || item.수집일시 || '';
+    }
+    function formatViewCount(n) {
+      if (n === null || n === undefined || n === '' || isNaN(Number(n))) return '';
+      n = Number(n);
+      if (n < 1000) return `조회수 ${n.toLocaleString('ko-KR')}회`;
+      if (n < 10000) return `조회수 ${(n / 1000).toFixed(1).replace(/\.0$/, '')}천회`;
+      if (n < 100000000) {
+        const v = n / 10000;
+        return `조회수 ${v >= 10 ? Math.floor(v) : v.toFixed(1).replace(/\.0$/, '')}만회`;
+      }
+      const v = n / 100000000;
+      return `조회수 ${v >= 10 ? Math.floor(v) : v.toFixed(1).replace(/\.0$/, '')}억회`;
     }
     function showToast(msg, kind='info') {
       const el = document.getElementById('toast');
@@ -492,6 +509,11 @@
       const pinnedBadge = item.pinned ? `<span class="pinned-badge"><i class="fas fa-thumbtack"></i> 고정</span>` : '';
       const delBtnLabel = item.pinned ? '핀 해제' : '삭제';
       const delAction = item.pinned ? 'unpin' : 'delete';
+      const viewCountStr = isYouTube ? formatViewCount(item.view_count) : '';
+      const postedAgo = isYouTube ? timeSince(videoPostedAt(item)) : '';
+      const youtubeMeta = isYouTube && (viewCountStr || postedAgo)
+        ? `<div class="text-[11px] text-gray-500 mb-3">${escapeHtml(viewCountStr)}${viewCountStr && postedAgo ? ' <span class="text-gray-300 mx-0.5">·</span> ' : ''}${escapeHtml(postedAgo)}</div>`
+        : '';
 
       return `
         <div class="card overflow-hidden flex flex-col ${pinnedRing}">
@@ -509,6 +531,7 @@
                 <span class="text-[10px] text-gray-400">${timeSince(item.수집일시)}</span>
               </div>
               <h4 class="text-base font-bold text-gray-800 line-clamp-2 mb-3 leading-snug">${escapeHtml(item.제목 || '')}</h4>
+              ${youtubeMeta}
               <p class="text-xs text-gray-500 line-clamp-3 mb-3">${escapeHtml(item.요약 || '')}</p>
               <div class="mt-auto flex justify-between items-center text-[10px] text-gray-400 pt-3 border-t border-gray-50">
                 <span>${escapeHtml(country)} ${item.source === 'global_official' ? '· 공식' : (item.source === 'kw_search' ? '· 검색' : '')}</span>
