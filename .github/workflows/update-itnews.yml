@@ -28,12 +28,25 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run IT News collector
+      - name: Run IT News and YouTube collectors
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: |
           python collect_news.py
+
+      - name: Verify YouTube items
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path("news_data.json").read_text(encoding="utf-8"))
+          youtube_count = sum(1 for item in data if item.get("type") == "youtube")
+          print(f"YouTube items in news_data.json: {youtube_count}")
+          if youtube_count == 0:
+              raise SystemExit("No YouTube items were collected.")
+          PY
 
       - name: Commit and Push changes
         run: |
