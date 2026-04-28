@@ -109,7 +109,7 @@
       <p class="font-bold mb-2"><i class="fas fa-info-circle mr-1"></i> 처음 사용 시</p>
       <ol class="list-decimal ml-6 space-y-1 text-[13px]">
         <li><a class="underline font-semibold" target="_blank" rel="noopener" href="https://github.com/settings/personal-access-tokens/new">GitHub Fine-grained PAT 발급</a> → Repository access: <code class="bg-amber-100 px-1 rounded">mrsure1/itnews</code> 만 선택 → Permissions: <code class="bg-amber-100 px-1 rounded">Contents: Read and write</code> 권한 부여.</li>
-        <li>발급받은 토큰을 우상단 <span class="font-bold">[PAT 입력]</span> 버튼으로 등록 (브라우저 sessionStorage 보관, 탭 닫으면 자동 삭제).</li>
+        <li>발급받은 토큰을 우상단 <span class="font-bold">[PAT 입력]</span> 버튼으로 등록 (이 브라우저 <span class="font-bold">localStorage</span>에 저장되어, 브라우저를 닫거나 PC를 껐다 켜도 유지됩니다. 다른 브라우저·시크릿 창에는 공유되지 않습니다).</li>
         <li>이후 카드 우상단 <span class="font-bold text-red-600">×</span> 버튼으로 삭제, 아래 폼으로 URL 핀 고정.</li>
       </ol>
     </div>
@@ -281,12 +281,31 @@
     // ========================
     // 인증 (PAT)
     // ========================
+    /** 이전 버전(sessionStorage)에만 있던 PAT를 한 번만 localStorage로 옮김 */
+    function migratePatFromSessionStorageOnce() {
+      try {
+        const fromSession = sessionStorage.getItem(STORAGE_KEY);
+        if (!fromSession) return;
+        if (!localStorage.getItem(STORAGE_KEY)) {
+          localStorage.setItem(STORAGE_KEY, fromSession);
+        }
+        sessionStorage.removeItem(STORAGE_KEY);
+      } catch (_) { /* 저장소 비활성화 등 */ }
+    }
     function getPat() {
-      return sessionStorage.getItem(STORAGE_KEY) || '';
+      try {
+        migratePatFromSessionStorageOnce();
+        return localStorage.getItem(STORAGE_KEY) || '';
+      } catch (_) {
+        return '';
+      }
     }
     function setPat(token) {
-      if (token) sessionStorage.setItem(STORAGE_KEY, token);
-      else sessionStorage.removeItem(STORAGE_KEY);
+      try {
+        if (token) localStorage.setItem(STORAGE_KEY, token);
+        else localStorage.removeItem(STORAGE_KEY);
+        try { sessionStorage.removeItem(STORAGE_KEY); } catch (_) {}
+      } catch (_) { /* quota / 비활성화 */ }
       updateAuthUI();
     }
     function updateAuthUI() {
@@ -304,13 +323,13 @@
     }
     async function onAuthBtn() {
       if (getPat()) {
-        if (confirm('로그아웃 하시겠습니까? (sessionStorage에서 PAT 삭제)')) {
+        if (confirm('로그아웃 하시겠습니까? (이 브라우저에 저장된 PAT가 삭제됩니다)')) {
           setPat('');
           overridesSha = null;
         }
         return;
       }
-      const t = prompt('GitHub Personal Access Token (fine-grained, contents:write) 을 입력하세요.\n\n탭을 닫으면 자동으로 삭제됩니다.');
+      const t = prompt('GitHub Personal Access Token (fine-grained, contents:write) 을 입력하세요.\n\n이 브라우저에 저장되어 다음에도 유지됩니다. 제거하려면 [로그아웃]을 누르세요.');
       if (t && t.trim()) {
         setPat(t.trim());
         showToast('PAT 확인 중...', 'info');

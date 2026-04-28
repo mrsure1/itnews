@@ -2387,7 +2387,6 @@ YOUTUBE_SEARCH_QUERIES = [
     "Nano Banana 이미지",
     "Midjourney 사용법",
     "ElevenLabs 음성",
-    "Sora AI 영상",
     "Veo Google 영상",
     "Runway AI 영상",
     "AI 에이전트 자동화",
@@ -2422,6 +2421,109 @@ def _is_ai_music(title: str = "", channel: str = "", description: str = "") -> b
     # description 은 일부러 무시 (요약/설명 본문은 false positive 다발)
     text = f"{title} {channel}".lower()
     return any(k in text for k in _AI_MUSIC_KEYWORDS)
+
+
+# 키워드 검색(kw_search) 결과: 제목+설명에만 명시적 AI 신호가 있을 때 통과 (채널명만으로는 불가).
+# 짧은 영어 토큰은 단어 경계로만 매칭해 'said' 등 오탐을 줄임.
+_YOUTUBE_AI_SUBSTRING_TERMS = (
+    "인공지능",
+    "생성형",
+    "챗gpt",
+    "chatgpt",
+    "openai",
+    "open ai",
+    "클로드",
+    "claude",
+    "anthropic",
+    "제미나이",
+    "gemini",
+    "gpt-4",
+    "gpt4",
+    "gpt-3",
+    "gpt3",
+    "gpt-5",
+    "gpt5",
+    "midjourney",
+    "미드저니",
+    "runway",
+    "런웨이",
+    "veo",
+    "sora",
+    "perplexity",
+    "퍼플렉시티",
+    "n8n",
+    "antigravity",
+    "elevenlabs",
+    "일레븐랩",
+    "hugging face",
+    "허깅페이스",
+    "deepmind",
+    "딥마인드",
+    "copilot",
+    "코파일럿",
+    "머신러닝",
+    "machine learning",
+    "딥러닝",
+    "deep learning",
+    "멀티모달",
+    "multimodal",
+    "diffusion",
+    "디퓨전",
+    "fine-tuning",
+    "파인튜닝",
+    "langchain",
+    "랭체인",
+    "pytorch",
+    "파이토치",
+    "tensorflow",
+    "nvidia",
+    "뉴비디아",
+    "cuda",
+    "text-to-image",
+    "텍스트 투 이미지",
+    "에이전트",
+    "nano banana",
+    "나노 바나나",
+    "cursor ai",
+    "cursor 코딩",
+    "google ai",
+    "구글 ai",
+    "llama",
+    "라마",
+    "mistral",
+    "미스트랄",
+    "stable diffusion",
+    "스테이블 디퓨전",
+)
+
+_YOUTUBE_AI_TERM_REGEXES = (
+    re.compile(r"(?<![a-z])ai(?![a-z])", re.IGNORECASE),
+    re.compile(r"\bgpt\b", re.IGNORECASE),
+    re.compile(r"\bllm\b", re.IGNORECASE),
+    re.compile(r"\bcursor\b", re.IGNORECASE),
+    re.compile(r"\brag\b", re.IGNORECASE),
+)
+
+
+def _is_ai_relevant_youtube(
+    title: str,
+    channel: str,
+    description: str,
+    source_tag: str,
+) -> bool:
+    """YouTube 항목이 AI/ML 주제와 관련 있는지 판별.
+
+    - global_official: GLOBAL_OFFICIAL_CHANNELS 화이트리스트 채널이면 통과 (기존 Tier1 의도 유지).
+    - kw_search: 제목+설명(소문자)에 명시 키워드/토큰이 있어야 통과. 채널명만 한글인 일반 뉴스 쇼츠는 제외.
+    """
+    if source_tag == "global_official":
+        return channel in GLOBAL_OFFICIAL_CHANNELS
+    if source_tag != "kw_search":
+        return False
+    blob = f"{title} {description}".lower()
+    if any(term in blob for term in _YOUTUBE_AI_SUBSTRING_TERMS):
+        return True
+    return any(rx.search(blob) for rx in _YOUTUBE_AI_TERM_REGEXES)
 
 
 def _build_youtube_item(*, title: str, video_url: str, video_id: str,
@@ -2491,7 +2593,10 @@ def _fetch_video_view_counts(video_ids: list[str]) -> dict[str, int]:
 
 
 def _fetch_global_official_videos() -> list[dict]:
-    """Tier 1: 글로벌 공식 채널 RSS 수집 (영어 허용, 키워드 필터 없음)."""
+    """Tier 1: 글로벌 공식 채널 RSS 수집 (영어 허용).
+
+    제목 키워드 필터는 없으나, 화이트리스트 채널만 수집하고 `_is_ai_relevant_youtube` 로 출처를 검증한다.
+    """
     items: list[dict] = []
     cutoff = datetime.now() - timedelta(days=14)
     headers = {"User-Agent": "Mozilla/5.0 (compatible; Feedfetcher-Google; +http://www.google.com/feedfetcher.html)"}
@@ -2546,6 +2651,10 @@ def _fetch_global_official_videos() -> list[dict]:
                 # AI 음악 영상은 수집 제외
                 if _is_ai_music(title, name, description):
                     print(f"  [skip-music] {name}: {title[:60]}")
+                    continue
+
+                if not _is_ai_relevant_youtube(title, name, description, "global_official"):
+                    print(f"  [skip-non-ai] {name}: {title[:60]}")
                     continue
 
                 items.append(_build_youtube_item(
@@ -2621,6 +2730,10 @@ def _fetch_korean_keyword_search() -> list[dict]:
                 # AI 음악 영상은 수집 제외
                 if _is_ai_music(title, channel_title, description):
                     print(f"  [skip-music] {channel_title}: {title[:60]}")
+                    continue
+
+                if not _is_ai_relevant_youtube(title, channel_title, description, "kw_search"):
+                    print(f"  [skip-non-ai] {channel_title}: {title[:60]}")
                     continue
 
                 seen_video_ids.add(vid)
