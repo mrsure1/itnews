@@ -5,8 +5,9 @@ env:
 
 on:
   schedule:
-    - cron: '0 23 * * *' # 매일 한국 시간 오전 8시 (UTC 23:00)에 실행
-  workflow_dispatch: # 수동 실행 
+    - cron: "0 23 * * *" # 매일 한국 시간 오전 8시 (UTC 23:00)에 실행
+  workflow_dispatch:
+    # 수동 실행 
 
 jobs:
   update-news:
@@ -21,7 +22,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11' # 최신의 안정적인 버전 사용
+          python-version: "3.11" # 최신의 안정적인 버전 사용
 
       - name: Install dependencies
         run: |
@@ -46,7 +47,16 @@ jobs:
         run: |
           python collect_news.py
 
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Auto-update IT News data and images" || echo "No changes to commit"
+          git push || echo "No changes to push"
+
       - name: Report YouTube keyword search items
+        if: always()
         run: |
           python - <<'PY'
           import json
@@ -73,24 +83,24 @@ jobs:
               and (dt := parsed_collected_at(item)) is not None
               and dt >= cutoff
           ]
+          recent_articles = [
+              item for item in data
+              if item.get("type") != "youtube"
+              and (dt := parsed_collected_at(item)) is not None
+              and dt >= cutoff
+          ]
           keyword_items = [item for item in recent_youtube if item.get("source") == "kw_search"]
           source_counts = Counter(item.get("source") or "unknown" for item in recent_youtube)
 
+          print(f"Recent article items collected in this run window: {len(recent_articles)}")
           print(f"Recent YouTube items collected in this run window: {len(recent_youtube)}")
           print(f"Recent Korean keyword-search YouTube items: {len(keyword_items)}")
           print(f"Recent YouTube source counts: {dict(source_counts)}")
 
           if not recent_youtube:
-              raise SystemExit("No recent YouTube items were collected.")
+              print("::warning::No recent YouTube items were collected in this run.")
           if not keyword_items:
               print("No Korean YouTube keyword-search items were collected in this run.")
-              print("Collector completed successfully; check the Run IT News and YouTube collectors log for [YT/Search] details.")
+          if not recent_articles:
+              print("::warning::No recent article items were collected in this run.")
           PY
-
-      - name: Commit and Push changes
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "Auto-update IT News data and images" || echo "No changes to commit"
-          git push || echo "No changes to push"

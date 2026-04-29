@@ -2110,8 +2110,8 @@ def collect_domestic_news(now: str) -> list[dict]:
         return items_out
 
     soup = BeautifulSoup(r.text, "html.parser")
-    # Change selector to capture the whole item which includes both thumb and text
-    news_items = soup.select(".sa_item_inner")[:10]
+    # Fetch more items initially to allow AI filtering to find enough matches
+    news_items = soup.select(".sa_item_inner")[:30]
     print(f"Found {len(news_items)} domestic news items")
 
     for idx, item in enumerate(news_items, start=1):
@@ -2197,6 +2197,8 @@ def collect_domestic_news(now: str) -> list[dict]:
                 curation_mode=curation.get("mode", ""),
             )
         )
+        if len(items_out) >= 10:
+            break
 
     return items_out
 
@@ -2293,7 +2295,11 @@ def collect_global_news() -> list[dict]:
             soup = BeautifulSoup(resp.content, "xml")
             entries = soup.find_all("item")
             if not entries: entries = soup.find_all("entry")
-            for entry in entries[:5]:
+            
+            collected_for_this_feed = 0
+            for entry in entries[:20]: # Check up to 20 entries
+                if collected_for_this_feed >= 5: # Keep up to 5 valid AI articles per feed
+                    break
                 title = entry.find("title").text.strip() if entry.find("title") else "Untitled"
                 link = ""
                 if entry.find("link"):
@@ -2345,6 +2351,7 @@ def collect_global_news() -> list[dict]:
                     "요약": curation_data["summary"],
                     "수집일시": datetime.now().isoformat(), "type": "article"
                 })
+                collected_for_this_feed += 1
         except Exception as e:
             print(f"[Error] Failed to fetch {name}: {e}")
     return items_out
@@ -2611,9 +2618,12 @@ def _fetch_global_official_videos() -> list[dict]:
                 continue
 
             soup = BeautifulSoup(resp.content, "xml")
-            entries = soup.find_all("entry")[:5]  # 채널당 최신 5개
-
+            entries = soup.find_all("entry")[:15]  # Check up to 15 entries
+            
+            collected_for_this_channel = 0
             for entry in entries:
+                if collected_for_this_channel >= 5: # Keep up to 5 valid AI videos per channel
+                    break
                 published_dt = None
                 pub_tag = entry.find("published")
                 if pub_tag and pub_tag.text:
@@ -2663,6 +2673,7 @@ def _fetch_global_official_videos() -> list[dict]:
                     description=description, source_tag="global_official",
                     view_count=view_count,
                 ))
+                collected_for_this_channel += 1
         except Exception as e:
             print(f"  [error] {name}: {e}")
 
