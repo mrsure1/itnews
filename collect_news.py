@@ -2795,6 +2795,21 @@ def fetch_youtube_news():
             if vid in view_map and not it.get("view_count"):
                 it["view_count"] = view_map[vid]
 
+    # 키워드 검색(kw_search)만: 조회수가 확인되었고 100 이하인 영상은 제외
+    _min_kw_views = 101
+    before_kw = len(deduped)
+    deduped = [
+        it for it in deduped
+        if not (
+            it.get("source") == "kw_search"
+            and isinstance(it.get("view_count"), int)
+            and it["view_count"] < _min_kw_views
+        )
+    ]
+    dropped_kw = before_kw - len(deduped)
+    if dropped_kw:
+        print(f"[YouTube] 키워드 검색: 조회수 {_min_kw_views - 1} 이하 제외 {dropped_kw}건")
+
     # 게시일 기준 최신순 정렬 (게시일이 없으면 수집일시로 폴백)
     def _sort_key(x):
         return x.get("날짜") or x.get("수집일시", "")
