@@ -357,15 +357,31 @@
       return hasKorean(item.제목);
     }
 
-    // 아이템의 수집일시에서 YYYY-MM-DD 추출
+    // 수집일시 문자열 → 로컬(KST) YYYY-MM-DD. GitHub Actions는 UTC naive ISO로 저장함.
+    function collectedAtToLocalDate(raw) {
+      if (!raw) return '';
+      const hasTz = /[Zz]$|[+-]\d{2}:\d{2}$/.test(raw);
+      let dt;
+      if (raw.includes('T')) {
+        dt = new Date(hasTz ? raw : raw + 'Z');
+      } else if (raw.includes(' ')) {
+        dt = new Date(raw.replace(' ', 'T') + 'Z');
+      } else {
+        return raw.slice(0, 10);
+      }
+      if (isNaN(dt.getTime())) return raw.slice(0, 10);
+      const yyyy = dt.getFullYear();
+      const mm = String(dt.getMonth() + 1).padStart(2, '0');
+      const dd = String(dt.getDate()).padStart(2, '0');
+      return `${yyyy}-${mm}-${dd}`;
+    }
+
+    // 아이템의 수집일시에서 YYYY-MM-DD 추출 (브라우저 로컬 날짜 기준)
     function getItemDate(item) {
       // 핀 항목은 사용자가 지정한 표시 날짜(pinned_for_date)를 우선 사용
       if (item.pinned_for_date) return item.pinned_for_date;
       const raw = item.수집일시 || item.collected_at || '';
-      if (!raw) return '';
-      if (raw.includes('T')) return raw.split('T')[0];
-      if (raw.includes(' ')) return raw.split(' ')[0];
-      return raw.slice(0, 10);
+      return collectedAtToLocalDate(raw);
     }
 
     // 선택된 날짜 기준으로 아이템 필터링

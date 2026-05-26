@@ -7,7 +7,34 @@ import random
 import re
 import sys
 import time
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+
+# 한국 표준시(KST, UTC+9). 한국은 일광절약시 없음.
+KST = timezone(timedelta(hours=9))
+
+
+def now_kst_iso() -> str:
+    """수집일시·collected_at 저장용 ISO 8601 문자열 (KST, 오프셋 포함)."""
+    return datetime.now(KST).isoformat()
+
+
+def parse_collected_at_for_retention(pub_date_str: str) -> datetime | None:
+    """기존 JSON의 수집일시를 KST aware datetime으로 파싱 (7일 보존 비교용).
+
+    - 타임존 없는 값은 과거 GitHub Actions(UTC)에서 저장된 것으로 보고 UTC로 간주.
+    """
+    if not pub_date_str:
+        return None
+    try:
+        if "T" in pub_date_str:
+            dt = datetime.fromisoformat(pub_date_str.replace("Z", "+00:00"))
+        else:
+            dt = datetime.strptime(pub_date_str.strip(), "%Y-%m-%d %H:%M:%S")
+    except ValueError:
+        return None
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt.astimezone(KST)
 from pathlib import Path
 from urllib.parse import quote_plus, urljoin
 
@@ -1457,7 +1484,7 @@ def pick_company_variant_image(theme: dict, article_uid: str = "", title: str = 
 
     theme_id = (theme.get("id") or "").strip().lower()
     if COMPANY_DAILY_ROTATION:
-        day_key = datetime.now().strftime("%Y-%m-%d")
+        day_key = datetime.now(KST).strftime("%Y-%m-%d")
         uid = article_uid or title or day_key
         seed = hashlib.sha1(f"{theme_id}|{day_key}|{uid}".encode("utf-8")).hexdigest()
         picked = int(seed[:12], 16) % len(paths)
@@ -2269,8 +2296,9 @@ def collect_hacker_news(now: str) -> list[dict]:
     return items_out
 
 
-def collect_global_news() -> list[dict]:
+def collect_global_news(collected_at: str | None = None) -> list[dict]:
     items_out: list[dict] = []
+    ts = collected_at or now_kst_iso()
     usa_feeds = {
         "TechCrunch": "https://techcrunch.com/feed/",
         "The Verge": "https://www.theverge.com/rss/index.xml",
@@ -2349,7 +2377,7 @@ def collect_global_news() -> list[dict]:
                     "국가": "미국", "매체": name, "제목": title, "링크": link,
                     "이미지": image_url,
                     "요약": curation_data["summary"],
-                    "수집일시": datetime.now().isoformat(), "type": "article"
+                    "수집일시": ts, "type": "article"
                 })
                 collected_for_this_feed += 1
         except Exception as e:
@@ -2548,8 +2576,8 @@ def _build_youtube_item(*, title: str, video_url: str, video_id: str,
         "요약": curation_data["summary"],
         # 영상 게시일(YouTube 표기 그대로). 카드의 시간 표시는 이 값을 우선 사용.
         "published_at": (published_dt.isoformat() if published_dt else ""),
-        "날짜": (published_dt.isoformat() if published_dt else datetime.now().isoformat()),
-        "수집일시": datetime.now().isoformat(),
+        "날짜": (published_dt.isoformat() if published_dt else now_kst_iso()),
+        "수집일시": now_kst_iso(),
         "video_id": video_id,
         # YouTube 조회수 (정수). 알 수 없으면 None.
         "view_count": view_count,
@@ -2830,12 +2858,12 @@ def main():
         except Exception:
             pass
 
-    now = datetime.now().isoformat()
+    now = now_kst_iso()
     print("--- Collecting News ---")
     
     # 각 섹션별 데이터 수집
     domestic_items = collect_domestic_news(now)
-    global_items = collect_global_news()
+    global_items = collect_global_news(collected_at=now)
     youtube_items = fetch_youtube_news()
     
     all_new_items = domestic_items + global_items + youtube_items
@@ -2850,23 +2878,16 @@ def main():
             seen_links.add(link)
             combined_items.append(item)
             
-    # 2. 기존 아이템 중 7일 이내 데이터 유지
-    seven_days_ago = datetime.now() - timedelta(days=7)
+    # 2. 기존 아이템 중 7일 이내 데이터 유지 (수집일시는 KST 기준으로 저장·비교)
+    seven_days_ago = datetime.now(KST) - timedelta(days=7)
     for item in existing_items:
         link = item.get("링크") or item.get("link")
         if link and link not in seen_links:
             pub_date_str = item.get("수집일시") or item.get("collected_at", "")
-            try:
-                if "T" in pub_date_str:
-                    pub_date = datetime.fromisoformat(pub_date_str)
-                else:
-                    pub_date = datetime.strptime(pub_date_str, "%Y-%m-%d %H:%M:%S")
-                
-                if pub_date > seven_days_ago:
-                    seen_links.add(link)
-                    combined_items.append(item)
-            except Exception:
-                pass
+            pub_kst = parse_collected_at_for_retention(pub_date_str)
+            if pub_kst is not None and pub_kst > seven_days_ago:
+                seen_links.add(link)
+                combined_items.append(item)
 
     # JSON 저장
     with open(json_name, "w", encoding="utf-8") as f:
