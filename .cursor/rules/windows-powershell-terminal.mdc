@@ -1,0 +1,44 @@
+---
+description: Windows PowerShell 터미널 UTF-8 출력 및 명령어 호환 규칙
+alwaysApply: true
+---
+
+# Windows PowerShell 터미널 규칙
+
+이 프로젝트는 Windows + PowerShell 환경이다. Shell 도구 실행 시 아래를 반드시 따른다.
+
+## UTF-8 출력 (한글 깨짐 방지)
+
+모든 Shell 명령 앞에 UTF-8 초기화를 붙인다:
+
+```powershell
+chcp 65001 > $null; [Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false); [Console]::InputEncoding = [System.Text.UTF8Encoding]::new($false); $OutputEncoding = [Console]::OutputEncoding;
+```
+
+한 줄로 이어서 실제 명령을 실행한다. 예:
+
+```powershell
+chcp 65001 > $null; [Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false); $OutputEncoding = [Console]::OutputEncoding; git status
+```
+
+Python 실행 시 `$env:PYTHONUTF8='1'` 또는 `$env:PYTHONIOENCODING='utf-8'`도 함께 설정한다.
+
+## Bash 문법 금지
+
+PowerShell에서 동작하지 않거나 한글 오류 메시지가 깨지는 패턴을 쓰지 않는다.
+
+| 금지 | 대신 사용 |
+|------|-----------|
+| `cmd1 && cmd2` | `cmd1; if ($?) { cmd2 }` 또는 `cmd1; cmd2` |
+| `cat <<'EOF'` heredoc | `git commit -m "제목" -m "본문"` 또는 PowerShell here-string `@'...'@` |
+| `$(cat <<'EOF' ... EOF)` | 여러 `-m` 플래그, 또는 `-F` 파일 |
+
+## Git 커밋 (Windows)
+
+```powershell
+git commit -m "fix: 한글 커밋 메시지" -m "추가 설명"
+```
+
+## Python 파일 읽기/쓰기
+
+스크립트·JSON·텍스트 파일은 항상 `encoding='utf-8'`을 명시한다.
